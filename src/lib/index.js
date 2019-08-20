@@ -1,23 +1,22 @@
 import Vue from "vue";
 import AppCss from "./css/app.css";
 import Iconfont from "./font/iconfont";
+import FontBlod from "./font/SourceHanSansSC-Blod.css";
+import FontRegular from "./font/SourceHanSansSC-Regular.css";
 
-import { util } from "./util/index";
+import { util, QueryModel } from "./util/index";
 import user from "./store/system/user";
 import building from "./store/building/building";
 import common from "./store/common/common";
 import diyHouseType from "./store/diy/diyHouseType";
 import product from "./store/product/product";
-import { QueryModel } from "./util/common/pager";
 import { Orienter } from "./util/threejs/three.orienter";
-
 //注入组件
 import UtilImage from "./components/util-image.vue";
 import UtilTree from "./components/util-tree.vue";
 import UtilRadioButton from "./components/util-radio-button.vue";
 import UtilTreeItem from "./components/util-tree-item.vue";
-import UtilTitle from "./components/util-title.vue";
-import UtilTitleSpace from "./components/util-title-space.vue";
+import UtilNav from "./components/util-nav.vue";
 import UtilList from "./components/util-list.vue";
 import UtilInputNumber from "./components/util-input-number.vue";
 import UtilLayoutItem from "./components/util-layout-item.vue";
@@ -32,11 +31,10 @@ const install = (Vue, options) => {
   if (options.serverConfig) util.url.base.init(options.serverConfig);
 
   Vue.component("util-image", UtilImage);
-  Vue.component("util-title", UtilTitle);
+  Vue.component("util-nav", UtilNav);
   Vue.component("util-radio-button", UtilRadioButton);
   Vue.component("util-tree", UtilTree);
   Vue.component("util-tree-item", UtilTreeItem);
-  Vue.component("util-title-space", UtilTitleSpace);
   Vue.component("util-list", UtilList);
   Vue.component("util-input-number", UtilInputNumber);
   Vue.component("util-layout-item", UtilLayoutItem);
@@ -51,7 +49,6 @@ if (typeof window !== "undefined" && window.Vue) {
 export default {
   install,
   util,
-  QueryModel,
   store: {
     user,
     building,

@@ -1,9 +1,14 @@
 :root {
+  --f7-navbar-background: #f7f7f7;
+  --f7-navbar-color: #333;
   --f7-navbar-height: 44px;
   --f7-navbar-title-text-align: center;
+  --f7-font-family: "SourceHanSansSC-Regular";
 }
 
 .util-title-center {
   flex: 1 !important;
   text-align: center !important;
 }
+
+

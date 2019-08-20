@@ -14,6 +14,7 @@ import { Storage } from "./../util/storage/storage";
 import { ActionSheet } from "./../util/actions/actionSheet";
 import { plus } from "./../util/plus/index";
 import { IO } from "./../util/plus/io/io";
+import { QueryModel } from "./../util/common/pager";
 
 var staticUtil = {
   helper: new Helper(),
@@ -30,4 +31,4 @@ var staticUtil = {
   plus: plus
 };
 
-export { staticUtil as util, HttpClient };
+export { staticUtil as util, HttpClient, QueryModel };

@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <util-title title="菜单"></util-title>
+    <util-nav title="菜单"></util-nav>
     <f7-page-content>
       <f7-list no-hairlines-md>
         <f7-list-input

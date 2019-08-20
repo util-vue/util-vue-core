@@ -1,15 +1,42 @@
 <template>
-  <f7-navbar class="util-title">
-    <f7-nav-left back-link="Back"></f7-nav-left>
-    <f7-nav-title :class="{ 'util-title-center': titleCenter}">
-      标题
-    </f7-nav-title>
-    <f7-nav-right>
-      <f7-link
-        icon="iconfont icon-icon_wodeshoucang"
-        panel-open="right"
-      ></f7-link>
-    </f7-nav-right>
+  <f7-navbar
+    class="util-title"
+    :style="titleStyle"
+  >
+    <template v-if="mode == 1">
+      <util-nav-bar
+        :isBack="isBack"
+        :isLeft="true"
+        :btns="leftBtns"
+      ></util-nav-bar>
+      <f7-nav-title :class="{ 'util-title-center': titleCenter}">
+        {{title}}
+      </f7-nav-title>
+      <util-nav-bar :btns="rightBtns"></util-nav-bar>
+    </template>
+
+    <template v-if="mode == 2">
+      <util-nav-bar
+        :isBack="isBack"
+        :isLeft="true"
+        :btns="leftBtns"
+      ></util-nav-bar>
+      <f7-nav-title>
+        <div class="search-bg">
+          <i class="iconfont icon-icon_sousuo1"></i>
+          <input
+            class="search-input"
+            v-model="searchValue"
+            type="search"
+            name="search"
+            maxlength="50"
+            :placeholder="searchPlaceholder"
+            @keypress="searchKeypress"
+          />
+        </div>
+      </f7-nav-title>
+      <util-nav-bar :btns="rightBtns"></util-nav-bar>
+    </template>
   </f7-navbar>
   <!-- <div
     class="util-title"
@@ -86,9 +113,10 @@
 </template>
 
 <script>
-import Toolbar from "./util-title-toolbar";
+import UtilNavBar from "./util-nav-bar";
+
 export default {
-  components: { Toolbar },
+  components: { UtilNavBar },
   props: {
     /**  */
     titleCenter: {
@@ -117,13 +145,13 @@ export default {
     /** 文字颜色 */
     color: {
       default: function() {
-        return "#333";
+        return "var(--f7-navbar-color)";
       }
     },
     /** 导航栏背景色 */
     background: {
       default: function() {
-        return "#f7f7f7";
+        return "var(--f7-navbar-background)";
       }
     },
     /** 查询输入框标题 */
@@ -146,12 +174,6 @@ export default {
     },
     /** 右侧按钮 按钮对象格式 { ic:'icon-icon-xxxxx',text:'文字', click:func  } */
     rightBtns: {
-      default: function() {
-        return [];
-      }
-    },
-    /** 右侧按钮 按钮对象格式 { ic:'icon-icon-xxxxx',text:'文字', click:func  } */
-    rightStr: {
       default: function() {
         return [];
       }
@@ -205,7 +227,13 @@ export default {
 
 <style>
 :root {
-  --f7-font-size: 24px;
+  --f7-navbar-title-font-size: 42px;
+}
+.navbar a {
+  color: var(--f7-navbar-color);
+}
+.icon {
+  font-size: 42px !important;
 }
 </style>
 
@@ -220,6 +248,8 @@ export default {
   left: 0;
   right: 0;
   z-index: 9999;
+  font-size: var(--f7-navbar-title-font-size);
+  font-family: "SourceHanSansSC-Bold";
 }
 
 .util-title-default {
@@ -246,17 +276,24 @@ export default {
   line-height: 100%;
 }
 
-.util-title-default .search-bg {
+.search-bg {
   flex: 1;
   background: rgba(241, 241, 241, 1);
   border: 1px solid rgba(238, 238, 238, 1);
-  border-radius: 8px;
+  border-radius: 31px;
   height: 62px;
   margin-left: 7px;
   padding: 10px;
   line-height: 32px;
+  position: relative;
 }
 
+.search-bg .icon-icon_sousuo1 {
+  position: absolute;
+  left: 12px;
+  top: 28px;
+  font-size: var(--f7-navbar-title-font-size);
+}
 .search-bg span {
   color: #9c9c9c;
   padding-left: 10px;
@@ -268,8 +305,9 @@ export default {
 
 .search-bg .search-input {
   flex: 1;
-  height: 32px;
+  height: 62px;
   background: transparent;
   border: none;
+  padding-left: 80px;
 }
 </style>
