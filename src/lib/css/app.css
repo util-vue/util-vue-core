@@ -1,0 +1,9 @@
+:root {
+  --f7-navbar-height: 44px;
+  --f7-navbar-title-text-align: center;
+}
+
+.util-title-center {
+  flex: 1 !important;
+  text-align: center !important;
+}
