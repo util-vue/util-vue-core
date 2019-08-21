@@ -9,18 +9,26 @@
     <f7-link
       v-for="(item, index) in btns"
       :key="index"
-      :icon="item.ic"
-      @click="item.click&&item.click(item)"
-    ></f7-link>
-
+      icon-only
+    >
+      <f7-icon :class="item.ic">
+        <f7-badge v-if="item.badge&&item.badge > 0" color="red">{{item.badge}}</f7-badge>
+      </f7-icon>
+    </f7-link>
+    <slot name="left"></slot>
   </f7-nav-left>
   <f7-nav-right v-else>
     <f7-link
       v-for="(item, index) in btns"
       :key="index"
-      :icon="item.ic"
-      @click="item.click&&item.click(item)"
-    ></f7-link>
+      icon-only
+    >
+      <f7-icon :class="item.ic">
+        <f7-badge v-if="item.badge&&item.badge > 0" color="red">{{item.badge}}</f7-badge>
+      </f7-icon>
+    </f7-link>
+    
+    <slot name="right"></slot>
   </f7-nav-right>
 </template>
 

@@ -2,17 +2,22 @@
   <f7-navbar
     class="util-title"
     :style="titleStyle"
+    :sliding="true"
   >
     <template v-if="mode == 1">
       <util-nav-bar
         :isBack="isBack"
         :isLeft="true"
         :btns="leftBtns"
-      ></util-nav-bar>
+      >
+        <slot name="left" slot="left"></slot>
+      </util-nav-bar>
       <f7-nav-title :class="{ 'util-title-center': titleCenter}">
         {{title}}
       </f7-nav-title>
-      <util-nav-bar :btns="rightBtns"></util-nav-bar>
+      <util-nav-bar :btns="rightBtns">
+        <slot name="right" slot="right"></slot>
+      </util-nav-bar>
     </template>
 
     <template v-if="mode == 2">
@@ -37,79 +42,20 @@
       </f7-nav-title>
       <util-nav-bar :btns="rightBtns"></util-nav-bar>
     </template>
-  </f7-navbar>
-  <!-- <div
-    class="util-title"
-    :style="titleStyle"
-  >
-    <template v-if="mode == 1">
-      <div class="flex flex-content-between-center util-title-default">
-        <toolbar
-          @btnClick="btnClick"
-          :leftBtns="leftBtns"
-          :isBack="isBack"
-        ></toolbar>
-        <div
-          v-if="title"
-          class="center flex flex-content-center-center util-title-default-center"
-        >{{title}}</div>
-        <toolbar
-          @btnClick="btnClick"
-          :isLeft="false"
-          :rightBtns="rightBtns"
-        ></toolbar>
-      </div>
-    </template>
-
-    <template v-if="mode == 2">
-      <div class="flex flex-content-between-center util-title-default">
-        <toolbar
-          @btnClick="btnClick"
-          :leftBtns="leftBtns"
-          :isBack="isBack"
-        ></toolbar>
-        <div class="center flex flex-content-center-center">
-          <span>{{searchLable}}</span>
-          <div class="search-bg flex flex-content-center-center">
-            <input
-              v-model="searchValue"
-              type="search"
-              name="search"
-              class="search-input"
-              maxlength="50"
-              :placeholder="searchPlaceholder"
-              @keypress="searchKeypress"
-            />
-            <span class="split">&nbsp;</span>
-            <span class="iconfont icon-icon_sousuo"></span>
-          </div>
-        </div>
-        <toolbar
-          @btnClick="btnClick"
-          :isLeft="false"
-          :rightBtns="rightBtns"
-        ></toolbar>
-      </div>
-    </template>
 
     <template v-if="mode == 3">
-      <div class="flex flex-content-between-center util-title-default">
-        <toolbar
-          @btnClick="btnClick"
-          :leftBtns="leftBtns"
-          :isBack="isBack"
-        ></toolbar>
-        <div class="center flex flex-content-center-center">
-          <slot></slot>
-        </div>
-        <toolbar
-          @btnClick="btnClick"
-          :isLeft="false"
-          :rightBtns="rightBtns"
-        ></toolbar>
-      </div>
+      <util-nav-bar
+        :isBack="isBack"
+        :isLeft="true"
+        :btns="leftBtns"
+      ></util-nav-bar>
+      <f7-nav-title>
+        <slot></slot>
+      </f7-nav-title>
+      <util-nav-bar :btns="rightBtns"></util-nav-bar>
     </template>
-  </div> -->
+
+  </f7-navbar>
 </template>
 
 <script>
@@ -118,7 +64,13 @@ import UtilNavBar from "./util-nav-bar";
 export default {
   components: { UtilNavBar },
   props: {
-    /**  */
+    /** 滑动隐藏 */
+    sliding: {
+      default: function() {
+        return false;
+      }
+    },
+    /** 标题居中 */
     titleCenter: {
       default: function() {
         return false;

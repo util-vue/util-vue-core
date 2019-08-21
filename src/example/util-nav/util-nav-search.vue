@@ -7,7 +7,10 @@
       :rightBtns="btns"
     ></util-nav>
     <f7-page-content>
-      内容
+      <h1
+        v-for="(item, index) of 100"
+        :key="index"
+      >内容</h1>
     </f7-page-content>
   </f7-page>
 </template>
@@ -22,7 +25,8 @@ export default {
           click: this.git
         },
         {
-          ic: "iconfont icon-icon_fenxiangshangpinyangbanjian"
+          ic: "iconfont icon-icon_fenxiangshangpinyangbanjian",
+          badge: 9
         }
       ]
     };

@@ -1,5 +1,4 @@
 import Vue from "vue";
-import VueResource from "vue-resource";
 import App from "./App.vue";
 import router from "./example/router/router";
 
@@ -17,8 +16,6 @@ import Iconfont from "./lib/font/iconfont.css";
 
 // Init F7 Vue Plugin
 Framework7.use(Framework7Vue);
-
-Vue.use(VueResource);
 
 var vue = new Vue({
   el: "#app",

@@ -11,4 +11,8 @@
   text-align: center !important;
 }
 
-
+.icon .badge{
+  top: 2px;
+  margin-left: 0;
+  font-family: none;
+}
