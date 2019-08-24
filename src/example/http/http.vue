@@ -68,7 +68,8 @@ export default {
     };
   },
   async mounted() {
-    var result = await this.autoLoginAsync();
+    debugger
+    //var result = await this.autoLoginAsync();
   },
   methods: {
     ...mapActions("user", [

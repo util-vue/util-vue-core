@@ -1,5 +1,6 @@
 import Vue from "vue";
 import { util } from "./../index";
+import axios from "axios";
 
 /** 请求客户端 */
 export class HttpClient {
@@ -10,25 +11,8 @@ export class HttpClient {
 
   /** 初始化 */
   init() {
-    Vue.http.interceptors.push((request, next) => {
-      let timeout;
-      // 這裡改用 _timeout
-      if (request._timeout) {
-        timeout = setTimeout(() => {
-          //自定义响应体 status:408,statustext:"请求超时"，并返回给下下边的next
-          next(
-            request.respondWith(request.body, {
-              status: 408,
-              statusText: "请求超时"
-            })
-          );
-        }, request._timeout);
-      }
-      next(response => {
-        console.log(response.status); //如果超时输出408
-        return response;
-      });
-    });
+    axios.defaults.timeout = 15000;
+    axios.defaults.headers["Content-Type"] = "application/json";
   }
 
   /**
@@ -60,9 +44,8 @@ export class HttpClient {
   utilHttpHandle(pos) {
     pos.data = pos.data || {};
     pos.headers = pos.headers || {};
-    pos.headers["Content-Type"] = "application/json";
     util.globalHeader.merge(pos.headers); //合并全局的头文件
-    pos._timeout = 10000;
+    pos.timeout = 30000;
     return pos;
   }
 
@@ -99,17 +82,17 @@ export class HttpClient {
     switch (pos.method) {
       case "GET":
         pos.params = pos.data;
-        Vue.http.get(pos.url, pos).then(pos.success, pos.error);
+        axios.get(pos.url, pos).then(pos.success, pos.error);
         break;
       case "POST":
-        Vue.http.post(pos.url, pos.data, pos).then(pos.success, pos.error);
+        axios.post(pos.url, pos.data).then(pos.success, pos.error);
         break;
       case "PUT":
-        Vue.http.put(pos.url, pos.data, pos).then(pos.success, pos.error);
+        axios.put(pos.url, pos.data).then(pos.success, pos.error);
         break;
       case "DELETE":
         pos.params = pos.data;
-        Vue.http.delete(pos.url, pos).then(pos.success, pos.error);
+        axios.delete(pos.url, pos).then(pos.success, pos.error);
         break;
     }
   }

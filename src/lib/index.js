@@ -1,5 +1,4 @@
 import Vue from "vue";
-import VueResource from "vue-resource";
 import AppCss from "./css/app.css";
 import Iconfont from "./font/iconfont";
 import FontBlod from "./font/SourceHanSansSC-Blod.css";
@@ -31,7 +30,6 @@ const install = (Vue, options) => {
   if (options.f7App) util.f7.initFramework7App(options.f7App);
   if (options.serverConfig) util.url.base.init(options.serverConfig);
 
-  Vue.use(VueResource);
   Vue.component("util-image", UtilImage);
   Vue.component("util-nav", UtilNav);
   Vue.component("util-radio-button", UtilRadioButton);

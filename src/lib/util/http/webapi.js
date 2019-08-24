@@ -45,7 +45,7 @@ export class WebApi {
       if (options.btn && options.btn.stop) {
         options.btn.stop();
       }
-      var result = response.body;
+      var result = response.data;
       if (result.code === 1) {
         if (successCallback) successCallback(result.data);
       } else {

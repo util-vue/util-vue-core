@@ -115,7 +115,12 @@ class CommonUrl {
 }
 
 /** 楼盘 */
-class BuildingUrl {}
+class BuildingUrl {
+  /** 建筑风格 */
+  get buildingStylePagerQuery() {
+    return `${util.url.base.buildingServer}/api/buildingStyle`;
+  }
+}
 
 /** 换装 */
 class DiyUrl {

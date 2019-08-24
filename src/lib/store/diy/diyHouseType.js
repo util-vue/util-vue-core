@@ -32,7 +32,7 @@ const actions = {
   ) {
     return await new Promise((resolve, reject) => {
       util.webApi.get({
-        url: util.url.diyPanoramaDetailAsync,
+        url: util.url.diyUrl.diyPanoramaDetail,
         data: data,
         success: result => {
           resolve(result);
