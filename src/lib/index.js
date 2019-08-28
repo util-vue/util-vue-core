@@ -1,4 +1,5 @@
 import Vue from "vue";
+import "./plus-core/common";
 import AppCss from "./css/app.css";
 import Iconfont from "./font/iconfont";
 import FontBlod from "./font/SourceHanSansSC-Blod.css";
