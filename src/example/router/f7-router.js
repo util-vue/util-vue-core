@@ -3,7 +3,7 @@ import Menu from "./../menu.vue";
 import ActionSheet from "./../actionSheet/actionSheet.vue";
 import UtilNav from "./../util-nav/util-nav.vue";
 import UtilNavSearch from "./../util-nav/util-nav-search.vue";
-
+import sqlLite from "./../sqlLite/sql-lite.vue";
 export default [
   {
     path: "/",
@@ -24,5 +24,9 @@ export default [
   {
     path: "/actionSheet",
     component: ActionSheet
+  },
+  {
+    path: "/sqlLite",
+    component: sqlLite
   }
 ];

@@ -13,7 +13,6 @@ import { store } from "./../store/export";
 import { Storage } from "./../util/storage/storage";
 import { ActionSheet } from "./../util/actions/actionSheet";
 import { plus } from "./../util/plus/index";
-import { IO } from "./../util/plus/io/io";
 import { QueryModel } from "./../util/common/pager";
 
 var staticUtil = {
@@ -26,7 +25,6 @@ var staticUtil = {
   webApi: new WebApi(),
   storage: new Storage(),
   actionSheet: new ActionSheet(),
-  io: new IO(),
   store: store,
   plus: plus
 };

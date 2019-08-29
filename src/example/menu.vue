@@ -51,6 +51,21 @@
           </f7-accordion-content>
         </f7-list-item>
 
+
+           <f7-list-item
+          accordion-item
+          title="SqlLite"
+        >
+          <f7-accordion-content>
+            <f7-list>
+              <f7-list-item>
+                <f7-link href="/sqlLite">SqlLite操作</f7-link>
+              </f7-list-item>
+            </f7-list>
+          </f7-accordion-content>
+        </f7-list-item>
+
+
       </f7-list>
     </f7-page-content>
   </f7-page>
