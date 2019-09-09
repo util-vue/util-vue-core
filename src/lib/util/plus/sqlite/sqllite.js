@@ -25,6 +25,40 @@ export class SqlLite {
     }
 
     /**
+     * 解压压缩包
+     * @param {压缩包路径} zip 
+     * @param {解压路径} unzip 
+     * @param {回调成功方法} success 
+     * @param {回调失败方法} error 
+     */
+    doDecompress(zip, unzip, success, error) {
+        plus.zip.decompress(zip, unzip, function () {
+            if (success)
+                success(unzip);
+        }, function (e) {
+            if (error)
+                error(e.message)
+        });
+    }
+
+   
+    /**
+     * 清空数据/文件
+     * @param {文件路径} path  //_downloads/
+     * @param {回调方法} callBack 
+     */
+    clear(path,callBack){
+        plus.io.resolveLocalFileSystemURL(path, function(entry){
+            entry.removeRecursively();
+            if(callBack)
+              callBack(true)
+        },function(){
+            if(callBack)
+              callBack(false)
+        } );
+    }
+    
+    /**
      * 打开数据库
      * @param {数据库名字} dbName 
      * @param {数据库地址} dbPath 
