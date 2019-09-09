@@ -124,13 +124,17 @@ class BuildingUrl {
 
 /** 换装 */
 class DiyUrl {
-  /** 商品清单 */
+  /** 换装户型列表 */
   get diyHouseTypePagerQuery() {
     return `${util.url.base.diyServer}/api/diyHouseType`;
   }
-  /** 商品清单 */
+  /** 换装全景详情 */
   get diyPanoramaDetail() {
     return `${util.url.base.diyServer}/api/diyHouseType/diyPanoramaDetail`;
+  }
+  /** 换装方案保存 */
+  get saveScheme() {
+    return `${util.url.base.diyServer}/api/DiyScheme/SaveScheme`;
   }
 }
 

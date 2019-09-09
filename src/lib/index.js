@@ -10,6 +10,7 @@ import user from "./store/system/user";
 import building from "./store/building/building";
 import common from "./store/common/common";
 import diyHouseType from "./store/diy/diyHouseType";
+import diyScheme from "./store/diy/diyScheme";
 import product from "./store/product/product";
 import { Orienter } from "./util/threejs/three.orienter";
 //注入组件
@@ -56,7 +57,8 @@ export default {
     building,
     common,
     diyHouseType,
-    product
+    product,
+    diyScheme
   },
   threeJs: {
     Orienter
