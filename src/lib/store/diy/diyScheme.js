@@ -25,6 +25,24 @@ const actions = {
         }
       });
     });
+  },
+  /** 换装方案查询 */
+  async diySchemePagerQueryAsync(
+    { dispatch, commit, state, rootState, rootGetters },
+    queryModel
+  ) {
+    return await new Promise((resolve, reject) => {
+      util.webApi.get({
+        url: util.url.diyUrl.diySchemePagerQuery,
+        data: queryModel,
+        success: result => {
+          resolve(result);
+        },
+        error: () => {
+          resolve(false);
+        }
+      });
+    });
   }
 };
 

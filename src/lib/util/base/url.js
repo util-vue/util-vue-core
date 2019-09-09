@@ -132,6 +132,10 @@ class DiyUrl {
   get diyPanoramaDetail() {
     return `${util.url.base.diyServer}/api/diyHouseType/diyPanoramaDetail`;
   }
+  /** 换装方案查询 */
+  get diySchemePagerQuery() {
+    return `${util.url.base.diyServer}/api/DiyScheme`;
+  }
   /** 换装方案保存 */
   get saveScheme() {
     return `${util.url.base.diyServer}/api/DiyScheme/SaveScheme`;
