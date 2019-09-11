@@ -144,19 +144,20 @@ export class SqlLite {
      * 执行查询的SQL语句
      * @param {数据库名字} dbName 
      * @param {sql查询语句} selectSql 
-     * @param {回调方法} callBack
+     * @param {回调方法} success
+     * @param {回调方法} error
      */
-    selectSql(dbName, selectSql, callBack) {
+    selectSql(dbName, selectSql,  success, error) {
         plus.sqlite.selectSql({
             name: dbName,
             sql: selectSql,
             success: function (data) {
-                if (callBack)
-                    callBack(data);
+                if (success)
+                success(data);
             },
             fail: function (e) {
-                if (callBack)
-                    callBack(e);
+                if (error)
+                  error(e);
             }
         });
     }

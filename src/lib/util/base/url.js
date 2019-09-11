@@ -154,6 +154,8 @@ class ProductUrl {
   }
 }
 
+
+
 /**
  * 设置数据库缓存地址
 */
@@ -166,6 +168,9 @@ class SetDb{
   }
   get dbName(){
     return "daogou.db";
+  }
+  get databaseName(){
+    return "daogou";
   }
 }
 

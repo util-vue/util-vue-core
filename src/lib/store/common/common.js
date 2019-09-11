@@ -14,7 +14,7 @@ const actions = {
    */
   async getNewDb(
     { dispatch, commit, state, rootState, rootGetters },
-    queryParam=null
+    queryParam
   ) {
     return await new Promise((resolve, reject) => {
       util.webApi.get({
