@@ -23,7 +23,7 @@ export class Downloder {
       (download, status) => {
         //下载完成
         if (status == 200) {
-          util.plus.io.loadCacheFile(url.source, success, error);
+          util.plus.io.loadCacheFile(url.source, success, error,defaultDoc);
         } else {
           if (error) error(download.filename);
         }

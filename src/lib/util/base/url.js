@@ -154,13 +154,29 @@ class ProductUrl {
   }
 }
 
+/**
+ * 设置数据库缓存地址
+*/
+class SetDb{
+  get caheDb(){
+    return "_doc/download/cahedb/";
+  }
+  get newDb(){
+    return "_doc/download/db/";
+  }
+  get dbName(){
+    return "daogou.db";
+  }
+}
+
 var url = {
   base: new BaseUrl(),
   system: new SystemUrl(),
   building: new BuildingUrl(),
   commonUrl: new CommonUrl(),
   diyUrl: new DiyUrl(),
-  productUrl: new ProductUrl()
+  productUrl: new ProductUrl(),
+  setDb:new SetDb()
 };
 
 export default url;

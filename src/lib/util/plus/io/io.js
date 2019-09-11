@@ -7,42 +7,39 @@ export class IO {
       if (callBack) callBack(fs);
     });
   }
-
   /** 打开或者创建文件夹 */
   openOrCrateFolder(path, code, success, error) {
     this.getPrivateDocFileSystem(code, fs => {
       fs.root.getDirectory(path, { create: true }, function (fileEntry) {
         if (success)
-        success(fileEntry);
-      },function(e){
+          success(fileEntry);
+      }, function (e) {
         if (error)
           error(e);
       });
     });
   }
-
-    /**
-   * 移动文件
-   * @param {原始文件对象} fileEntry 
-   * @param {移动到目标文件夹对象} dstEntry 
-   * @param {文件新名称} newName 
-   * @param {回调成功方法} callback 
-   * @param {失败} error 
-   */
-  moveFile(fileEntry,dstEntry, newName, success, error) {
+  /**
+ * 移动文件
+ * @param {原始文件对象} fileEntry 
+ * @param {移动到目标文件夹对象} dstEntry 
+ * @param {文件新名称} newName 
+ * @param {回调成功方法} callback 
+ * @param {失败} error 
+ */
+  moveFile(fileEntry, dstEntry, newName, success, error) {
     fileEntry.moveTo(dstEntry, newName, function (entry) {
       if (success)
-          success(true);
+        success(true);
     }, function (e) {
       if (error)
-          error(false);
+        error(false);
     });
 
   }
-
-    /**
-   * 获取fileEntry
-   */
+  /**
+ * 获取fileEntry
+ */
   getFileEntry(path, callback, error) {
     plus.io.resolveLocalFileSystemURL(
       path,
@@ -57,7 +54,21 @@ export class IO {
     );
   }
 
-
+  /**
+ * 删除文件/删除目录
+ * @param {删除文件、目录对象} entry 
+ * @param {回调成功方法} success 
+ * @param {失败} error 
+ */
+  removeFile(entry, success, error) {
+    entry.remove(function (entry) {
+      if(success)
+          success(true);
+    }, function (e) {
+      if(error)
+         error(e.message);
+    });
+  }
 
 
   /** 打开或者创建文件 */
@@ -138,11 +149,11 @@ export class IO {
 
   /** 读取本地文件 */
   loadLocalFile(path, success, error) {
+    console.log("loadLocalFile:"+path);
     plus.io.resolveLocalFileSystemURL(
       path,
       entry => {
         entry.file(file => {
-
           if (success) success(file);
         }, error);
       },

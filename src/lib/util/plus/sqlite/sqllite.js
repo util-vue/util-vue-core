@@ -1,3 +1,4 @@
+import { util } from "./../../index.js";
 /**
  * sqllite数据库操作
  */
@@ -6,22 +7,82 @@ export class SqlLite {
     /**
      * 下载文件
      * @param {远程地址} url 
-     * @param {回调方法} callBack 
+     * @param {回调方法} success 
+     * @param {错误回调} error 
      */
-    download(url, callBack) {
-        var data = {}; //设置返回对象
-        var dtask = plus.downloader.createDownload(url, {}, function (d, status) {
-            // 下载完成 status =200完成
-            if (status == 200) {
-                data.filename = d.filename; //下载文件保存路径
-                data.totalSize = d.totalSize; //文件的总大小
-                data.downloadedSize = d.downloadedSize; //已完成下载文件的大小
-            }
-            data.status = status;
-            if (callBack)
-                callBack(data);
+    updateDb(url, success, error) {
+        var _self = this;
+        var path =util.url.setDb.caheDb;
+        var newPath =util.url.setDb.newDb;
+        var dbName =util.url.setDb.dbName;
+        var urlFile = util.url.base.parseURL(url);
+        util.downloder.download(url, function (file) {
+            util.plus.io.isExistFile(newPath + dbName, function (d) {
+                if (d) {
+                    _self.deleteFile(dbName, newPath, function () {
+                        _self.moveFile(path + urlFile.file, newPath, dbName, function (d) {
+                            if (success)
+                                success(d)
+                        }, function (e) {
+                            if (error)
+                                error(e);
+                        });
+                    })
+                } else {
+                    _self.moveFile(path + urlFile.file, newPath, dbName, function (d) {
+                        if (success)
+                            success(d)
+                    }, function (e) {
+                        if (error)
+                            error(e);
+                    });
+                }
+            })
+        }, null, function (e) {
+            if (error)
+                error(e);
+        }, path);
+    }
+
+    /**
+     * 删除下载的数据库文件
+    */
+    deleteFile(fileName, path, success, error) {
+       util.plus.io.getFileEntry(path + fileName, function (f) {
+            util.plus.io.removeFile(f, function (d) {
+                if (success)
+                    success(d);
+            }, function (e) {
+                if (error)
+                    error(e);
+            })
+        }, function (e) {
+            if (error)
+                error(e);
         });
-        dtask.start();
+    }
+
+    /**
+     * 移动数据库文件
+     */
+    moveFile(oldFileName, newPath, newName, success, error) {
+        util.plus.io.getFileEntry(oldFileName, function (fileEntry) {
+           util.plus.io.openOrCrateFolder(newPath, plus.io.PRIVATE_DOC, function () {
+                util.plus.io.getFileEntry(newPath, function (fileEntrys) {
+                    fileEntry.moveTo(fileEntrys, newName, function (entry) {
+                        if (success)
+                            success(entry.fullPath);
+                    }, function (e) {
+                        if (error)
+                            error(e);
+                    });
+                });
+            })
+
+        }, function (e) {
+            if (error)
+                error(e);
+        });
     }
 
     /**
@@ -41,23 +102,23 @@ export class SqlLite {
         });
     }
 
-   
+
     /**
      * 清空数据/文件
      * @param {文件路径} path  //_downloads/
      * @param {回调方法} callBack 
      */
-    clear(path,callBack){
-        plus.io.resolveLocalFileSystemURL(path, function(entry){
+    clear(path, callBack) {
+        plus.io.resolveLocalFileSystemURL(path, function (entry) {
             entry.removeRecursively();
-            if(callBack)
-              callBack(true)
-        },function(){
-            if(callBack)
-              callBack(false)
-        } );
+            if (callBack)
+                callBack(true)
+        }, function () {
+            if (callBack)
+                callBack(false)
+        });
     }
-    
+
     /**
      * 打开数据库
      * @param {数据库名字} dbName 
