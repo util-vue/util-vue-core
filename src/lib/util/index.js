@@ -5,6 +5,7 @@ import { Helper } from "./common/helper";
 import url from "./base/url";
 import { F7 } from "./base/f7";
 import { Message } from "./message/message";
+import { Downloder } from "./http/downloder"
 import { GlobalHeader } from "./http/globalHeader";
 import { HttpClient } from "./http/httpClient";
 import { WebApi } from "./http/webapi";
@@ -26,6 +27,7 @@ var staticUtil = {
   storage: new Storage(),
   actionSheet: new ActionSheet(),
   store: store,
+  downloder: new Downloder(),
   plus: plus
 };
 
