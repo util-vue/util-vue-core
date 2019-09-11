@@ -112,6 +112,10 @@ class CommonUrl {
   get upload() {
     return `${util.url.base.commonServer}/api/upload`;
   }
+   /** 查询数据版本 */
+   get getNewDb() {
+    return `${util.url.base.commonServer}/api/dataVersion/getNewDb`;
+  }
 }
 
 /** 楼盘 */

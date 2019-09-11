@@ -5,13 +5,14 @@ export class Downloder {
   /**
    * 下载
    */
-  download(url, success, progress, error) {
+  download(url, success, progress, error, defaultDoc) {
+    defaultDoc = defaultDoc || "_doc/download/";
     var url = util.url.base.parseURL(url);
     if (!url.file) {
       if (error) error("文件不存在");
       return;
     }
-    var filename = "_doc/download/" + url.file;
+    var filename = defaultDoc + url.file;
     var task = plus.downloader.createDownload(
       url.source,
       {
@@ -41,8 +42,8 @@ export class Downloder {
             parseInt(
               (parseFloat(download.downloadedSize + "") /
                 parseFloat(download.totalSize + "")) *
-                100 +
-                ""
+              100 +
+              ""
             )
           );
       },
@@ -50,4 +51,5 @@ export class Downloder {
     );
     task.start();
   }
+
 }

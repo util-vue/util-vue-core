@@ -3,19 +3,73 @@ import { util } from "./../../index.js";
 export class IO {
   /**获取私有文件目录对象 plus.io.PRIVATE_DOC|PRIVATE_WWW|PRIVATE_DOCUMENTS|PRIVATE_DOWNLOADS */
   getPrivateDocFileSystem(code, callBack) {
-    plus.io.requestFileSystem(code, function(fs) {
+    plus.io.requestFileSystem(code, function (fs) {
       if (callBack) callBack(fs);
     });
   }
 
+  /** 打开或者创建文件夹 */
+  openOrCrateFolder(path, code, success, error) {
+    this.getPrivateDocFileSystem(code, fs => {
+      fs.root.getDirectory(path, { create: true }, function (fileEntry) {
+        if (success)
+        success(fileEntry);
+      },function(e){
+        if (error)
+          error(e);
+      });
+    });
+  }
+
+    /**
+   * 移动文件
+   * @param {原始文件对象} fileEntry 
+   * @param {移动到目标文件夹对象} dstEntry 
+   * @param {文件新名称} newName 
+   * @param {回调成功方法} callback 
+   * @param {失败} error 
+   */
+  moveFile(fileEntry,dstEntry, newName, success, error) {
+    fileEntry.moveTo(dstEntry, newName, function (entry) {
+      if (success)
+          success(true);
+    }, function (e) {
+      if (error)
+          error(false);
+    });
+
+  }
+
+    /**
+   * 获取fileEntry
+   */
+  getFileEntry(path, callback, error) {
+    plus.io.resolveLocalFileSystemURL(
+      path,
+      entry => {
+        if (callback)
+          callback(entry);
+      },
+      e => {
+        if (error)
+          error(e);
+      }
+    );
+  }
+
+
+
+
   /** 打开或者创建文件 */
   openOrCrate(path, code, callBack) {
     this.getPrivateDocFileSystem(code, fs => {
-      fs.root.getFile(path, { create: true }, function(fileEntry) {
+      fs.root.getFile(path, { create: true }, function (fileEntry) {
         return fileEntry;
       });
     });
   }
+
+
 
   /**文件是否存在 */
   isExistFile(path, callback, error) {
@@ -30,19 +84,22 @@ export class IO {
     );
   }
 
+
+
   /** 网络文件是否存在 */
-  isExistUrlFile(url, callback, error) {
+  isExistUrlFile(url, callback, error, defaultDoc) {
+    defaultDoc = defaultDoc || "_doc/download/";
     var url = util.url.base.parseURL(url);
     if (!url.file) {
       if (error) error("文件不存在");
       return;
     }
-    var filename = "_doc/download/" + url.file;
+    var filename = defaultDoc + url.file;
     this.isExistFile(filename, callback, error);
   }
 
   /** 加载网络文件 并进行本地缓存 */
-  loadUrlFileAndCache(url, success, progress, error) {
+  loadUrlFileAndCache(url, success, progress, error, defaultDoc) {
     if (!window.plus) {
       this.loadHttpImage(url, success, progress, error);
 
@@ -55,25 +112,27 @@ export class IO {
       result => {
         if (result) {
           //如果文件存在  返回file
-          _self.loadCacheFile(url, success, error);
+          _self.loadCacheFile(url, success, error, defaultDoc);
           return;
         }
-        util.downloder.download(url, success, progress, error);
+        util.downloder.download(url, success, progress, error, defaultDoc);
       },
       e => {
         console.log(e);
-      }
+      },
+      defaultDoc
     );
   }
 
   /**读取缓存文件 */
-  loadCacheFile(url, success, error) {
+  loadCacheFile(url, success, error, defaultDoc) {
+    defaultDoc = defaultDoc || "_doc/download/";
     var url = util.url.base.parseURL(url);
     if (!url.file) {
       if (error) error("文件不存在");
       return;
     }
-    var filename = "_doc/download/" + url.file;
+    var filename = defaultDoc + url.file;
     this.loadLocalFile(filename, success, error);
   }
 
@@ -83,6 +142,7 @@ export class IO {
       path,
       entry => {
         entry.file(file => {
+
           if (success) success(file);
         }, error);
       },
