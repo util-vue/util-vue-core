@@ -61,7 +61,7 @@ export class WebApi {
         util.loading.hide();
       }
       if (options.btn && options.btn.play) {
-        options.btn.play();
+        options.btn.stop();
       }
       if (errorCallback) errorCallback("请求出现错误");
     };

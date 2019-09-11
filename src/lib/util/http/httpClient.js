@@ -41,58 +41,69 @@ export class HttpClient {
   }
 
   //网络请求处理
-  utilHttpHandle(pos) {
-    pos.data = pos.data || {};
-    pos.headers = pos.headers || {};
-    util.globalHeader.merge(pos.headers); //合并全局的头文件
-    pos.timeout = 30000;
-    return pos;
+  utilHttpHandle(options) {
+    options.data = options.data || {};
+    options.headers = options.headers || {};
+    util.globalHeader.merge(options.headers); //合并全局的头文件
+    options.timeout = 30000;
+    return options;
   }
 
   /** 发送 */
-  get(pos) {
-    pos = this.utilHttpHandle(pos);
-    pos.method = "GET";
-    this.send(pos);
+  get(options) {
+    options = this.utilHttpHandle(options);
+    options.method = "GET";
+    this.send(options);
   }
 
   /** 发送 */
-  post(pos) {
-    pos = this.utilHttpHandle(pos);
-    pos.method = "POST";
-    this.send(pos);
+  post(options) {
+    options = this.utilHttpHandle(options);
+    options.method = "POST";
+    this.send(options);
   }
 
   /** 发送 */
-  put(pos) {
-    pos = this.utilHttpHandle(pos);
-    pos.method = "PUT";
-    this.send(pos);
+  put(options) {
+    options = this.utilHttpHandle(options);
+    options.method = "PUT";
+    this.send(options);
   }
 
   /** 发送 */
-  delete(pos) {
-    pos = this.utilHttpHandle(pos);
-    pos.method = "DELETE";
-    this.send(pos);
+  delete(options) {
+    options = this.utilHttpHandle(options);
+    options.method = "DELETE";
+    this.send(options);
   }
 
   /** 发送 */
-  send(pos) {
-    switch (pos.method) {
+  send(options) {
+    if (options.loading) {
+      util.loading.show();
+    }
+    if (options.btn && options.btn.stop) {
+      options.btn.play();
+    }
+
+    switch (options.method) {
       case "GET":
-        pos.params = pos.data;
-        axios.get(pos.url, pos).then(pos.success, pos.error);
+        options.params = options.data;
+        axios.get(options.url, options).then(options.success, options.error);
         break;
       case "POST":
-        axios.post(pos.url, pos.data).then(pos.success, pos.error);
+        axios
+          .post(options.url, options.data)
+          .then(options.success, options.error);
         break;
       case "PUT":
-        axios.put(pos.url, pos.data).then(pos.success, pos.error);
+        axios
+          .put(options.url, options.data)
+          .then(options.success, options.error);
         break;
       case "DELETE":
-        pos.params = pos.data;
-        axios.delete(pos.url, pos).then(pos.success, pos.error);
+        options.params = options.data;
+        axios.delete(options.url, options).then(options.success, options.error);
         break;
     }
   }
