@@ -12,9 +12,9 @@ export class SqlLite {
      */
     updateDb(url, success, error) {
         var _self = this;
-        var path =util.url.setDb.caheDb;
-        var newPath =util.url.setDb.newDb;
-        var dbName =util.url.setDb.dbName;
+        var path = util.url.setDb.caheDb;
+        var newPath = util.url.setDb.newDb;
+        var dbName = util.url.setDb.dbName;
         var urlFile = util.url.base.parseURL(url);
         util.downloder.download(url, function (file) {
             util.plus.io.isExistFile(newPath + dbName, function (d) {
@@ -48,7 +48,7 @@ export class SqlLite {
      * 删除下载的数据库文件
     */
     deleteFile(fileName, path, success, error) {
-       util.plus.io.getFileEntry(path + fileName, function (f) {
+        util.plus.io.getFileEntry(path + fileName, function (f) {
             util.plus.io.removeFile(f, function (d) {
                 if (success)
                     success(d);
@@ -67,7 +67,7 @@ export class SqlLite {
      */
     moveFile(oldFileName, newPath, newName, success, error) {
         util.plus.io.getFileEntry(oldFileName, function (fileEntry) {
-           util.plus.io.openOrCrateFolder(newPath, plus.io.PRIVATE_DOC, function () {
+            util.plus.io.openOrCrateFolder(newPath, plus.io.PRIVATE_DOC, function () {
                 util.plus.io.getFileEntry(newPath, function (fileEntrys) {
                     fileEntry.moveTo(fileEntrys, newName, function (entry) {
                         if (success)
@@ -147,19 +147,29 @@ export class SqlLite {
      * @param {回调方法} success
      * @param {回调方法} error
      */
-    selectSql(dbName, selectSql,  success, error) {
-        plus.sqlite.selectSql({
-            name: dbName,
-            sql: selectSql,
-            success: function (data) {
-                if (success)
-                success(data);
-            },
-            fail: function (e) {
-                if (error)
-                  error(e);
-            }
+    selectSql(dbName, selectSql, success, error) {
+        var _self = this;
+        this.openDb(util.url.setDb.databaseName, util.url.setDb.newDb + util.url.setDb.dbName, function (data) {
+            console.log("数据库打开成功");
+            plus.sqlite.selectSql({
+                name: dbName,
+                sql: selectSql,
+                success: function (data) {
+                    if (success)
+                        success(data);
+                    _self.closeDb(util.url.setDb.databaseName);
+                },
+                fail: function (e) {
+                    if (error)
+                        error(e);
+                    _self.closeDb(util.url.setDb.databaseName);
+                }
+            });
+        }, function (e) {
+            if (error)
+                error(e);
         });
+
     }
 
 
@@ -170,18 +180,25 @@ export class SqlLite {
      * @param {回调方法} callBack
      */
     executeSql(dbName, sql, callBack) {
-        plus.sqlite.executeSql({
-            name: dbName,
-            sql: sql,
-            success: function (data) {
-                if (callBack)
-                    callBack(true);
-            },
-            fail: function (e) {
-                if (callBack)
-                    callBack(e);
-            }
-        })
+        this.openDb(util.url.setDb.databaseName, util.url.setDb.newDb + util.url.setDb.dbName, function (data) {
+            plus.sqlite.executeSql({
+                name: dbName,
+                sql: sql,
+                success: function (data) {
+                    if (callBack)
+                        callBack(true);
+                    _self.closeDb(util.url.setDb.databaseName);
+                },
+                fail: function (e) {
+                    if (callBack)
+                        callBack(e);
+                    _self.closeDb(util.url.setDb.databaseName);
+                }
+            })
+        }, function (e) {
+            if (callBack)
+                callBack(e);
+        });
     }
 
     /**

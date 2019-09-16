@@ -9,6 +9,7 @@ import { util, QueryModel } from "./util/index";
 import user from "./store/system/user";
 import building from "./store/building/building";
 import common from "./store/common/common";
+import article from "./store/article/article";
 import diyHouseType from "./store/diy/diyHouseType";
 import diyScheme from "./store/diy/diyScheme";
 import product from "./store/product/product";
@@ -58,7 +59,8 @@ export default {
     common,
     diyHouseType,
     product,
-    diyScheme
+    diyScheme,
+    article
   },
   threeJs: {
     Orienter
