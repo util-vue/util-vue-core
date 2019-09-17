@@ -178,7 +178,7 @@ class CustomerUrl {
     return `${util.url.base.customerServer}/api/commonComment/rootPagerQuery`;
   }
 
-  /**  获取根目录评论 */
+  /**  获取子目录评论 */
   get childQuery() {
     return `${util.url.base.customerServer}/api/commonComment/childQuery`;
   }
