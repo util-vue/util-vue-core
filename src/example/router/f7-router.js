@@ -4,6 +4,7 @@ import ActionSheet from "./../actionSheet/actionSheet.vue";
 import UtilNav from "./../util-nav/util-nav.vue";
 import UtilNavSearch from "./../util-nav/util-nav-search.vue";
 import sqlLite from "./../sqlLite/sql-lite.vue";
+import comment from "./../http/comment.vue";
 export default [
   {
     path: "/",
@@ -28,5 +29,9 @@ export default [
   {
     path: "/sqlLite",
     component: sqlLite
+  },
+  {
+    path: "/comment",
+    component: comment
   }
 ];

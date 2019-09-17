@@ -36,7 +36,7 @@ const actions = {
         url: util.url.customerUrl.deleteComment,
         data: JSON.stringify(id),
         success: result => {
-          resolve(result);
+          resolve(true);
         },
         error: () => {
           resolve(false);
