@@ -25,7 +25,9 @@
         :isBack="isBack"
         :isLeft="true"
         :btns="leftBtns"
-      ></util-nav-bar>
+      >
+      <slot name="left" slot="left"></slot>
+      </util-nav-bar>
       <f7-nav-title>
         <div class="search-bg">
           <i class="iconfont icon-icon_sousuo1"></i>
