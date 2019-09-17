@@ -58,14 +58,18 @@ const actions = {
       queryModel=data;
       var sql = "select * from ArticleContent   " + where + " ORDER BY "+order+limit;
       var totalCountSql="select COUNT(*) as totalCount from ArticleContent   " + where;
+      console.log("sql="+sql+"--totalCountSql--"+totalCountSql);
       var query={};
       util.plus.sqllite.selectSql(util.url.setDb.databaseName,totalCountSql,function(data){
         query.totalCount=data[0].totalCount;
         query.pageCount=Math.ceil(query.totalCount/queryModel.pageSize);
+        console.log("totalCount="+data[0].totalCount+"--pageCount--"+query.pageCount);
       })
       util.plus.sqllite.selectSql(util.url.setDb.databaseName, sql, function (data) {
+        console.log("data="+JSON.stringify(data));
          query.data=data;
          queryModel.extends(query);
+         console.log("queryModel="+JSON.stringify(queryModel));
          resolve(queryModel);
       }, function (e) {
          resolve(e);
