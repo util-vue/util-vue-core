@@ -13,6 +13,7 @@ import article from "./store/article/article";
 import diyHouseType from "./store/diy/diyHouseType";
 import diyScheme from "./store/diy/diyScheme";
 import product from "./store/product/product";
+import customer from "./store/customer/customer";
 import { Orienter } from "./util/threejs/three.orienter";
 //注入组件
 import UtilImage from "./components/util-image.vue";
@@ -60,7 +61,8 @@ export default {
     diyHouseType,
     product,
     diyScheme,
-    article
+    article,
+    customer
   },
   threeJs: {
     Orienter
