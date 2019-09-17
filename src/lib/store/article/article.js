@@ -94,7 +94,44 @@ const actions = {
           resolve(e);
         });
       });
-    }
+    },
+     /**
+   * 文章分類分页查询
+   * @param {*} param0 
+   * @param {*} data 
+   */
+  async getArticleChannelPage({ dispatch, commit, state, rootState, rootGetters },data){
+    return await new Promise((resolve, reject) => {
+      var  queryModel=new QueryModel();
+      var where = "where IsDeleted=0 and Enabled=1";
+      var order="CreationTime DESC";
+      var limit=" limit ("+(data.page-1)+")"+"*"+data.pageSize+","+data.pageSize;
+      if (data) {
+        if(data.title)  
+            where += " and Title like  '%"+data.title+"%'" ;  
+        if (data.code)
+            where += " and  Code ='"+data.code+"'";
+        if(data.parentId)    
+            where += " and  ParentId ='"+data.parentId+"'";
+         if(data.order)  
+            order=data.order;
+      }
+      queryModel=data;
+      var sql = "select * from ArticleChannel   " + where + " ORDER BY "+order+limit;
+      var totalCountSql="select COUNT(*) as totalCount from ArticleChannel   " + where;
+      util.plus.sqllite.selectSql(util.url.setDb.databaseName,totalCountSql,function(data){
+        queryModel.totalCount=data[0].totalCount;
+        queryModel.pageCount=Math.ceil(queryModel.totalCount/queryModel.pageSize);
+      })
+      util.plus.sqllite.selectSql(util.url.setDb.databaseName, sql, function (data) {
+         queryModel.extends(queryModel);
+         queryModel.data=data;
+         resolve(queryModel);
+      }, function (e) {
+         resolve(e);
+      });
+    });
+  },
 
 };
 

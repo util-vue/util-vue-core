@@ -12,6 +12,7 @@
                             <f7-list-item @click="init">
                                 查詢
                             </f7-list-item>
+                             
                         </f7-list>
                     </f7-accordion-content>
                 </f7-list-item>
@@ -21,10 +22,11 @@
 </template>
 <script>
 import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
+import { util,QueryModel} from "./../../lib/util/index";
 export default {
   data() {
     return {
-      queryModel: new UtilVueCore.QueryModel(),
+      queryModel: new QueryModel(),
       dataList: []
     };
   },
@@ -33,33 +35,34 @@ export default {
     ...mapActions("article", [
       "getArticleContent",
       "getArticleChannel",
-      "getArticleContentPage"
+      "getArticleContentPage",
+      "getArticleChannelPage"
     ]),
     async updateDb() {
-      UtilVueCore.util.loading.show("数据同步中,请稍后...");
+     util.loading.show("数据同步中,请稍后...");
       var data = await this.getNewDb();
       var _self = this;
       if (data) {
-        var versionNumber = UtilVueCore.util.storage.getStorage(
+        var versionNumber = util.storage.getStorage(
           "VersionNumber"
         );
         if (versionNumber < data.versionNumber) {
-          UtilVueCore.util.storage.setStorage(
+          util.storage.setStorage(
             "VersionNumber",
             data.versionNumber
           );
-          UtilVueCore.util.plus.sqllite.updateDb(
+        util.plus.sqllite.updateDb(
             data.dataUpdateAddress,
             function(d) {
-              UtilVueCore.util.loading.hide();
+             util.loading.hide();
             },
             function(e) {
-              UtilVueCore.util.loading.hide();
-              UtilVueCore.util.message.alert("数据同步失败");
+             util.loading.hide();
+              util.message.alert("数据同步失败");
             }
           );
         } else {
-          UtilVueCore.util.loading.hide();
+        util.loading.hide();
         }
       }
     },
@@ -70,18 +73,16 @@ export default {
 
     //根据Code查询分类ID
     async getArticle() {
-      var data = await this.getArticleChannel({ code: "enterprise_new" });
-      console.log(JSON.stringify(data) + "--------------");
+      var data = await this.getArticleChannel({ code: "electronic_books" });
       if (!data) return;
-      this.pageList(data[0].ArticleChannelId);
+      this.pageList(data[0].ParentId);
     },
     ///查询文章分页数据
-    async pageList(articleChannelId) {
+    async pageList(parentId) {
       this.queryModel.page = 1;
       this.queryModel.pageSize = 2;
-      this.queryModel.articleChannelId = articleChannelId;
-      var result = await this.getArticleContentPage(this.queryModel);
-      console.log(JSON.stringify(result));
+      this.queryModel.parentId = parentId;
+      var result = await this.getArticleChannelPage(this.queryModel);
       this.dataList.push(result);
       console.log(JSON.stringify(this.dataList));
     }
