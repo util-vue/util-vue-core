@@ -19,6 +19,9 @@
               <f7-list-item>
                 <f7-link href="/http/">数据请求</f7-link>
               </f7-list-item>
+               <f7-list-item>
+                <f7-link href="/comment/">评论</f7-link>
+              </f7-list-item>
             </f7-list>
           </f7-accordion-content>
         </f7-list-item>
