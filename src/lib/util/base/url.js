@@ -17,6 +17,7 @@ class BaseUrl {
     this._buildingServer = options.buildingServer;
     this._commonServer = options.commonServer;
     this._productServer = options.productServer;
+    this._customerServer = options.customerServer;
     this._diyServer = options.diyServer;
   }
 
@@ -33,6 +34,11 @@ class BaseUrl {
   /** 楼盘服务器地址 */
   get productServer() {
     return this._productServer;
+  }
+  
+  /** 用户服务器地址 */
+  get customerServer() {
+    return this._customerServer;
   }
 
   /** 楼盘服务器地址 */
@@ -112,8 +118,8 @@ class CommonUrl {
   get upload() {
     return `${util.url.base.commonServer}/api/upload`;
   }
-   /** 查询数据版本 */
-   get getNewDb() {
+  /** 查询数据版本 */
+  get getNewDb() {
     return `${util.url.base.commonServer}/api/dataVersion/getNewDb`;
   }
 }
@@ -154,22 +160,45 @@ class ProductUrl {
   }
 }
 
+/** 用户 */
+class CustomerUrl {
 
+  /** 发送评论 */
+  get sendComment() {
+    return `${util.url.base.customerServer}/api/commonComment`;
+  }
+
+  /** 发送评论 */
+  get deleteComment() {
+    return `${util.url.base.customerServer}/api/commonComment/Delete`;
+  }
+
+  /**  获取根目录评论 */
+  get rootPagerQuery() {
+    return `${util.url.base.customerServer}/api/commonComment/rootPagerQuery`;
+  }
+
+  /**  获取根目录评论 */
+  get childQuery() {
+    return `${util.url.base.customerServer}/api/commonComment/childQuery`;
+  }
+
+}
 
 /**
  * 设置数据库缓存地址
-*/
-class SetDb{
-  get caheDb(){
+ */
+class SetDb {
+  get caheDb() {
     return "_doc/download/cahedb/";
   }
-  get newDb(){
+  get newDb() {
     return "_doc/download/db/";
   }
-  get dbName(){
+  get dbName() {
     return "daogou.db";
   }
-  get databaseName(){
+  get databaseName() {
     return "daogou";
   }
 }
@@ -181,7 +210,8 @@ var url = {
   commonUrl: new CommonUrl(),
   diyUrl: new DiyUrl(),
   productUrl: new ProductUrl(),
-  setDb:new SetDb()
+  customerUrl: new CustomerUrl(),
+  setDb: new SetDb()
 };
 
 export default url;

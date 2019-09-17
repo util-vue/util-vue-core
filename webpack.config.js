@@ -1,6 +1,7 @@
 var path = require("path");
 var webpack = require("webpack");
-
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 module.exports = {
   //开发配置
   entry: "./src/main.js",
@@ -87,11 +88,26 @@ if (process.env.NODE_ENV === "production") {
         NODE_ENV: '"production"'
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        compress: {
+          warnings: false
+        }
+      },
       sourceMap: true,
-      compress: {
-        warnings: false
-      }
+      parallel: true
+    }),
+    new HtmlWebpackPlugin({
+      // 打包输出HTML
+      title: "Hello World app",
+      minify: {
+        // 压缩HTML文件
+        removeComments: true, // 移除HTML中的注释
+        collapseWhitespace: true, // 删除空白符与换行符
+        minifyCSS: true // 压缩内联css
+      },
+      filename: "index.html",
+      template: "index.html"
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
