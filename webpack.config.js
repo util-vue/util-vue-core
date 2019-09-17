@@ -2,24 +2,24 @@ var path = require("path");
 var webpack = require("webpack");
 
 module.exports = {
-/*   //开发配置
+  //开发配置
   entry: "./src/main.js",
   output: {
     path: path.resolve(__dirname, "./dist"),
     publicPath: "/dist/",
     filename: "build.js"
-  }, */
+  },
 
   //发布配置
-  entry: "./src/lib/index.js",
-  output: {
-    path: path.resolve(__dirname, "./dist"),
-    publicPath: "/dist/",
-    filename: "util-vue-core.js",
-    library: "UtilVueCore", // 你使用require时的模块名
-    libraryTarget: "umd",
-    umdNamedDefine: true
-  },
+  // entry: "./src/lib/index.js",
+  // output: {
+  //   path: path.resolve(__dirname, "./dist"),
+  //   publicPath: "/dist/",
+  //   filename: "util-vue-core.js",
+  //   library: "UtilVueCore", // 你使用require时的模块名
+  //   libraryTarget: "umd",
+  //   umdNamedDefine: true
+  //},
 
   module: {
     rules: [

@@ -1,7 +1,7 @@
 import { util,QueryModel } from "./../../util/index";
 
 const state = {
-  queryModel:new QueryModel()
+
 };
 
 const getters = {};
@@ -41,6 +41,7 @@ const actions = {
    */
   async getArticleContentPage({ dispatch, commit, state, rootState, rootGetters },data){
     return await new Promise((resolve, reject) => {
+      var  queryModel=new QueryModel();
       var where = "where IsDeleted=0 and Enabled=1";
       var order="CreationTime DESC";
       var limit=" limit ("+(data.page-1)+")"+"*"+data.pageSize+","+data.pageSize;
@@ -54,18 +55,18 @@ const actions = {
          if(data.order)  
             order=data.order;
       }
-      state.queryModel=data;
+      queryModel=data;
       var sql = "select * from ArticleContent   " + where + " ORDER BY "+order+limit;
       var totalCountSql="select COUNT(*) as totalCount from ArticleContent   " + where;
       var query={};
       util.plus.sqllite.selectSql(util.url.setDb.databaseName,totalCountSql,function(data){
         query.totalCount=data[0].totalCount;
-        query.pageCount=Math.ceil(query.totalCount/state.queryModel.pageSize);
+        query.pageCount=Math.ceil(query.totalCount/queryModel.pageSize);
       })
       util.plus.sqllite.selectSql(util.url.setDb.databaseName, sql, function (data) {
          query.data=data;
-         state.queryModel.extends(query);
-         resolve(state.queryModel);
+         queryModel.extends(query);
+         resolve(queryModel);
       }, function (e) {
          resolve(e);
       });
