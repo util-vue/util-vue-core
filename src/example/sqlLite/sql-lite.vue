@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     ...mapActions("common", ["getNewDb"]),
-    ...mapActions("productSqlLite", ["getBrandSerialList","getGoodsPage"]),
+    ...mapActions("productSqlLite", ["getBrandSerialList","getGoodsPage","getGoodsTagList"]),
     async updateDb() {
      util.loading.show("数据同步中,请稍后...");
       var data = await this.getNewDb();
@@ -68,16 +68,24 @@ export default {
 
     //根据Code查询分类ID
     async getGoodsPage() {
-      var data = await this.getBrandSerialList();
-       console.log(JSON.stringify(data));
+      var data = await this.getGoodsTagList({goodsId:"4f074818-d2b1-4667-91cc-907c1f42de83"});
+      console.log(JSON.stringify(data));
     },
     ///查询文章分页数据
     async pageList() {
+      console.log("11122");
+      var _self=this;
       this.queryModel.page = 1;
       this.queryModel.pageSize = 15;
-      this.queryModel.tagId = "41a324be-43ff-421e-92eb-a14fa63ec321";
+      //this.queryModel.brandSerialId = "7ee8e755-73b8-4fa0-87a2-1f79dd3b456b";
+     // this.queryModel.tagId = "41a324be-43ff-421e-92eb-a14fa63ec321";
       var result = await this.getGoodsPage(this.queryModel);
-      this.dataList.push(result);
+      console.log(JSON.stringify(result));
+       result.data.forEach(item => {
+           item.tag=_self.getGoodsTagList({goodsId:item.GoodsId});
+          _self.dataList.push(item);
+       });
+       console.log(JSON.stringify(this.dataList));
     }
   }
 };

@@ -61,8 +61,9 @@ const actions = {
           order = data.order;
       }
       queryModel = data;
-      var sql = "SELECT a.*, b.* FROM Goods a LEFT JOIN TagGoods b ON a.GoodsId = b.GoodsId " + where + " ORDER BY " + order + limit;
-      var totalCountSql = "SELECT a.*, b.* FROM Goods a LEFT JOIN TagGoods b ON a.GoodsId = b.GoodsId " + where;
+      //  var sql = "SELECT a.*, b.* FROM Goods a LEFT JOIN TagGoods b ON a.GoodsId = b.GoodsId " + where + " ORDER BY " + order + limit;
+      var sql = "select *  from (select a.*,b.*  from Goods a LEFT JOIN TagGoods b ON a.GoodsId = b.GoodsId " + where + " group by a.GoodsId  ORDER BY " + order + limit + " )  as c";
+      var totalCountSql = "select count(*) as totalCount  from (select a.*,b.*  from Goods a LEFT JOIN TagGoods b ON a.GoodsId = b.GoodsId " + where + " group by a.GoodsId )  as c"
       util.plus.sqllite.selectSql(util.url.setDb.databaseName, totalCountSql, function (data) {
         queryModel.totalCount = data[0].totalCount;
         queryModel.pageCount = Math.ceil(queryModel.totalCount / queryModel.pageSize);
@@ -105,6 +106,31 @@ const actions = {
       });
     });
   },
+
+    /**
+   * 查询商品Tag
+   * @param {*} param0 
+   * @param {*} data 
+   */
+  async getGoodsTagList({ dispatch, commit, state, rootState, rootGetters }, data) {
+    return await new Promise((resolve, reject) => {
+      var where = "where  b.Enabled=1";
+      if (data) {
+        if (data.goodsId)
+          where += " and  a.GoodsId ='" + data.goodsId + "'";
+        if (data.tagId)
+          where += " and a.TagId ='" + data.tagId + "'";
+      }
+      var sql = "select a.*,b.* from TagGoods  a LEFT JOIN Tag b ON a.TagId = b.TagId " + where;
+      console.log(sql);   
+      util.plus.sqllite.selectSql(util.url.setDb.databaseName, sql, function (data) {
+        resolve(data);
+      }, function (e) {
+        resolve(e);
+      });
+    });
+   },
+
 
 };
 
