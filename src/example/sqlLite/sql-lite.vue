@@ -32,12 +32,7 @@ export default {
   },
   methods: {
     ...mapActions("common", ["getNewDb"]),
-    ...mapActions("article", [
-      "getArticleContent",
-      "getArticleChannel",
-      "getArticleContentPage",
-      "getArticleChannelPage"
-    ]),
+    ...mapActions("productSqlLite", ["getBrandSerialList","getGoodsPage"]),
     async updateDb() {
      util.loading.show("数据同步中,请稍后...");
       var data = await this.getNewDb();
@@ -68,23 +63,21 @@ export default {
     },
 
     init() {
-      this.getArticle();
+      this.getGoodsPage();
     },
 
     //根据Code查询分类ID
-    async getArticle() {
-      var data = await this.getArticleChannel({ code: "electronic_books" });
-      if (!data) return;
-      this.pageList(data[0].ParentId);
+    async getGoodsPage() {
+      var data = await this.getBrandSerialList();
+       console.log(JSON.stringify(data));
     },
     ///查询文章分页数据
-    async pageList(parentId) {
+    async pageList() {
       this.queryModel.page = 1;
-      this.queryModel.pageSize = 2;
-      this.queryModel.parentId = parentId;
-      var result = await this.getArticleChannelPage(this.queryModel);
+      this.queryModel.pageSize = 15;
+      this.queryModel.tagId = "41a324be-43ff-421e-92eb-a14fa63ec321";
+      var result = await this.getGoodsPage(this.queryModel);
       this.dataList.push(result);
-      console.log(JSON.stringify(this.dataList));
     }
   }
 };

@@ -9,10 +9,11 @@ import { util, QueryModel } from "./util/index";
 import user from "./store/system/user";
 import building from "./store/building/building";
 import common from "./store/common/common";
-import article from "./store/article/article";
+import articleSqlLite from "./store/article/article-sqllite";
 import diyHouseType from "./store/diy/diyHouseType";
 import diyScheme from "./store/diy/diyScheme";
 import product from "./store/product/product";
+import productSqlLite from "./store/product/product-sqllite";
 import customer from "./store/customer/customer";
 import { Orienter } from "./util/threejs/three.orienter";
 //注入组件
@@ -61,8 +62,9 @@ export default {
     diyHouseType,
     product,
     diyScheme,
-    article,
-    customer
+    articleSqlLite,
+    customer,
+    productSqlLite
   },
   threeJs: {
     Orienter
