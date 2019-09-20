@@ -150,7 +150,6 @@ export class SqlLite {
     selectSql(dbName, selectSql, success, error) {
         var _self = this;
         this.openDb(util.url.setDb.databaseName, util.url.setDb.newDb + util.url.setDb.dbName, function (data) {
-            console.log("数据库打开成功");
             plus.sqlite.selectSql({
                 name: dbName,
                 sql: selectSql,

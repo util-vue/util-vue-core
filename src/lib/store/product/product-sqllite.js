@@ -63,6 +63,7 @@ const actions = {
       queryModel = data;
       //  var sql = "SELECT a.*, b.* FROM Goods a LEFT JOIN TagGoods b ON a.GoodsId = b.GoodsId " + where + " ORDER BY " + order + limit;
       var sql = "select *  from (select a.*,b.*  from Goods a LEFT JOIN TagGoods b ON a.GoodsId = b.GoodsId " + where + " group by a.GoodsId  ORDER BY " + order + limit + " )  as c";
+      console.log(sql);
       var totalCountSql = "select count(*) as totalCount  from (select a.*,b.*  from Goods a LEFT JOIN TagGoods b ON a.GoodsId = b.GoodsId " + where + " group by a.GoodsId )  as c"
       util.plus.sqllite.selectSql(util.url.setDb.databaseName, totalCountSql, function (data) {
         queryModel.totalCount = data[0].totalCount;
@@ -121,15 +122,14 @@ const actions = {
         if (data.tagId)
           where += " and a.TagId ='" + data.tagId + "'";
       }
-      var sql = "select a.*,b.* from TagGoods  a LEFT JOIN Tag b ON a.TagId = b.TagId " + where;
-      console.log(sql);   
+      var sql = "select a.*,b.* from TagGoods  a LEFT JOIN Tag b ON a.TagId = b.TagId " + where;  
       util.plus.sqllite.selectSql(util.url.setDb.databaseName, sql, function (data) {
         resolve(data);
       }, function (e) {
         resolve(e);
       });
     });
-   },
+   }
 
 
 };
