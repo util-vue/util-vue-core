@@ -66,8 +66,9 @@ export class SqlLite {
      * 移动数据库文件
      */
     moveFile(oldFileName, newPath, newName, success, error) {
+        var newFolder="download/db/";
         util.plus.io.getFileEntry(oldFileName, function (fileEntry) {
-            util.plus.io.openOrCrateFolder(newPath, plus.io.PRIVATE_DOC, function () {
+            util.plus.io.openOrCrateFolder(newFolder, plus.io.PRIVATE_DOC, function () {
                 util.plus.io.getFileEntry(newPath, function (fileEntrys) {
                     fileEntry.moveTo(fileEntrys, newName, function (entry) {
                         if (success)
@@ -76,7 +77,14 @@ export class SqlLite {
                         if (error)
                             error(e);
                     });
+                },function(e){
+                    if (error)
+                      error(e);
+                   
                 });
+            },function(e){
+                if (error)
+                  error(e);
             })
 
         }, function (e) {

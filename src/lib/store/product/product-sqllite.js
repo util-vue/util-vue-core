@@ -47,7 +47,7 @@ const actions = {
       var order = "CreationTime DESC";
       var limit = " limit (" + (data.page - 1) + ")" + "*" + data.pageSize + "," + data.pageSize;
       if (data) {
-        if (data.name)
+        if (data.keyword)
           where += " and a.Name like  '%" + data.name + "%'";
         if (data.code)
           where += " and  a.Code ='" + data.code + "'";
@@ -63,7 +63,7 @@ const actions = {
       queryModel = data;
       //  var sql = "SELECT a.*, b.* FROM Goods a LEFT JOIN TagGoods b ON a.GoodsId = b.GoodsId " + where + " ORDER BY " + order + limit;
       var sql = "select *  from (select a.*,b.*  from Goods a LEFT JOIN TagGoods b ON a.GoodsId = b.GoodsId " + where + " group by a.GoodsId  ORDER BY " + order + limit + " )  as c";
-      console.log(sql);
+     console.log(sql);
       var totalCountSql = "select count(*) as totalCount  from (select a.*,b.*  from Goods a LEFT JOIN TagGoods b ON a.GoodsId = b.GoodsId " + where + " group by a.GoodsId )  as c"
       util.plus.sqllite.selectSql(util.url.setDb.databaseName, totalCountSql, function (data) {
         queryModel.totalCount = data[0].totalCount;

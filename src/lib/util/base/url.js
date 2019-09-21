@@ -195,7 +195,7 @@ class SetDb {
   get newDb() {
     return "_doc/download/db/";
   }
-  get dbName() {
+  get dbName() { 
     return "daogou.db";
   }
   get databaseName() {

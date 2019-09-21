@@ -23,8 +23,8 @@ module.exports = {
     library: "UtilVueCore", // 你使用require时的模块名
     libraryTarget: "umd",
     umdNamedDefine: true
-  }, */
-
+  }, 
+ */
   module: {
     rules: [
       {
@@ -95,10 +95,14 @@ if (process.env.NODE_ENV === "production") {
       uglifyOptions: {
         compress: {
           warnings: false
+        },
+        mangle: {
+          safari10: true
         }
       },
-      sourceMap: true,
-      parallel: true
+      sourceMap:true,
+      parallel: true,
+      cache: true
     }),
     new HtmlWebpackPlugin({
       // 打包输出HTML
