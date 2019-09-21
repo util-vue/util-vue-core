@@ -48,7 +48,7 @@ const actions = {
       var limit = " limit (" + (data.page - 1) + ")" + "*" + data.pageSize + "," + data.pageSize;
       if (data) {
         if (data.keyword)
-          where += " and a.Name like  '%" + data.name + "%'";
+          where += " and a.Name like  '%" + data.keyword + "%'";
         if (data.code)
           where += " and  a.Code ='" + data.code + "'";
         if (data.categoryId)
