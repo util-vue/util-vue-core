@@ -66,7 +66,10 @@ export default {
      /*   var ids=["'3d6b3ce9-e926-4a3d-8f14-8a09174f6ce7'","'3d6b3ce9-e926-4a3d-8f14-8a09174f6ce7'"];
       var a=ids.join();
       console.log(JSON.stringify(a)); */
-      this.pageList();
+     // this.pageList();
+      util.plus.events.onNetChange(function(data){
+        console.log("---"+data);
+      });
     },
 
     //根据Code查询分类ID
