@@ -28,6 +28,39 @@ const actions = {
         }
       });
     });
+  },
+  /**
+   * 获取附件列表
+   * @param {*} param0 
+   * @param {*} data 
+   */
+  async getAccessoryList({ dispatch, commit, state, rootState, rootGetters }, data) {
+    return await new Promise((resolve, reject) => {
+      var where = "where IsDownload is null  or IsDownload=0";
+      var sql = "select * from Attachment " + where;
+      util.plus.sqllite.selectSql(util.url.setDb.databaseName, sql, function (data) {
+        resolve(data);
+      }, function (e) {
+        resolve(false); 
+      });
+    });
+  },
+
+  /**
+   * 更改状态
+   * @param {*} param0 
+   * @param {*} data 
+   */
+  async updateAccessoryStatus({ dispatch, commit, state, rootState, rootGetters }, data) {
+    return await new Promise((resolve, reject) => {
+      var where = " where AttachmentId='" + data.id + "'";
+      var sql ="UPDATE Attachment SET IsDownload=" + data.status+ where;
+      util.plus.sqllite.executeSql(util.url.setDb.databaseName, sql, function (data) {
+        resolve(true);
+      }, function (e) {
+        resolve(e);
+      });
+    });
   }
 };
 

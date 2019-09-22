@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 module.exports = {
   //开发配置
-/*   entry: "./src/main.js",
+  entry: "./src/main.js",
   output: {
     path: path.resolve(__dirname, "./dist"),
     publicPath:
@@ -12,10 +12,10 @@ module.exports = {
         ? "./"
         : "/dist/",
     filename: "build.js"
-  }, */
+  },
 
   //发布配置
-  entry: "./src/lib/index.js",
+/*   entry: "./src/lib/index.js",
   output: {
     path: path.resolve(__dirname, "./dist"),
     publicPath: "/dist/",
@@ -24,7 +24,7 @@ module.exports = {
     libraryTarget: "umd",
     umdNamedDefine: true
   }, 
-
+ */
   module: {
     rules: [
       {
