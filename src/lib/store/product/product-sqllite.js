@@ -14,7 +14,7 @@ const actions = {
    */
   async getBrandSerialList({ dispatch, commit, state, rootState, rootGetters }, data) {
     return await new Promise((resolve, reject) => {
-      var where = "where IsDeleted=0 and Enabled=1";
+      var where = "where  Enabled=1";
       var order = "CreationTime DESC";
       if (data) {
         if (data.code)
@@ -34,6 +34,43 @@ const actions = {
       });
     });
   },
+   /**
+   * 查询品牌系列分页
+   * @param {*} param0 
+   * @param {*} data 
+   */
+  async getBrandSerialPage({ dispatch, commit, state, rootState, rootGetters }, data) {
+    return await new Promise((resolve, reject) => {
+      var queryModel = new QueryModel();
+      var where = "where  Enabled=1";
+      var order = "CreationTime DESC";
+      var limit = " limit (" + (data.page - 1) + ")" + "*" + data.pageSize + "," + data.pageSize;
+      if (data) {
+        if (data.code)
+          where += " and  Code ='" + data.code + "'";
+        if (data.id)
+          where += " and BrandSerialId ='" + data.id + "'";
+        if (data.brandId)
+          where += " and BrandId ='" + data.brandId + "'";
+        if (data.order)
+          order = data.order;
+      }
+      queryModel = data;
+      var sql = "select * from BrandSerial " + where + " ORDER BY " + order + limit;
+      var totalCountSql="select count(*) as totalCount from BrandSerial " + where ;
+      util.plus.sqllite.selectSql(util.url.setDb.databaseName, totalCountSql, function (data) {
+        queryModel.totalCount = data[0].totalCount;
+        queryModel.pageCount = Math.ceil(queryModel.totalCount / queryModel.pageSize);
+      })
+      util.plus.sqllite.selectSql(util.url.setDb.databaseName, sql, function (data) {
+        queryModel.extends(queryModel);
+        queryModel.data = data;
+        resolve(queryModel);
+      }, function (e) {
+        resolve(e);
+      });
+    });
+  },
 
   /**
   * 分页查询商品
@@ -43,7 +80,7 @@ const actions = {
   async getGoodsPage({ dispatch, commit, state, rootState, rootGetters }, data) {
     return await new Promise((resolve, reject) => {
       var queryModel = new QueryModel();
-      var where = "where IsDeleted=0 and Enabled=1 and State=2";
+      var where = "where  Enabled=1 and State=2";
       var order = "CreationTime DESC";
       var limit = " limit (" + (data.page - 1) + ")" + "*" + data.pageSize + "," + data.pageSize;
       if (data) {
@@ -63,7 +100,6 @@ const actions = {
       queryModel = data;
       //  var sql = "SELECT a.*, b.* FROM Goods a LEFT JOIN TagGoods b ON a.GoodsId = b.GoodsId " + where + " ORDER BY " + order + limit;
       var sql = "select *  from (select a.*,b.*  from Goods a LEFT JOIN TagGoods b ON a.GoodsId = b.GoodsId " + where + " group by a.GoodsId  ORDER BY " + order + limit + " )  as c";
-     console.log(sql);
       var totalCountSql = "select count(*) as totalCount  from (select a.*,b.*  from Goods a LEFT JOIN TagGoods b ON a.GoodsId = b.GoodsId " + where + " group by a.GoodsId )  as c"
       util.plus.sqllite.selectSql(util.url.setDb.databaseName, totalCountSql, function (data) {
         queryModel.totalCount = data[0].totalCount;
@@ -85,7 +121,7 @@ const actions = {
    */
   async getProductList({ dispatch, commit, state, rootState, rootGetters }, data) {
     return await new Promise((resolve, reject) => {
-      var where = "where IsDeleted=0 and Enabled=1";
+      var where = "where  Enabled=1";
       var order = "CreationTime DESC";
       if (data) {
         if (data.code)

@@ -16,7 +16,7 @@ const actions = {
    */
   async getArticleContent({ dispatch, commit, state, rootState, rootGetters },data){
     return await new Promise((resolve, reject) => {
-      var where = "where IsDeleted=0 and Enabled=1";
+      var where = "where  Enabled=1";
       var order="CreationTime";
       if (data) {
         if (data.articleChannelId)
@@ -42,7 +42,7 @@ const actions = {
   async getArticleContentPage({ dispatch, commit, state, rootState, rootGetters },data){
     return await new Promise((resolve, reject) => {
       var  queryModel=new QueryModel();
-      var where = "where IsDeleted=0 and Enabled=1";
+      var where = "where  Enabled=1";
       var order="CreationTime DESC";
       var limit=" limit ("+(data.page-1)+")"+"*"+data.pageSize+","+data.pageSize;
       if (data) {
@@ -80,7 +80,7 @@ const actions = {
   async getArticleChannel({ dispatch, commit, state, rootState, rootGetters }, data) 
   {
       return await new Promise((resolve, reject) => {
-        var where = "where IsDeleted=0 and Enabled=1";
+        var where = "where  Enabled=1";
         if (data) {
           if (data.code)
             where += " and  Code ='"+data.code+"'";
@@ -103,7 +103,7 @@ const actions = {
   async getArticleChannelPage({ dispatch, commit, state, rootState, rootGetters },data){
     return await new Promise((resolve, reject) => {
       var  queryModel=new QueryModel();
-      var where = "where IsDeleted=0 and Enabled=1";
+      var where = "where  Enabled=1";
       var order="CreationTime DESC";
       var limit=" limit ("+(data.page-1)+")"+"*"+data.pageSize+","+data.pageSize;
       if (data) {
