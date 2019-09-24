@@ -92,7 +92,7 @@ export default {
     /** 替换比例地址前缀路径 */
     replaceSrcPrefix: {
       default() {
-        return "";
+        return "static/";
       }
     }
   },
