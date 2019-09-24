@@ -20,4 +20,8 @@ body {
 #app {
   color: #333;
 }
+
+.image-pack {
+  background-image: url("./assets/rectangle_2_1_replace.png");
+}
 </style>

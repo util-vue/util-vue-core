@@ -1,4 +1,5 @@
 import Http from "./../http/http.vue";
+import ImageCache from "./../http/image-cache.vue";
 import Menu from "./../menu.vue";
 import ActionSheet from "./../actionSheet/actionSheet.vue";
 import UtilNav from "./../util-nav/util-nav.vue";
@@ -33,5 +34,9 @@ export default [
   {
     path: "/comment",
     component: comment
+  },
+  {
+    path: "/imageCache",
+    component: ImageCache
   }
 ];
