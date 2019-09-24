@@ -17,6 +17,13 @@ import Iconfont from "./lib/font/iconfont.css";
 // Init F7 Vue Plugin
 Framework7.use(Framework7Vue);
 
+//图片延迟加载
+import VueLazyload from "vue-lazyload";
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  attempt: 4
+});
+
 var vue = new Vue({
   el: "#app",
   router,
@@ -28,7 +35,7 @@ import UtilVueCore from "./lib/index";
 Vue.use(UtilVueCore, {
   f7App: vue.$f7,
   serverConfig: {
-    systemServer: "http://112.74.135.9:7006",
+    systemServer: "http://localhost:7001",
     buildingServer: "http://112.74.135.9:7002",
     commonServer: "http://112.74.135.9:7001",
     productServer: "http://112.74.135.9:7003",

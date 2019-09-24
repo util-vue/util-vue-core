@@ -1,17 +1,18 @@
 <template>
   <img
-    @click="clickHandle"
-    v-lazy:background-image=" src ? ( src + zoomUrl) : ''"
-    :key="src"
-    :width="width"
-    :height="height"
-    :class="bindClass + ' replace-img' + (circular ?  ' circular' : '')"
-    :style="{
+      @click="clickHandle"
+      v-lazy:background-image=" currentUrl ? ( currentUrl + zoomUrl) : ''"
+      :data="currentUrl"
+      :key="src"
+      :width="width"
+      :height="height"
+      :class="bindClass + ' replace-img' + (circular ?  ' circular' : '')"
+      :style="{
         'background-size':modeStyle,
         'border-radius':radius
     }"
-    :src="replaceSrc"
-  />
+      :src="replaceSrc"
+    />
 </template>
 
 <script>
@@ -81,7 +82,27 @@ export default {
       default() {
         return false;
       }
+    },
+    /** 开启hbuilder缓存 */
+    plusCache: {
+      default() {
+        return false;
+      }
+    },
+    /** 替换比例地址前缀路径 */
+    replaceSrcPrefix: {
+      default() {
+        return "";
+      }
     }
+  },
+  data() {
+    return {
+      /** plus是否已经开启 */
+      plusOpen: false,
+      /** 图片真实加载地址 */
+      currentUrl: undefined
+    };
   },
   computed: {
     /** 缩放地址 */
@@ -103,14 +124,26 @@ export default {
     },
     /** 替换地址 */
     replaceSrc() {
-      if (!this.size) return "static/replace/rectangle_2_1_replace.png";
+      if (!this.size)
+        return this.replaceSrcPrefix + "rectangle_2_1_replace.png";
       var scaleParam = this.size.split(":");
-      return `static/replace/rectangle_${scaleParam[0]}_${
-        scaleParam[1]
-      }_replace.png`;
+      return (
+        this.replaceSrcPrefix +
+        `rectangle_${scaleParam[0]}_${scaleParam[1]}_replace.png`
+      );
     }
   },
+  watch: {
+    src(val) {
+      this.resetCurrentUrl();
+    }
+  },
+  mounted() {
+    this.plusOpen = this.$util.plus.helper.isOpen();
+    this.resetCurrentUrl();
+  },
   methods: {
+    /** 点击事件 */
     clickHandle(e) {
       if (this.preview) {
         var imagePreview = this.$util.f7.f7App.photoBrowser.create({
@@ -122,6 +155,27 @@ export default {
         return;
       }
       this.$emit("click", e);
+    },
+    /** 重置 真实地址 */
+    resetCurrentUrl() {
+      if (!this.plusCache || !this.src || !this.plusOpen) {
+        this.currentUrl = this.src;
+        return;
+      }
+      var _self = this;
+      this.$util.plus.io.loadUrlFileAndCache(
+        this.src,
+        newPath => {
+          console.log(newPath);
+          _self.currentUrl = newPath.fullPath;
+        },
+        p => {
+          console.log(p);
+        },
+        e => {
+          console.log(p);
+        }
+      );
     }
   }
 };
