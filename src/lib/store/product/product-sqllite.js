@@ -34,11 +34,11 @@ const actions = {
       });
     });
   },
-   /**
-   * 查询品牌系列分页
-   * @param {*} param0 
-   * @param {*} data 
-   */
+  /**
+  * 查询品牌系列分页
+  * @param {*} param0 
+  * @param {*} data 
+  */
   async getBrandSerialPage({ dispatch, commit, state, rootState, rootGetters }, data) {
     return await new Promise((resolve, reject) => {
       var queryModel = new QueryModel();
@@ -57,7 +57,7 @@ const actions = {
       }
       queryModel = data;
       var sql = "select * from BrandSerial " + where + " ORDER BY " + order + limit;
-      var totalCountSql="select count(*) as totalCount from BrandSerial " + where ;
+      var totalCountSql = "select count(*) as totalCount from BrandSerial " + where;
       util.plus.sqllite.selectSql(util.url.setDb.databaseName, totalCountSql, function (data) {
         queryModel.totalCount = data[0].totalCount;
         queryModel.pageCount = Math.ceil(queryModel.totalCount / queryModel.pageSize);
@@ -66,6 +66,38 @@ const actions = {
         queryModel.extends(queryModel);
         queryModel.data = data;
         resolve(queryModel);
+      }, function (e) {
+        resolve(e);
+      });
+    });
+  },
+
+  /**
+ * 查询商品
+ * @param {*} param0 
+ * @param {*} data 
+ */
+  async getGoods({ dispatch, commit, state, rootState, rootGetters }, data) {
+    return await new Promise((resolve, reject) => {
+      var where = "where  Enabled=1 and State=2";
+      var order = "CreationTime DESC";
+      if (data) {
+        if (data.id)
+          where += " and  GoodsId ='" + data.id + "'";
+        if (data.keyword)
+          where += " and  Name like  '%" + data.keyword + "%'";
+        if (data.code)
+          where += " and  Code ='" + data.code + "'";
+        if (data.categoryId)
+          where += " and  CategoryId ='" + data.categoryId + "'";
+        if (data.brandSerialId)
+          where += " and  BrandSerialId ='" + data.brandSerialId + "'";
+        if (data.order)
+          order = data.order;
+      }
+      var sql = "select * from Goods " + where + " ORDER BY " + order;
+      util.plus.sqllite.selectSql(util.url.setDb.databaseName, sql, function (data) {
+        resolve(data);
       }, function (e) {
         resolve(e);
       });
@@ -144,11 +176,11 @@ const actions = {
     });
   },
 
-    /**
-   * 查询商品Tag
-   * @param {*} param0 
-   * @param {*} data 
-   */
+  /**
+ * 查询商品Tag
+ * @param {*} param0 
+ * @param {*} data 
+ */
   async getGoodsTagList({ dispatch, commit, state, rootState, rootGetters }, data) {
     return await new Promise((resolve, reject) => {
       var where = "where  b.Enabled=1";
@@ -158,14 +190,14 @@ const actions = {
         if (data.tagId)
           where += " and a.TagId ='" + data.tagId + "'";
       }
-      var sql = "select a.*,b.* from TagGoods  a LEFT JOIN Tag b ON a.TagId = b.TagId " + where;  
+      var sql = "select a.*,b.* from TagGoods  a LEFT JOIN Tag b ON a.TagId = b.TagId " + where;
       util.plus.sqllite.selectSql(util.url.setDb.databaseName, sql, function (data) {
         resolve(data);
       }, function (e) {
         resolve(e);
       });
     });
-   }
+  }
 
 
 };
