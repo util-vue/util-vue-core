@@ -1,5 +1,6 @@
 <template>
-  <img
+  <div ref="image">
+    <img
       @click="clickHandle"
       v-lazy:background-image=" currentUrl ? ( currentUrl + zoomUrl) : ''"
       :data="currentUrl"
@@ -13,9 +14,12 @@
     }"
       :src="replaceSrc"
     />
+  </div>
 </template>
 
 <script>
+import AlloyFinger from "alloyfinger";
+
 export default {
   props: {
     /**图片地址**/
@@ -84,7 +88,7 @@ export default {
       }
     },
     /** 开启hbuilder缓存 */
-    plusCache: {
+    openCache: {
       default() {
         return false;
       }
@@ -94,14 +98,27 @@ export default {
       default() {
         return "static/";
       }
+    },
+    /**
+     * 开启放大于缩放
+     */
+    openScal: {
+      default() {
+        return false;
+      }
     }
   },
   data() {
     return {
+      alloyFinger: undefined,
       /** plus是否已经开启 */
       plusOpen: false,
       /** 图片真实加载地址 */
-      currentUrl: undefined
+      currentUrl: undefined,
+      /** 背景比例 横向比例 */
+      backgroundSizeX: 100,
+      /** 背景比例 纵向比例 */
+      backgroundSizeY: 100
     };
   },
   computed: {
@@ -114,7 +131,7 @@ export default {
     modeStyle() {
       switch (this.mode) {
         case "scaleToFill":
-          return "100% 100%";
+          return `${this.backgroundSizeX}% ${this.backgroundSizeY}%`;
         case "aspectFit":
           return "contain";
         case "aspectFill":
@@ -141,6 +158,7 @@ export default {
   mounted() {
     this.plusOpen = this.$util.plus.helper.isOpen();
     this.resetCurrentUrl();
+    if (this.openScal) this.startScal();
   },
   methods: {
     /** 点击事件 */
@@ -176,8 +194,29 @@ export default {
           console.log(p);
         }
       );
+    },
+    /** 开始执行缩放 */
+    startScal() {
+      this.alloyFinger = new AlloyFinger(this.$refs.image, {
+        pinch: this.onDocumentPinch
+      });
+    },
+    /** 缩放 */
+    onDocumentPinch(evt) {
+      var current = this.backgroundSizeX;
+      this.backgroundSizeX = this.$util.helper.clamp(
+        current * evt.zoom,
+        100,
+        400
+      );
+      this.backgroundSizeY = this.$util.helper.clamp(
+        current * evt.zoom,
+        100,
+        400
+      );
     }
-  }
+  },
+  destroyed() {}
 };
 </script>
 
