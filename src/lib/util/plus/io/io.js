@@ -149,7 +149,6 @@ export class IO {
 
   /** 读取本地文件 */
   loadLocalFile(path, success, error) {
-    console.log("loadLocalFile:"+path);
     plus.io.resolveLocalFileSystemURL(
       path,
       entry => {
