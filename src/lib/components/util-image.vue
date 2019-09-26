@@ -145,14 +145,13 @@ export default {
       this.resetCurrentUrl();
     }
   },
-  mounted() {
+  created(){
     this.plusOpen = this.$util.plus.helper.isOpen();
+    this.resetCurrentUrl();
   },
-  activated() {
-    setTimeout(() => {
-      this.resetCurrentUrl();
+  mounted() {
       if (this.openScal) this.startScal();
-    }, 10);
+      
   },
   methods: {
     /** 点击事件 */
