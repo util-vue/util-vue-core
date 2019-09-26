@@ -1,10 +1,22 @@
 import { util } from "./../../util/index";
 
-const state = {};
+const state = {
+  uuidKey: "uuidKey"
+};
 
-const getters = {};
+const getters = {
+  /** 获取Uuid */
+  uuid(state) {
+    return util.storage.getStorage(state.uuidKey);
+  }
+};
 
-const mutations = {};
+const mutations = {
+  /** 保存Uuid */
+  saveUuid(state, uuid) {
+    util.storage.setStorage(state.uuidKey, uuid);
+  }
+};
 
 const actions = {
   /** 发送评论 */
@@ -72,6 +84,21 @@ const actions = {
         url: util.url.customerUrl.childQuery,
         data: { parentId: parentId },
         success: result => {
+          resolve(result);
+        },
+        error: () => {
+          resolve(false);
+        }
+      });
+    });
+  },
+  /** 保存Uuid */
+  async saveUuidAsync({ dispatch, commit, state, rootState, rootGetters }) {
+    return await new Promise((resolve, reject) => {
+      util.webApi.get({
+        url: util.url.customerUrl.getUuid,
+        success: result => {
+          commit("saveUuid", result);
           resolve(result);
         },
         error: () => {

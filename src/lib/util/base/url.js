@@ -189,6 +189,11 @@ class CustomerUrl {
     return `${util.url.base.customerServer}/api/commonComment/childQuery`;
   }
 
+  /**  获取Uuid */
+  get getUuid() {
+    return `${util.url.base.customerServer}/api/customer/getUuid`;
+  }
+
 }
 
 /**
