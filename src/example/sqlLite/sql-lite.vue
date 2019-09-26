@@ -28,7 +28,8 @@ export default {
   data() {
     return {
       queryModel: new QueryModel(),
-      dataList: []
+      dataList: [],
+
     };
   },
   methods: {
@@ -39,6 +40,7 @@ export default {
       "getGoodsTagList",
       "getGoods"
     ]),
+    ...mapActions("customer", ["loginAsync"]),
     async updateDb() {
       util.loading.show("数据同步中,请稍后...");
       var data = await this.getNewDb();
@@ -71,14 +73,17 @@ export default {
       /*     util.plus.events.onNetChange(function(data){
         console.log("---"+data);
       }); */
-        this.getGoodsPage();
+        //this.getGoodsPage();
+
+         
     },
 
     //根据Code查询分类ID
     async getGoodsPage() {
       //var data = await this.getGoodsTagList({goodsId:"4f074818-d2b1-4667-91cc-907c1f42de83"});
-       var data = await this.getGoods({id:"4f074818-d2b1-4667-91cc-907c1f42de83"});
-      console.log(JSON.stringify(data));
+     /*   var data = await this.getGoods({id:"4f074818-d2b1-4667-91cc-907c1f42de83"});
+      console.log(JSON.stringify(data)); */
+      await this.loginAsync();
     },
     ///查询文章分页数据
     async pageList() {
