@@ -76,8 +76,7 @@ const actions = {
     commit("setHeaderToken", token);
     return await new Promise((resolve, reject) => {
       util.webApi.get({
-        url: util.url.building.buildingStylePagerQuery,
-        data: { page: 1, pageSize: 20 },
+        url: util.url.system.get,
         success: result => {
           commit("setLogin", {
             token: token,

@@ -2,11 +2,34 @@
   <f7-page>
     <util-nav title="菜单"></util-nav>
     <f7-page-content>
-      <util-image
-        :src="src"
-        :plusCache="true"
-        mode="aspectFill"
-      ></util-image>
+
+      <f7-swiper>
+        <f7-swiper-slide>
+          <util-image
+            :src="src"
+            :openCache="true"
+            :openScal="true"
+            mode="scaleToFill"
+          ></util-image>
+        </f7-swiper-slide>
+        <f7-swiper-slide>
+          <util-image
+            :src="src"
+            :openCache="true"
+            :openScal="true"
+            mode="scaleToFill"
+          ></util-image>
+        </f7-swiper-slide>
+        <f7-swiper-slide>
+          <util-image
+            :src="src"
+            :openCache="true"
+            :openScal="true"
+            mode="scaleToFill"
+          ></util-image>
+        </f7-swiper-slide>
+      </f7-swiper>
+
     </f7-page-content>
   </f7-page>
 </template>
