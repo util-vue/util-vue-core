@@ -110,6 +110,12 @@ class SystemUrl {
   get loginOrRegister() {
     return `${util.url.base.systemServer}/api/user/LoginOrRegister`;
   }
+
+  /** 登录者用户信息 */
+  get get() {
+    return `${util.url.base.systemServer}/api/user/get`;
+  }
+
 }
 
 /** 楼盘 */
