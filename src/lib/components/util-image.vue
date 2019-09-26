@@ -1,19 +1,9 @@
 <template>
   <div ref="image">
-    <img
-      @click="clickHandle"
-      v-lazy:background-image=" currentUrl ? ( currentUrl + zoomUrl) : ''"
-      :data="currentUrl"
-      :key="src"
-      :width="width"
-      :height="height"
-      :class="bindClass + ' replace-img' + (circular ?  ' circular' : '')"
-      :style="{
+    <img @click="clickHandle" v-lazy:background-image=" currentUrl ? ( currentUrl + zoomUrl) : ''" :data="currentUrl" :key="src" :width="width" :height="height" :class="bindClass + ' replace-img' + (circular ?  ' circular' : '')" :style="{
         'background-size':modeStyle,
         'border-radius':radius
-    }"
-      :src="replaceSrc"
-    />
+    }" :src="replaceSrc" />
   </div>
 </template>
 
@@ -114,7 +104,7 @@ export default {
       /** plus是否已经开启 */
       plusOpen: false,
       /** 图片真实加载地址 */
-      currentUrl: undefined,
+      currentUrl: "",
       /** 背景比例 横向比例 */
       backgroundSizeX: 100,
       /** 背景比例 纵向比例 */
@@ -157,8 +147,12 @@ export default {
   },
   mounted() {
     this.plusOpen = this.$util.plus.helper.isOpen();
-    this.resetCurrentUrl();
-    if (this.openScal) this.startScal();
+  },
+  activated() {
+    setTimeout(() => {
+      this.resetCurrentUrl();
+      if (this.openScal) this.startScal();
+    }, 10);
   },
   methods: {
     /** 点击事件 */
@@ -191,7 +185,8 @@ export default {
           console.log(p);
         },
         e => {
-          console.log(p);
+          _self.currentUrl = _self.src;
+          console.log(e);
         }
       );
     },

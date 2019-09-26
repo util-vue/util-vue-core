@@ -10,7 +10,6 @@ import diyScheme from "./diy/diyScheme";
 import product from "./product/product";
 import productSqlLite from "./product/product-sqllite";
 import user from "./system/user";
-
 const store = new Vuex.Store({
   modules: {
     articleSqlLite,

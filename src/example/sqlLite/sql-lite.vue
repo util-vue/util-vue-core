@@ -29,7 +29,13 @@ export default {
     return {
       queryModel: new QueryModel(),
       dataList: [],
-
+      user: {
+        userName: "admin",
+        password: "admin",
+        uuid: "",
+        device: 4,
+        application: "inhome-app"
+      }
     };
   },
   methods: {
@@ -73,17 +79,16 @@ export default {
       /*     util.plus.events.onNetChange(function(data){
         console.log("---"+data);
       }); */
-        //this.getGoodsPage();
-
-         
+      this.getGoodsPage();
     },
 
     //根据Code查询分类ID
     async getGoodsPage() {
       //var data = await this.getGoodsTagList({goodsId:"4f074818-d2b1-4667-91cc-907c1f42de83"});
-     /*   var data = await this.getGoods({id:"4f074818-d2b1-4667-91cc-907c1f42de83"});
+      /*   var data = await this.getGoods({id:"4f074818-d2b1-4667-91cc-907c1f42de83"});
       console.log(JSON.stringify(data)); */
-      await this.loginAsync();
+      var result=await this.loginAsync(this.user);
+      console.log(JSON.stringify(result));
     },
     ///查询文章分页数据
     async pageList() {
