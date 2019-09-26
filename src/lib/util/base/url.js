@@ -169,6 +169,10 @@ class ProductUrl {
 /** 用户 */
 class CustomerUrl {
 
+  get login(){
+    return `${util.url.base.customerServer}/api/Customer/Login`;
+  }
+   
   /** 发送评论 */
   get sendComment() {
     return `${util.url.base.customerServer}/api/commonComment`;

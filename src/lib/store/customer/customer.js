@@ -19,6 +19,25 @@ const mutations = {
 };
 
 const actions = {
+  /** 用户登录 */
+  async loginAsync(
+    { dispatch, commit, state, rootState, rootGetters },
+    params
+  ) {
+    return await new Promise((resolve, reject) => {
+      util.webApi.post({
+        url: util.url.customerUrl.login,
+        data: params,
+        loading: true,
+        success: result => {
+          resolve(result);
+        },
+        error: () => {
+          resolve(false);
+        }
+      });
+    });
+  },
   /** 发送评论 */
   async sendCommentAsync(
     { dispatch, commit, state, rootState, rootGetters },
