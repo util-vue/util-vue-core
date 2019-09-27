@@ -1,14 +1,11 @@
 <template>
-  <div ref="image">
     <img @click="clickHandle" v-lazy:background-image=" currentUrl ? ( currentUrl + zoomUrl) : ''" :data="currentUrl" :key="src" :width="width" :height="height" :class="bindClass + ' replace-img' + (circular ?  ' circular' : '')" :style="{
         'background-size':modeStyle,
         'border-radius':radius
     }" :src="replaceSrc" />
-  </div>
 </template>
 
 <script>
-import AlloyFinger from "alloyfinger";
 
 export default {
   props: {
@@ -88,14 +85,6 @@ export default {
       default() {
         return "static/";
       }
-    },
-    /**
-     * 开启放大于缩放
-     */
-    openScal: {
-      default() {
-        return false;
-      }
     }
   },
   data() {
@@ -150,8 +139,6 @@ export default {
     this.resetCurrentUrl();
   },
   mounted() {
-      if (this.openScal) this.startScal();
-      
   },
   methods: {
     /** 点击事件 */
@@ -169,7 +156,7 @@ export default {
     },
     /** 重置 真实地址 */
     resetCurrentUrl() {
-      if (!this.plusCache || !this.src || !this.plusOpen) {
+      if (!this.openCache || !this.src || !this.plusOpen) {
         this.currentUrl = this.src;
         return;
       }
@@ -187,26 +174,6 @@ export default {
           _self.currentUrl = _self.src;
           console.log(e);
         }
-      );
-    },
-    /** 开始执行缩放 */
-    startScal() {
-      this.alloyFinger = new AlloyFinger(this.$refs.image, {
-        pinch: this.onDocumentPinch
-      });
-    },
-    /** 缩放 */
-    onDocumentPinch(evt) {
-      var current = this.backgroundSizeX;
-      this.backgroundSizeX = this.$util.helper.clamp(
-        current * evt.zoom,
-        100,
-        400
-      );
-      this.backgroundSizeY = this.$util.helper.clamp(
-        current * evt.zoom,
-        100,
-        400
       );
     }
   },

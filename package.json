@@ -1,7 +1,7 @@
 {
   "name": "util-vue-core",
   "description": "Util团队HTML5前端框架",
-  "version": "1.0.92",
+  "version": "1.0.95",
   "author": "huxingye",
   "license": "MIT",
   "private": false,
@@ -52,6 +52,8 @@
     "webpack-dev-server": "^2.9.1",
     "html-webpack-plugin": "^2.30.1",
     "uglifyjs-webpack-plugin": "^1.1.1",
-    "alloyfinger": "0.1.16"
+    "alloyfinger": "0.1.16",
+    "vue-awesome-swiper": "^3.1.3",
+    "vue-photo-gallery": "^1.0.1"
   }
 }

@@ -25,6 +25,9 @@
               <f7-list-item>
                 <f7-link href="/imageCache/">图片与离线缓存</f7-link>
               </f7-list-item>
+              <f7-list-item>
+                <f7-link href="/photoSwiper/">图片播放器</f7-link>
+              </f7-list-item>
             </f7-list>
           </f7-accordion-content>
         </f7-list-item>
