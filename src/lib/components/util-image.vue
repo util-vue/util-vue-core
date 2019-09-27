@@ -1,15 +1,21 @@
 <template>
-  <div ref="image">
-    <img @click="clickHandle" v-lazy:background-image=" currentUrl ? ( currentUrl + zoomUrl) : ''" :data="currentUrl" :key="src" :width="width" :height="height" :class="bindClass + ' replace-img' + (circular ?  ' circular' : '')" :style="{
+  <img
+    @click="clickHandle"
+    v-lazy:background-image=" currentUrl ? ( currentUrl + zoomUrl) : ''"
+    :data="currentUrl"
+    :key="src"
+    :width="width"
+    :height="height"
+    :class="bindClass + ' replace-img' + (circular ?  ' circular' : '')"
+    :style="{
         'background-size':modeStyle,
         'border-radius':radius
-    }" :src="replaceSrc" />
-  </div>
+    }"
+    :src="replaceSrc"
+  />
 </template>
 
 <script>
-import AlloyFinger from "alloyfinger";
-
 export default {
   props: {
     /**图片地址**/
@@ -88,14 +94,6 @@ export default {
       default() {
         return "static/";
       }
-    },
-    /**
-     * 开启放大于缩放
-     */
-    openScal: {
-      default() {
-        return false;
-      }
     }
   },
   data() {
@@ -132,7 +130,8 @@ export default {
     /** 替换地址 */
     replaceSrc() {
       if (!this.size)
-        return this.replaceSrcPrefix + "rectangle_2_1_replace.png";
+        /*      return this.replaceSrcPrefix + "rectangle_2_1_replace.png"; */
+        return this.currentUrl;
       var scaleParam = this.size.split(":");
       return (
         this.replaceSrcPrefix +
@@ -145,14 +144,11 @@ export default {
       this.resetCurrentUrl();
     }
   },
-  created(){
+  created() {
     this.plusOpen = this.$util.plus.helper.isOpen();
     this.resetCurrentUrl();
   },
-  mounted() {
-      if (this.openScal) this.startScal();
-      
-  },
+  mounted() {},
   methods: {
     /** 点击事件 */
     clickHandle(e) {
@@ -169,7 +165,7 @@ export default {
     },
     /** 重置 真实地址 */
     resetCurrentUrl() {
-      if (!this.plusCache || !this.src || !this.plusOpen) {
+      if (!this.openCache || !this.src || !this.plusOpen) {
         this.currentUrl = this.src;
         return;
       }
@@ -187,26 +183,6 @@ export default {
           _self.currentUrl = _self.src;
           console.log(e);
         }
-      );
-    },
-    /** 开始执行缩放 */
-    startScal() {
-      this.alloyFinger = new AlloyFinger(this.$refs.image, {
-        pinch: this.onDocumentPinch
-      });
-    },
-    /** 缩放 */
-    onDocumentPinch(evt) {
-      var current = this.backgroundSizeX;
-      this.backgroundSizeX = this.$util.helper.clamp(
-        current * evt.zoom,
-        100,
-        400
-      );
-      this.backgroundSizeY = this.$util.helper.clamp(
-        current * evt.zoom,
-        100,
-        400
       );
     }
   },

@@ -5,7 +5,6 @@
       <util-image
         :src="src"
         :openCache="true"
-        :openScal="true"
         mode="scaleToFill"
       ></util-image>
     </f7-page-content>

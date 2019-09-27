@@ -26,10 +26,13 @@ Vue.use(VueLazyload, {
 
 import AlloyFinger from "alloyfinger";
 import AlloyFingerPlugin from "alloyfinger/vue/alloy_finger_vue";
-
 Vue.use(AlloyFingerPlugin, {
   AlloyFinger
 });
+
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
+Vue.use(VueAwesomeSwiper)
 
 var vue = new Vue({
   el: "#app",

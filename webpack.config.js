@@ -4,15 +4,12 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 module.exports = {
   //开发配置
-/*  entry: "./src/main.js",
+/*   entry: "./src/main.js",
   output: {
     path: path.resolve(__dirname, "./dist"),
-    publicPath:
-      process.env.NODE_ENV === "production"
-        ? "./"
-        : "/dist/",
+    publicPath: process.env.NODE_ENV === "production" ? "./" : "/dist/",
     filename: "build.js"
-  },  */
+  }, */
 
   //发布配置
   entry: "./src/lib/index.js",
@@ -23,7 +20,7 @@ module.exports = {
     library: "UtilVueCore", // 你使用require时的模块名
     libraryTarget: "umd",
     umdNamedDefine: true
-  }, 
+  },
 
   module: {
     rules: [
@@ -100,7 +97,7 @@ if (process.env.NODE_ENV === "production") {
           safari10: true
         }
       },
-      sourceMap:true,
+      sourceMap: true,
       parallel: true,
       cache: true
     }),

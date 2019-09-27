@@ -1,5 +1,6 @@
 import Http from "./../http/http.vue";
 import ImageCache from "./../http/image-cache.vue";
+import PhotoSwiper from "./../images/photoswiper.vue";
 import Menu from "./../menu.vue";
 import ActionSheet from "./../actionSheet/actionSheet.vue";
 import UtilNav from "./../util-nav/util-nav.vue";
@@ -38,5 +39,9 @@ export default [
   {
     path: "/imageCache",
     component: ImageCache
+  },
+  {
+    path: "/photoSwiper",
+    component: PhotoSwiper
   }
 ];
