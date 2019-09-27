@@ -142,11 +142,13 @@ export default {
   watch: {
     src(val) {
       this.resetCurrentUrl();
+      this.checkImgCache();
     }
   },
   created() {
     this.plusOpen = this.$util.plus.helper.isOpen();
     this.resetCurrentUrl();
+    this.checkImgCache();
   },
   mounted() {},
   methods: {
@@ -182,6 +184,27 @@ export default {
         e => {
           _self.currentUrl = _self.src;
           console.log(e);
+        }
+      );
+    },
+    /**
+     * 检测图片是否缓存，是就返回本地路径
+     *  */
+
+    checkImgCache() {
+      if (!this.src || !this.plusOpen) {
+        this.currentUrl = this.src;
+        return;
+      }
+      var _self = this;
+      this.$util.plus.io.loadCacheFile(
+        this.src,
+        newPath => {
+          console.log("检测图片路径=" + newPath);
+          _self.currentUrl = newPath.fullPath;
+        },
+        e => {
+          _self.currentUrl = _self.src;
         }
       );
     }
