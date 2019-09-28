@@ -12,7 +12,7 @@ module.exports = {
   }, */
 
   //发布配置
-  entry: "./src/lib/index.js",
+   entry: "./src/lib/index.js",
   output: {
     path: path.resolve(__dirname, "./dist"),
     publicPath: "/dist/",
@@ -20,7 +20,7 @@ module.exports = {
     library: "UtilVueCore", // 你使用require时的模块名
     libraryTarget: "umd",
     umdNamedDefine: true
-  },
+  }, 
 
   module: {
     rules: [

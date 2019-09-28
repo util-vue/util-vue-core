@@ -94,6 +94,12 @@ export default {
       default() {
         return "static/";
       }
+    },
+    /**plus 检测本地图片是否存在 */
+    isCacheExist: {
+      default() {
+        return false;
+      }
     }
   },
   data() {
@@ -142,13 +148,17 @@ export default {
   watch: {
     src(val) {
       this.resetCurrentUrl();
-      this.checkImgCache();
+      setTimeout(() => {
+        this.checkImgCache();
+      }, 300);
     }
   },
   created() {
     this.plusOpen = this.$util.plus.helper.isOpen();
     this.resetCurrentUrl();
-    this.checkImgCache();
+    setTimeout(() => {
+      this.checkImgCache();
+    }, 500);
   },
   mounted() {},
   methods: {
@@ -192,7 +202,7 @@ export default {
      *  */
 
     checkImgCache() {
-      if (!this.src || !this.plusOpen) {
+      if (!this.src || !this.plusOpen || !this.isCacheExist) {
         this.currentUrl = this.src;
         return;
       }
