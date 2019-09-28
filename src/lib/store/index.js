@@ -10,6 +10,7 @@ import diyScheme from "./diy/diyScheme";
 import product from "./product/product";
 import productSqlLite from "./product/product-sqllite";
 import user from "./system/user";
+import area from "./common/area";
 const store = new Vuex.Store({
   modules: {
     articleSqlLite,
@@ -20,7 +21,8 @@ const store = new Vuex.Store({
     diyScheme,
     product,
     user,
-    productSqlLite
+    productSqlLite,
+    area
   },
   strict: process.env.NODE_ENV !== "production"
 });

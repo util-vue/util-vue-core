@@ -128,6 +128,14 @@ class CommonUrl {
   get getNewDb() {
     return `${util.url.base.commonServer}/api/dataVersion/getNewDb`;
   }
+  //获取所有地区
+  get getAllAreaList(){
+  return `${util.url.base.commonServer}/api/area/GetAllAsync`;
+  }
+  //地址转经纬度
+  get addressToLngLat(){
+    return `${util.url.base.commonServer}/api/area/AddressToLngLat`;
+  }
 }
 
 /** 楼盘 */
