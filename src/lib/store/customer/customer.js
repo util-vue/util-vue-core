@@ -112,10 +112,11 @@ const actions = {
     });
   },
   /** 保存Uuid */
-  async saveUuidAsync({ dispatch, commit, state, rootState, rootGetters }) {
+  async saveUuidAsync({ dispatch, commit, state, rootState, rootGetters },type) {
     return await new Promise((resolve, reject) => {
       util.webApi.get({
         url: util.url.customerUrl.getUuid,
+        data: { "type": type },
         success: result => {
           commit("saveUuid", result);
           resolve(result);

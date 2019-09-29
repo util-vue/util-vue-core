@@ -32,16 +32,16 @@ const actions = {
     /**
    * 查询最新客户端版本
    * @param {*} param0 
-   * @param {设备类型} deviceType  
+   * @param {设备类型} clientCode  
    */
   async getClientVersion(
     { dispatch, commit, state, rootState, rootGetters },
-    deviceType
+    clientCode
   ) {
     return await new Promise((resolve, reject) => {
       util.webApi.get({
         url: util.url.commonUrl.getClientVersion,
-        data:{ DeviceType: deviceType },
+        data:{ ClientCode: clientCode },
         success: result => {
           resolve(result);
         },

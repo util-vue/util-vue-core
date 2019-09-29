@@ -171,4 +171,9 @@ export class IO {
     };
     img.src = url;
   }
+  /**打开文件 _doc/a.pdf*/
+  openFile(filename){
+    plus.runtime.openFile(filename);
+  }
+  
 }

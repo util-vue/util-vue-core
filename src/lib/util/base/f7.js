@@ -9,4 +9,5 @@ export class F7 {
   initFramework7App(app) {
     this.f7App = app;
   }
+  
 }
