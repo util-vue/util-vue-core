@@ -20,6 +20,7 @@ const actions = {
       util.webApi.get({
         url: util.url.commonUrl.getNewDb,
         data: JSON.stringify(queryParam),
+        loading: true,
         success: result => {
           resolve(result);
         },
@@ -42,6 +43,7 @@ const actions = {
       util.webApi.get({
         url: util.url.commonUrl.getClientVersion,
         data:{ ClientCode: clientCode },
+        loading: true,
         success: result => {
           resolve(result);
         },

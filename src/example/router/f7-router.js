@@ -8,6 +8,7 @@ import UtilNavSearch from "./../util-nav/util-nav-search.vue";
 import sqlLite from "./../sqlLite/sql-lite.vue";
 import comment from "./../http/comment.vue";
 import Area from "./../area/area.vue";
+import Version from "./../plus/version.vue";
 export default [
   {
     path: "/",
@@ -20,6 +21,10 @@ export default [
   {
     path: "/utilNav",
     component: UtilNav
+  },
+  {
+    path: "/version",
+    component: Version
   },
   {
     path: "/utilNavSearch",

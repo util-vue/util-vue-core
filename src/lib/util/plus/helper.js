@@ -1,10 +1,6 @@
 import {
   util
 } from "./../../index.js";
-import {
-  plus
-} from "./index.js";
-
 /** plus工具类 */
 export class Helper {
   /** 是否启用了Plus */
@@ -13,10 +9,12 @@ export class Helper {
     return false;
   }
   getVersionCode() {
-    return plus.runtime.versionCode;
+    var data = plus.runtime.versionCode;
+    return data;
   }
   getVersion() {
-    return plus.runtime.version;
+    var data = plus.runtime.version;
+    return data;
   }
   //比较版本号
   compareVersion(localVersion, newVersion) {
@@ -33,20 +31,21 @@ export class Helper {
 
   // 调用第三方程序打开文件
   launchApp(url) {
+    console.log(url);
     if (plus.os.name == "Android") {
       plus.runtime.launchApplication({
         pname: "com.android.browser",
         extra: {
-          url:url
+          url: url
         }
       }, function (e) {
-        util.message.toast("打开失败"+e.message);
+        util.message.toast("打开失败" + e.message);
       });
     } else if (plus.os.name == "iOS") {
       plus.runtime.launchApplication({
-        action:url
+        action: url
       }, function (e) {
-        util.message.toast("打开失败"+e.message);
+        util.message.toast("打开失败" + e.message);
       });
     }
   }
