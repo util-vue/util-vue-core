@@ -128,12 +128,17 @@ class CommonUrl {
   get getNewDb() {
     return `${util.url.base.commonServer}/api/dataVersion/getNewDb`;
   }
-
-   /** 查询客户端版本 */
+  //获取所有地区
+  get getAllAreaList(){
+  return `${util.url.base.commonServer}/api/area/GetAllAsync`;
+  }
+  //地址转经纬度
+  get addressToLngLat(){
+    return `${util.url.base.commonServer}/api/area/AddressToLngLat`;
+  }   /** 查询客户端版本 */
    get getClientVersion() {
     return `${util.url.base.commonServer}/api/ClientVersion/GetClientVersion`;
-  }
-}
+  }}
 
 /** 楼盘 */
 class BuildingUrl {

@@ -7,6 +7,7 @@ import UtilNav from "./../util-nav/util-nav.vue";
 import UtilNavSearch from "./../util-nav/util-nav-search.vue";
 import sqlLite from "./../sqlLite/sql-lite.vue";
 import comment from "./../http/comment.vue";
+import Area from "./../area/area.vue";
 export default [
   {
     path: "/",
@@ -43,5 +44,10 @@ export default [
   {
     path: "/photoSwiper",
     component: PhotoSwiper
+  },
+  {
+    path: "/area",
+    component: Area
+    
   }
 ];

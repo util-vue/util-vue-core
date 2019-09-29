@@ -28,6 +28,9 @@
               <f7-list-item>
                 <f7-link href="/photoSwiper/">图片播放器</f7-link>
               </f7-list-item>
+              <f7-list-item>
+                <f7-link href="/area">地区选择</f7-link>
+              </f7-list-item>
             </f7-list>
           </f7-accordion-content>
         </f7-list-item>

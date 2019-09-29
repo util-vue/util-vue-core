@@ -15,6 +15,7 @@ import diyScheme from "./store/diy/diyScheme";
 import product from "./store/product/product";
 import productSqlLite from "./store/product/product-sqllite";
 import customer from "./store/customer/customer";
+import area from "./store/common/area";
 import { Orienter } from "./util/threejs/three.orienter";
 //注入组件
 import UtilImage from "./components/util-image.vue";
@@ -27,7 +28,7 @@ import UtilInputNumber from "./components/util-input-number.vue";
 import UtilLayoutItem from "./components/util-layout-item.vue";
 import UtilPageLoadMore from "./components/util-page-load-more.vue";
 import UtilPageLoad from "./components/util-page-load.vue";
-
+import UtilInputArea from "./components/util-input-area.vue";
 const install = (Vue, options) => {
   Vue.prototype.$util = util;
   if (!options) return;
@@ -45,6 +46,7 @@ const install = (Vue, options) => {
   Vue.component("util-layout-item", UtilLayoutItem);
   Vue.component("util-page-load-more", UtilPageLoadMore);
   Vue.component("util-page-load", UtilPageLoad);
+  Vue.component("util-input-area", UtilInputArea);
 };
 
 if (typeof window !== "undefined" && window.Vue) {
@@ -64,7 +66,8 @@ export default {
     diyScheme,
     articleSqlLite,
     customer,
-    productSqlLite
+    productSqlLite,
+    area
   },
   threeJs: {
     Orienter

@@ -187,6 +187,7 @@ export class SqlLite {
      * @param {回调方法} callBack
      */
     executeSql(dbName, sql, callBack) {
+        var _self = this;
         this.openDb(util.url.setDb.databaseName, util.url.setDb.newDb + util.url.setDb.dbName, function (data) {
             plus.sqlite.executeSql({
                 name: dbName,
