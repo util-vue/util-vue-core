@@ -128,6 +128,11 @@ class CommonUrl {
   get getNewDb() {
     return `${util.url.base.commonServer}/api/dataVersion/getNewDb`;
   }
+
+   /** 查询客户端版本 */
+   get getClientVersion() {
+    return `${util.url.base.commonServer}/api/ClientVersion/GetClientVersion`;
+  }
 }
 
 /** 楼盘 */

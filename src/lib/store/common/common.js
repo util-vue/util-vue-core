@@ -29,6 +29,28 @@ const actions = {
       });
     });
   },
+    /**
+   * 查询最新客户端版本
+   * @param {*} param0 
+   * @param {设备类型} deviceType  
+   */
+  async getClientVersion(
+    { dispatch, commit, state, rootState, rootGetters },
+    deviceType
+  ) {
+    return await new Promise((resolve, reject) => {
+      util.webApi.get({
+        url: util.url.commonUrl.getClientVersion,
+        data:{ DeviceType: deviceType },
+        success: result => {
+          resolve(result);
+        },
+        error: () => {
+          resolve(false);
+        }
+      });
+    });
+  },
   /**
    * 获取附件列表
    * @param {*} param0 
