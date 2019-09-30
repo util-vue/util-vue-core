@@ -100,6 +100,12 @@ export default {
       default() {
         return false;
       }
+    },
+     /**是否缩略图*/
+    isThum:{
+         default() {
+        return false;
+      }
     }
   },
   data() {
@@ -202,9 +208,13 @@ export default {
      *  */
 
     checkImgCache() {
+      var  defaultDoc=null;
       if (!this.src || !this.plusOpen || !this.isCacheExist) {
         this.currentUrl = this.src;
         return;
+      }
+      if(this.isThum){
+         defaultDoc = "_doc/download/thum/";
       }
       var _self = this;
       this.$util.plus.io.loadCacheFile(
@@ -215,8 +225,7 @@ export default {
         },
         e => {
           _self.currentUrl = _self.src;
-        }
-      );
+        },defaultDoc);
     }
   },
   destroyed() {}

@@ -79,6 +79,7 @@ const actions = {
     return await new Promise((resolve, reject) => {
       var where = " where AttachmentId='" + data.id + "'";
       var sql ="UPDATE Attachment SET IsDownload=" + data.status+ where;
+      console.log("update="+sql);
       util.plus.sqllite.executeSql(util.url.setDb.databaseName, sql, function (data) {
         resolve(true);
       }, function (e) {
