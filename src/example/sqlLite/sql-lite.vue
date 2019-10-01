@@ -6,14 +6,16 @@
         <f7-list-item accordion-item title="SqlLite">
           <f7-accordion-content>
             <f7-list>
-              <f7-list-item @click="updateDb">
-                下载数据库
-              </f7-list-item>
-              <f7-list-item @click="init">
-                查詢
-              </f7-list-item>
-              <util-image size="2:1" :isCacheImg="true" src="http://www.dinggaojiaju.com:8004/Application/Admin/Common/kindeditor/attached/image/20181120/20181120092740_48542.jpg" mode="aspectFill"></util-image>
-
+              <f7-list-item @click="updateDb">下载数据库</f7-list-item>
+              <f7-list-item @click="init">查詢</f7-list-item>
+              <util-image
+                size="2:1"
+                 :isCacheExist="true" 
+                 :openCache="false"     
+                 :isThum="true" 
+                src="http://shopfile.touchodd.com/660739c6-4380-46a5-b355-f141b1d89769.jpg"
+                mode="aspectFill"
+              ></util-image>
             </f7-list>
           </f7-accordion-content>
         </f7-list-item>
@@ -39,7 +41,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("common", ["getNewDb"]),
+    ...mapActions("common", ["getNewDb","updateAccessoryStatus","getAccessoryList"]),
     ...mapActions("productSqlLite", [
       "getBrandSerialList",
       "getGoodsPage",
@@ -80,6 +82,7 @@ export default {
         console.log("---"+data);
       }); */
       this.getGoodsPage();
+       
     },
 
     //根据Code查询分类ID
@@ -87,8 +90,27 @@ export default {
       //var data = await this.getGoodsTagList({goodsId:"4f074818-d2b1-4667-91cc-907c1f42de83"});
       /*   var data = await this.getGoods({id:"4f074818-d2b1-4667-91cc-907c1f42de83"});
       console.log(JSON.stringify(data)); */
-      var result=await this.loginAsync(this.user);
-      console.log(JSON.stringify(result));
+      var self=this;
+      var updateData = await this.getAccessoryList();
+        updateData.forEach((items, index) => {
+        var url = items.Url +"?imageView2/2/w/300/h/300";
+        util.plus.io.loadUrlFileAndCache(
+          url,
+          function(d) {
+          var result = self.updateAccessoryStatus({
+            id: items.AttachmentId,
+            status: 1
+          });
+
+             console.log(JSON.stringify(d));
+          },
+          null,
+          null,
+         "_doc/download/thum/"
+        );
+      });
+
+
     },
     ///查询文章分页数据
     async pageList() {

@@ -113,7 +113,6 @@ export class IO {
   loadUrlFileAndCache(url, success, progress, error, defaultDoc) {
     if (!window.plus) {
       this.loadHttpImage(url, success, progress, error);
-
       return;
     }
     var _self = this;

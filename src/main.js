@@ -47,7 +47,7 @@ Vue.use(UtilVueCore, {
   serverConfig: {
     systemServer: "http://localhost:7001",
     buildingServer: "http://112.74.135.9:7002",
-    commonServer: "http://112.74.135.9:7001",
+    commonServer: "http://112.74.135.9:7002",
     productServer: "http://112.74.135.9:7003",
     diyServer: "http://112.74.135.9:7004",
     customerServer: "http://localhost:7007"

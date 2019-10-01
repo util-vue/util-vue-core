@@ -129,14 +129,12 @@ export class SqlLite {
 
     /**
      * 打开数据库
-     * @param {数据库名字} dbName 
-     * @param {数据库地址} dbPath 
      * @param {回调方法} callBack 
      */
-    openDb(dbName, dbPath, callBack) {
+    openDb(callBack) {
         plus.sqlite.openDatabase({
-            name: dbName,
-            path: dbPath,
+            name: util.url.setDb.databaseName,
+            path: util.url.setDb.newDb + util.url.setDb.dbName,
             success: function (e) {
                 if (callBack)
                     callBack(true)
@@ -157,19 +155,19 @@ export class SqlLite {
      */
     selectSql(dbName, selectSql, success, error) {
         var _self = this;
-        this.openDb(util.url.setDb.databaseName, util.url.setDb.newDb + util.url.setDb.dbName, function (data) {
+        this.openDb(function (data) {
             plus.sqlite.selectSql({
                 name: dbName,
                 sql: selectSql,
                 success: function (data) {
                     if (success)
                         success(data);
-                    _self.closeDb(util.url.setDb.databaseName);
+                    _self.closeDb();
                 },
                 fail: function (e) {
                     if (error)
                         error(e);
-                    _self.closeDb(util.url.setDb.databaseName);
+                    _self.closeDb();
                 }
             });
         }, function (e) {
@@ -188,35 +186,32 @@ export class SqlLite {
      */
     executeSql(dbName, sql, callBack) {
         var _self = this;
-        this.openDb(util.url.setDb.databaseName, util.url.setDb.newDb + util.url.setDb.dbName, function (data) {
+       this.openDb(function (data) { 
             plus.sqlite.executeSql({
                 name: dbName,
                 sql: sql,
                 success: function (data) {
                     if (callBack)
                         callBack(true);
-                    _self.closeDb(util.url.setDb.databaseName);
+                    _self.closeDb();
                 },
                 fail: function (e) {
                     if (callBack)
                         callBack(e);
-                    _self.closeDb(util.url.setDb.databaseName);
+                    _self.closeDb();
                 }
             })
-        }, function (e) {
-            if (callBack)
-                callBack(e);
-        });
+  
+        }); 
     }
 
     /**
      * 关闭数据库
-     * @param {数据库名字} dbName  
      * @param {回调方法} callBack
      */
-    closeDb(dbName, callBack) {
+    closeDb(callBack) {
         plus.sqlite.closeDatabase({
-            name: dbName,
+            name: util.url.setDb.databaseName,
             success: function (e) {
                 if (callBack)
                     callBack(true)
