@@ -138,7 +138,9 @@ class CommonUrl {
   }   /** 查询客户端版本 */
    get getClientVersion() {
     return `${util.url.base.commonServer}/api/ClientVersion/GetClientVersion`;
-  }}
+  }
+  
+}
 
 /** 楼盘 */
 class BuildingUrl {

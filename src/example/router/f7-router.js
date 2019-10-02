@@ -9,6 +9,8 @@ import sqlLite from "./../sqlLite/sql-lite.vue";
 import comment from "./../http/comment.vue";
 import Area from "./../area/area.vue";
 import Version from "./../plus/version.vue";
+import Images from "./../images/util-image.vue";
+import Camera from "./../images/camera.vue";
 export default [
   {
     path: "/",
@@ -17,6 +19,10 @@ export default [
   {
     path: "/http",
     component: Http
+  },
+  {
+    path: "/camera",
+    component: Camera
   },
   {
     path: "/utilNav",
@@ -54,5 +60,11 @@ export default [
     path: "/area",
     component: Area
     
+  },
+  {
+    path: "/images",
+    component: Images
+    
   }
+  
 ];

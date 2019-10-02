@@ -39,6 +39,7 @@
             maxlength="50"
             :placeholder="searchPlaceholder"
             @keypress="searchKeypress"
+            @focus="foucusClick"
           />
         </div>
       </f7-nav-title>
@@ -174,6 +175,10 @@ export default {
         if (e.currentTarget) e.currentTarget.blur();
         this.$emit("search", this.searchValue);
       }
+    },
+     /** 获取焦点事件 */
+    foucusClick(){
+    this.$emit("foucusClick", null);
     }
   }
 };

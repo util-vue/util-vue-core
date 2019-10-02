@@ -1,10 +1,6 @@
 <template>
   <f7-page>
-    <div class="list list-form inline-labels no-hairlines-md">
-      <ul>
-        <util-input-area lable="地区" :isShowIcon="false" required @changeAddress="changeAddress"></util-input-area>
-      </ul>
-    </div>
+        <util-input-area :isShowIcon="false" required @changeAddress="changeAddress"></util-input-area>
   </f7-page>
 </template>
 <script>
@@ -14,12 +10,6 @@ export default {
     return {
         address: {}
     };
-  },
-  methods: {
-    /** 修改地址 */
-    changeAddress(address) {
-      this.address = address;
-    }
   }
 };
 </script>

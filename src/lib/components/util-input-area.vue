@@ -1,17 +1,5 @@
 <template>
-  <li>
-    <div class="item-content item-input" :class="inputText ? 'item-input-with-value':''">
-      <span class="iconfont icon-icon_suozaidiqu" v-if="isShowIcon"></span>
-      <div class="item-inner">
-        <div class="item-title item-label ">
-          <span v-if="isShowRequiredIcon" style="color:#F40606">*</span>{{lable}}</div>
-        <div class="item-input-wrap">
-          <input type="text" :placeholder="placeholder" v-model="inputText" @click="openSelect" :required="required" validate onfocus="this.blur();">
-          <span @click="clearValue" class="input-clear-button"></span>
-        </div>
-      </div>
-    </div>
-  </li>
+       <input type="text" :placeholder="placeholder" v-model="inputText" @click="openSelect" :required="required" validate onfocus="this.blur();">
 </template>
 
 <script>
@@ -141,6 +129,65 @@ export default {
   }
 };
 </script>
-
-<style>
+<style scoped>
+.list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 0.5px solid #e2e2e2;
+  min-height: 117px;
+  margin: 0;
+  padding-left: 45px;
+  padding-right: 60px;
+  box-sizing: border-box;
+}
+.list.no-line{
+  border-bottom: 0;
+}
+.list .icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+}
+.list-name {
+  font-size: 28px;
+  color: #222222;
+}
+.list-value {
+  color: #666666;
+  font-size: 28px;
+  position: relative;
+  width: calc(100% - 200px);
+  text-align: right;
+}
+.list-value::after {
+  text-align: center;
+  display: block;
+  position: absolute;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  margin-top: -10px;
+  right: -20px;
+  content: "";
+  border-top: 1px solid #999999;
+  border-right: 1px solid #999999;
+  transform: rotate(45deg);
+}
+.list-value.input::after {
+  display: none;
+}
+.list-value img {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  margin: 10px 0;
+  float: right;
+}
+.list-value input {
+  width: 100%;
+  font-size: 28px;
+  text-align: right;
+}
 </style>

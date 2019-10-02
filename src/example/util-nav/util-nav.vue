@@ -31,14 +31,15 @@ export default {
       btns: [
         {
           ic: "iconfont icon-github",
-          click: this.git
+          c: this.git()
         }
       ]
     };
   },
   methods: {
     git() {
-      window.location.href = "https://github.com/util-vue/util-vue-core";
+      alert("Fdsa");
+      //window.location.href = "https://github.com/util-vue/util-vue-core";
     }
   }
 };

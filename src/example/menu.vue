@@ -64,30 +64,26 @@
                 <f7-link href="/version">获取版本号</f7-link>
               </f7-list-item>
             </f7-list>
-          </f7-accordion-content>
-        </f7-list-item>
-
-
-           <f7-list-item
-          accordion-item
-          title="SqlLite"
-        >
-          <f7-accordion-content>
-            <f7-list>
+              <f7-list>
               <f7-list-item>
                 <f7-link href="/sqlLite">SqlLite操作</f7-link>
+              </f7-list-item>
+                 <f7-list-item>
+                <f7-link href="/images">圖片</f7-link>
+              </f7-list-item>
+                    <f7-list-item>
+                <f7-link href="/camera">图片上传</f7-link>
               </f7-list-item>
             </f7-list>
           </f7-accordion-content>
         </f7-list-item>
-
-
       </f7-list>
     </f7-page-content>
   </f7-page>
 </template>
 
 <script>
+import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -99,11 +95,19 @@ export default {
       ]
     };
   },
+    mounted(){
+  },
   methods: {
-    git() {
+    /** 修改地址 */
+    changeAddress(address) {
+      this.address = address;
+    },
+   
+       git() {
       window.location.href = "https://github.com/util-vue/util-vue-core";
     }
   }
+
 };
 </script>
 

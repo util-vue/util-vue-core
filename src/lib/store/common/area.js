@@ -261,10 +261,11 @@ const actions = {
         state
     }) {
         return await new Promise((resolve, reject) => {
-            util.http.get({
+            util.webApi.get({
                 url: util.url.commonUrl.getAllAreaList,
                 loading: false,
                 success: function (result) {
+                    console.log(JSON.stringify(result));
                     commit('area', result);
                     commit('areaHasNull', result);
                     resolve(result)
@@ -282,7 +283,7 @@ const actions = {
         state
     }, addressDetail) {
         return await new Promise((resolve, reject) => {
-            util.http.get({
+            util.webApi.get({
                 url: util.url.commonUrl.addressToLngLat,
                 data: {
                     address: addressDetail

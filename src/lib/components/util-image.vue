@@ -95,15 +95,15 @@ export default {
         return "static/";
       }
     },
-    /**plus 检测本地图片是否存在 */
+    /**plus 检测网络本地图片是否存在 */
     isCacheExist: {
       default() {
         return false;
       }
     },
-     /**是否缩略图*/
-    isThum:{
-         default() {
+    /**是否缩略图*/
+    isThum: {
+      default() {
         return false;
       }
     }
@@ -160,7 +160,8 @@ export default {
     }
   },
   created() {
-    this.plusOpen = this.$util.plus.helper.isOpen();
+    if (this.isCacheExist || this.openCache)
+      this.plusOpen = this.$util.plus.helper.isOpen();
     this.resetCurrentUrl();
     setTimeout(() => {
       this.checkImgCache();
@@ -208,13 +209,13 @@ export default {
      *  */
 
     checkImgCache() {
-      var  defaultDoc=null;
+      var defaultDoc = null;
       if (!this.src || !this.plusOpen || !this.isCacheExist) {
         this.currentUrl = this.src;
         return;
       }
-      if(this.isThum){
-         defaultDoc = "_doc/download/thum/";
+      if (this.isThum) {
+        defaultDoc = "_doc/download/thum/";
       }
       var _self = this;
       this.$util.plus.io.loadCacheFile(
@@ -226,7 +227,9 @@ export default {
         e => {
           console.log(e);
           _self.currentUrl = _self.src;
-        },defaultDoc);
+        },
+        defaultDoc
+      );
     }
   },
   destroyed() {}

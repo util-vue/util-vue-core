@@ -29,6 +29,8 @@ import UtilLayoutItem from "./components/util-layout-item.vue";
 import UtilPageLoadMore from "./components/util-page-load-more.vue";
 import UtilPageLoad from "./components/util-page-load.vue";
 import UtilInputArea from "./components/util-input-area.vue";
+import UtilUploadMultiple from "./components/util-upload-multiple.vue";
+import UtilSingleUpload from "./components/util-upload.vue";
 const install = (Vue, options) => {
   Vue.prototype.$util = util;
   if (!options) return;
@@ -47,6 +49,8 @@ const install = (Vue, options) => {
   Vue.component("util-page-load-more", UtilPageLoadMore);
   Vue.component("util-page-load", UtilPageLoad);
   Vue.component("util-input-area", UtilInputArea);
+  Vue.component("util-upload-multiple", UtilUploadMultiple);
+  Vue.component("util-single-upload", UtilSingleUpload);
 };
 
 if (typeof window !== "undefined" && window.Vue) {

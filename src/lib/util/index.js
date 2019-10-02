@@ -26,6 +26,7 @@ var staticUtil = {
   webApi: new WebApi(),
   storage: new Storage(),
   actionSheet: new ActionSheet(),
+  httpClient: new HttpClient(),
   store: store,
   downloder: new Downloder(),
   plus: plus
