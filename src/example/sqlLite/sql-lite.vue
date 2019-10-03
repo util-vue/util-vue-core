@@ -45,6 +45,7 @@ export default {
       "getGoodsTagList",
       "getGoods"
     ]),
+        ...mapActions("building", ["buildingStylePagerQueryAsync"]),
     ...mapActions("customer", ["loginAsync"]),
     async updateDb() {
       util.loading.show("数据同步中,请稍后...");
@@ -83,10 +84,12 @@ export default {
 
     //根据Code查询分类ID
     async getGoodsPage() {
+      this.queryModel.pageSize = 1000;
+      var data = await this.buildingStylePagerQueryAsync(this.queryModel);
       //var data = await this.getGoodsTagList({goodsId:"4f074818-d2b1-4667-91cc-907c1f42de83"});
       /*   var data = await this.getGoods({id:"4f074818-d2b1-4667-91cc-907c1f42de83"});
       console.log(JSON.stringify(data)); */
-      var self = this;
+   /*    var self = this;
       var updateData = await this.getAccessoryList();
       updateData.forEach((items, index) => {
         var url = items.Url + "?imageView2/2/w/300/h/300";
@@ -104,7 +107,7 @@ export default {
           null,
           "_doc/download/thum/"
         );
-      });
+      }); */
     },
     ///查询文章分页数据
     async pageList() {

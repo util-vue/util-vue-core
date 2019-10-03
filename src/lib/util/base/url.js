@@ -209,7 +209,20 @@ class CustomerUrl {
   get getUuid() {
     return `${util.url.base.customerServer}/api/customer/getUuid`;
   }
+  /**社區/案例  添加*/
+  get sendCommunity(){
+    return `${util.url.base.customerServer}/api/Community`;
+  }
+  /**获取社区、案例 */
+  get communityPagerQuery(){
+    return `${util.url.base.customerServer}/api/Community`;
+  }
+ /**删除社区、案例 */
+ get deleteCommunity() {
+  return `${util.url.base.customerServer}/api/Community/Delete`;
+}
 
+  
 }
 
 /**
