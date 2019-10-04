@@ -8,7 +8,7 @@
             <f7-list>
               <f7-list-item @click="updateDb">下载数据库</f7-list-item>
               <f7-list-item @click="init">查詢</f7-list-item>
-            
+              <f7-list-item @click="add">新增</f7-list-item>
             </f7-list>
           </f7-accordion-content>
         </f7-list-item>
@@ -43,9 +43,11 @@ export default {
       "getBrandSerialList",
       "getGoodsPage",
       "getGoodsTagList",
-      "getGoods"
+      "getGoods",
+      "insertCollect",
+      "getCollectGoodsPage"
     ]),
-        ...mapActions("building", ["buildingStylePagerQueryAsync"]),
+    ...mapActions("building", ["buildingStylePagerQueryAsync"]),
     ...mapActions("customer", ["loginAsync"]),
     async updateDb() {
       util.loading.show("数据同步中,请稍后...");
@@ -81,15 +83,25 @@ export default {
       }); */
       this.getGoodsPage();
     },
-
+    add() {
+      this.ins();
+    },
+    async ins() {
+      var data = await this.insertCollect({
+        projectId: "fc51d6d6-dc43-46a4-b46e-6ba376eaa398"
+      });
+      console.log(data);
+    },
     //根据Code查询分类ID
     async getGoodsPage() {
-      this.queryModel.pageSize = 1000;
-      var data = await this.buildingStylePagerQueryAsync(this.queryModel);
+      var d = await this.getCollectGoodsPage(this.queryModel);
+      console.log(JSON.stringify(d));
+      //  this.queryModel.pageSize = 1000;
+      //var data = await this.buildingStylePagerQueryAsync(this.queryModel);
       //var data = await this.getGoodsTagList({goodsId:"4f074818-d2b1-4667-91cc-907c1f42de83"});
       /*   var data = await this.getGoods({id:"4f074818-d2b1-4667-91cc-907c1f42de83"});
       console.log(JSON.stringify(data)); */
-   /*    var self = this;
+      /*    var self = this;
       var updateData = await this.getAccessoryList();
       updateData.forEach((items, index) => {
         var url = items.Url + "?imageView2/2/w/300/h/300";

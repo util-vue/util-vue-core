@@ -1,5 +1,13 @@
 <template>
-       <input type="text" :placeholder="placeholder" v-model="inputText" @click="openSelect" :required="required" validate onfocus="this.blur();">
+  <input
+    type="text"
+    :placeholder="placeholder"
+    v-model="inputText"
+    @click="openSelect"
+    :required="required"
+    validate
+    onfocus="this.blur();"
+  />
 </template>
 
 <script>
@@ -38,6 +46,11 @@ export default {
       default() {
         return false;
       }
+    },
+    isLastText: {
+      default() {
+        return false;
+      }
     }
   },
   data() {
@@ -60,12 +73,13 @@ export default {
     value(val) {
       if (!val || !val.countyId) return;
       var _self = this;
-      this.inputText =
-        _self.value.province +
-        "-" +
-        _self.value.city +
-        "-" +
-        _self.value.county;
+      this.inputText = this.isLastText
+        ? _self.value.county
+        : _self.value.province +
+          "-" +
+          _self.value.city +
+          "-" +
+          _self.value.county;
       setTimeout(() => {
         _self.areaPicker.setValue([
           _self.value.provinceId,
@@ -82,15 +96,13 @@ export default {
   },
   async mounted() {
     if (this.value) {
-       this.inputText =
-        this.value.province +
-        "-" +
-        this.value.city +
-        "-" +
-        this.value.county;
+      this.inputText = this.isLastText
+        ? this.value.county
+        : this.value.province + "-" + this.value.city + "-" + this.value.county;
       this.$emit("change", this.value.countyId);
     }
     this.areaPicker = await this.createAreaPickerComponent(this.pickerChange);
+   
   },
   methods: {
     ...mapActions("area", ["createAreaPickerComponent"]),
@@ -107,12 +119,13 @@ export default {
     pickerChange(picker, id, level) {
       if (level !== 3) return;
       this.areaItem = this.getAreaAllItem(id);
-      this.inputText =
-        this.areaItem[0].name +
-        "-" +
-        this.areaItem[1].name +
-        "-" +
-        this.areaItem[2].name;
+      this.inputText = this.isLastText
+        ? this.areaItem[2].name
+        : this.areaItem[0].name +
+          "-" +
+          this.areaItem[1].name +
+          "-" +
+          this.areaItem[2].name;
       this.$emit("change", id);
       var items = this.getAreaAllItem(id);
       this.$emit("changeItems", items);

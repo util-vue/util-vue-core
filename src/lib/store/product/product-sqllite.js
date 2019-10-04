@@ -197,7 +197,112 @@ const actions = {
         resolve(e);
       });
     });
-  }
+  },
+
+  /**
+   * 添加收藏
+   * @param {*} param0 
+   * @param {*} data 
+   */
+  async insertCollect({ dispatch, commit, state, rootState, rootGetters }, data) {
+    return await new Promise((resolve, reject) => {
+      var timestamp=new Date().getTime();
+      var day2 = new Date();
+      day2.setTime(day2.getTime());
+      var s2 = day2.getFullYear()+"-" + (day2.getMonth()+1) + "-" + day2.getDate();
+      var sql ="INSERT INTO Collect  VALUES ('" +timestamp+ "',1,'" +data.projectId+ "','" +s2+ "')";
+      util.plus.sqllite.executeSql(util.url.setDb.databaseName, sql, function (data) {
+        resolve(true);
+      }, function (e) {
+        resolve(e);
+      });
+    });
+  },
+ /**
+   * 取消收藏
+   * @param {*} param0 
+   * @param {*} data 
+   */
+  async deleteCollect({ dispatch, commit, state, rootState, rootGetters }, data) {
+    return await new Promise((resolve, reject) => {
+      var sql ="DELETE FROM Collect WHERE CollectId='" + data.CollectId + "'";
+      util.plus.sqllite.executeSql(util.url.setDb.databaseName, sql, function (data) {
+        resolve(true);
+      }, function (e) {
+        resolve(e);
+      });
+    });
+  },
+
+  /**
+  * 获取收藏商品
+  * @param {*} param0 
+  * @param {*} data 
+  */
+ async getCollectGoodsPage({ dispatch, commit, state, rootState, rootGetters }, data) {
+  return await new Promise((resolve, reject) => {
+    var queryModel = new QueryModel();
+    var where = "where  b.Enabled=1 and b.State=2";
+    var order = "b.CreationTime DESC";
+    var limit = " limit (" + (data.page - 1) + ")" + "*" + data.pageSize + "," + data.pageSize;
+    if (data) {
+      if (data.keyword)
+        where += " and b.Name like  '%" + data.keyword + "%'";
+      if (data.code)
+        where += " and  b.Code ='" + data.code + "'";
+      if (data.categoryId)
+        where += " and  b.CategoryId ='" + data.categoryId + "'";
+      if (data.brandSerialId)
+        where += " and  b.BrandSerialId ='" + data.brandSerialId + "'";
+      if(data.collectType) 
+        where += " and  a.CollectType ='" + data.collectType + "'";
+      if (data.order)
+        order = data.order;
+    }
+    queryModel = data;
+    var sql = "select a.*,b.*  from Collect a LEFT JOIN  Goods b ON a.ProjectId = b.GoodsId " + where + "  ORDER BY " + order + limit;
+    console.log(sql);
+    var totalCountSql ="select count(*) as totalCount  from Collect a LEFT JOIN  Goods b ON a.ProjectId = b.GoodsId " + where
+    util.plus.sqllite.selectSql(util.url.setDb.databaseName, totalCountSql, function (data) {
+      queryModel.totalCount = data[0].totalCount;
+      queryModel.pageCount = Math.ceil(queryModel.totalCount / queryModel.pageSize);
+    })
+    util.plus.sqllite.selectSql(util.url.setDb.databaseName, sql, function (data) {
+      queryModel.extends(queryModel);
+      queryModel.data = data;
+      resolve(queryModel);
+    }, function (e) {
+      resolve(e);
+    });
+  });
+},
+
+  /**
+   * 查询收藏
+   * @param {*} param0 
+   * @param {*} data 
+   */
+  async getCollectList({ dispatch, commit, state, rootState, rootGetters }, data) {
+    return await new Promise((resolve, reject) => {
+      var where = "where  1=1";
+      if (data) {
+        if (data.id)
+            where += " and CollectId ='" + data.id + "'";
+         if (data.collectType)
+            where += " and CollectType ='" + data.collectType + "'";
+        if (data.projectId)
+          where += " and ProjectId ='" + data.projectId + "'";
+      }
+      var sql = "select * from Collect " + where ;
+      util.plus.sqllite.selectSql(util.url.setDb.databaseName, sql, function (data) {
+        resolve(data);
+      }, function (e) {
+        resolve(e);
+      });
+    });
+  },
+ 
+
 
 
 };

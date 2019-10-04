@@ -192,7 +192,6 @@ export default {
       this.$util.plus.io.loadUrlFileAndCache(
         this.src,
         newPath => {
-          console.log(JSON.stringify(newPath));
           _self.currentUrl = newPath.fullPath;
         },
         p => {
@@ -200,7 +199,6 @@ export default {
         },
         e => {
           _self.currentUrl = _self.src;
-          console.log(e);
         }
       );
     },
@@ -221,11 +219,9 @@ export default {
       this.$util.plus.io.loadCacheFile(
         this.src,
         newPath => {
-          console.log("检测图片路径=" + JSON.stringify(newPath));
           _self.currentUrl = newPath.fullPath;
         },
         e => {
-          console.log(e);
           _self.currentUrl = _self.src;
         },
         defaultDoc

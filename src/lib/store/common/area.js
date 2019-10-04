@@ -265,7 +265,6 @@ const actions = {
                 url: util.url.commonUrl.getAllAreaList,
                 loading: false,
                 success: function (result) {
-                    console.log(JSON.stringify(result));
                     commit('area', result);
                     commit('areaHasNull', result);
                     resolve(result)

@@ -162,7 +162,7 @@ const actions = {
         });
       });
     },
-  /** 删除评论 */
+  /** 删除社区 */
   async deleteCommunityAsync(
     { dispatch, commit, state, rootState, rootGetters },
     id

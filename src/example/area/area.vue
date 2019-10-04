@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-        <util-input-area :isShowIcon="false" required @changeAddress="changeAddress"></util-input-area>
+        <util-input-area :isLastText="true" required @changeAddress="changeAddress" :closeState="gb"></util-input-area>
   </f7-page>
 </template>
 <script>
@@ -10,6 +10,14 @@ export default {
     return {
         address: {}
     };
+  },
+  methods:{
+    changeAddress(val){
+          console.log(JSON.stringify(val));
+    },
+    gb(val){
+     console.log(JSON.stringify(val));
+    }
   }
 };
 </script>

@@ -96,8 +96,13 @@ export default {
     };
   },
     mounted(){
+      this.getArea();
   },
   methods: {
+        ...mapActions("area", ["getAreaAll"]),
+       async getArea() {
+      await this.getAreaAll();
+    },
     /** 修改地址 */
     changeAddress(address) {
       this.address = address;

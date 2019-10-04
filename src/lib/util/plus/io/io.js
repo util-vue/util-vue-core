@@ -70,6 +70,29 @@ export class IO {
     });
   }
 
+  /**
+ * 递归删除目录
+ * @param {删除文件、目录对象} entry 
+ * @param {回调成功方法} success 
+ * @param {失败} error 
+ */
+removeRecursivelyFile(path, success, error){
+    this.getFileEntry(path, function (f) {
+      f.removeRecursively(function (entry) {
+            if(success)
+                success(true);
+          }, function (e) {
+            if(error)
+                error(e.message);
+          }
+      );
+      },e=>{
+        if(error)
+        error(e);
+      });
+  }
+
+
 
   /** 打开或者创建文件 */
   openOrCrate(path, code, callBack) {

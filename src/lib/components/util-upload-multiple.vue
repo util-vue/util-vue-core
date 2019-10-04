@@ -71,6 +71,7 @@ export default {
   watch: {},
   async mounted() {
     //this.winWidth = window.innerWidth;
+    console.log("上传输出"+JSON.stringify(this.value));
   },
   methods: {
     /** 打开选择 */
@@ -90,7 +91,7 @@ export default {
             text: "拍照",
             onClick: function() {
               _self.$util.plus.camera.upload(result => {
-                _self.uploadSuccess([result]);
+                _self.uploadSuccess(result);
               });
             }
           },
@@ -118,6 +119,7 @@ export default {
     },
     /** 上传成功 */
     uploadSuccess(files) {
+      console.log(JSON.stringify(files));
       if (!this.value) this.$emit("change", []);
       this.value.push(files);
       this.$emit("change", this.value);
