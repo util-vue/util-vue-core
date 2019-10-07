@@ -20,32 +20,28 @@
           :value="model.token"
           @input="model.token = $event.target.value"
         ></f7-list-input>
-
       </f7-list>
       <f7-block>
         <f7-row>
           <f7-col>
-            <f7-button
-              @click="sendSms"
-              fill
-            >发送验证码</f7-button>
+            <f7-button @click="sendSms" fill>发送验证码</f7-button>
           </f7-col>
           <f7-col>
-            <f7-button
-              @click="login"
-              fill
-            >登录</f7-button>
+            <f7-button @click="login" fill>登录</f7-button>
           </f7-col>
         </f7-row>
       </f7-block>
       <f7-block>
         <f7-row>
           <f7-col>
-            <f7-button
-              fill
-              round
-              @click="sendGet"
-            >获取数据</f7-button>
+            <f7-button fill round @click="sendGet">获取数据</f7-button>
+          </f7-col>
+        </f7-row>
+      </f7-block>
+      <f7-block>
+        <f7-row>
+          <f7-col>
+            <f7-button fill round @click="edit">修改</f7-button>
           </f7-col>
         </f7-row>
       </f7-block>
@@ -64,19 +60,36 @@ export default {
         phoneNumber: "",
         token: "",
         application: "inhome-app"
+      },
+      dl: {
+        userName: "bobo",
+        password: "123",
+        uuid: "",
+        device: 4,
+        application: "inhome-app"
+      },
+      user: {
+        oldPassword: 123,
+        newPassword: 123456,
+        qrnewPassword: 123456
       }
     };
   },
   async mounted() {
-    debugger
     //var result = await this.autoLoginAsync();
   },
   methods: {
-    ...mapActions("user", [
+    /*     ...mapActions("user", [
       "sendLoginOrRegisterTokenAsync",
-      "loginAsync",
-      "autoLoginAsync"
-    ]),
+       "loginAsync",
+      "autoLoginAsync",
+      "editPassWordAsync"
+    ]), */
+    ...mapActions("user", ["autoLoginAsync", "editPassWordAsync"]),
+    ...mapActions("customer", ["loginAsync", "saveUuidAsync"]),
+    async edit() {
+      var data = await this.editPassWordAsync(this.user);
+    },
     /** 发送请求 */
     async sendGet() {
       var datas = await this.autoLoginAsync();
@@ -90,9 +103,11 @@ export default {
     },
     /** 发送请求 */
     async login() {
-      var result = await this.loginAsync(this.model);
+      var result = await this.loginAsync(this.dl);
+      console.log(result);
       if (!result) return;
       var datas = await this.autoLoginAsync(result);
+      console.log(datas);
     }
   }
 };

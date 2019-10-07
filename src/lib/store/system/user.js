@@ -90,7 +90,32 @@ const actions = {
         }
       });
     });
+  },
+/**
+ * 修改密码
+ * @param {} param0 
+ * @param {*} data 
+ */
+
+  async editPassWordAsync(
+    { dispatch, commit, getters, state, rootState, rootGetters },
+    data
+  ) {
+    return await new Promise((resolve, reject) => {
+      util.webApi.post({
+        url: util.url.system.editPassWord,
+        data: data,
+        loading: true,
+        success: result => {
+          resolve(true);
+        },
+        error: ()=> {
+          resolve(false);
+        }
+      });
+    });
   }
+  
 };
 
 export default {

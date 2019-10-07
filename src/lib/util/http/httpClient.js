@@ -102,13 +102,14 @@ export class HttpClient {
         axios.get(options.url, options).then(options.success, options.error);
         break;
       case "POST":
-        axios
-          .post(options.url, options.data)
+        console.log(JSON.stringify(options.data));
+          axios
+          .post(options.url,options.data,options)
           .then(options.success, options.error);
         break;
       case "PUT":
         axios
-          .put(options.url, options.data)
+          .put(options.url, options.data,options)
           .then(options.success, options.error);
         break;
       case "DELETE":

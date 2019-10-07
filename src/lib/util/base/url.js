@@ -116,6 +116,13 @@ class SystemUrl {
     return `${util.url.base.systemServer}/api/user/get`;
   }
 
+  /**修改密码 */
+  get editPassWord(){
+    return `${util.url.base.systemServer}/api/User/ChangePassword`;
+  }
+
+  
+
 }
 
 /** 楼盘 */
@@ -209,6 +216,16 @@ class CustomerUrl {
   get getUuid() {
     return `${util.url.base.customerServer}/api/customer/getUuid`;
   }
+ 
+  /**獲取客戶信息 */
+  get getCustomerInfo() {
+    return `${util.url.base.customerServer}/api/customer/GetFind`;
+  }
+ /**更新客户信息 */
+  get saveCustomerInfo(){
+    return `${util.url.base.customerServer}/api/customer/Save`;
+  }
+
   /**社區/案例  添加*/
   get sendCommunity(){
     return `${util.url.base.customerServer}/api/Community`;
