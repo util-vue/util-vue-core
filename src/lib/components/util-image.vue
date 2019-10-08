@@ -1,17 +1,22 @@
 <template>
   <img
+    v-if="type === '1'"
     @click="clickHandle"
     v-lazy:background-image=" currentUrl ? ( currentUrl + zoomUrl) : ''"
-    :data="currentUrl"
-    :key="src"
     :width="width"
     :height="height"
     :class="bindClass + ' replace-img' + (circular ?  ' circular' : '')"
-    :style="{
-        'background-size':modeStyle,
-        'border-radius':radius
-    }"
+    :style="{'background-size':modeStyle,'border-radius':radius}"
     :src="replaceSrc"
+  />
+  <img
+    v-else
+    @click="clickHandle"
+    v-lazy="currentUrl ? ( currentUrl + zoomUrl) : ''"
+    :width="width"
+    :height="height"
+    :class="bindClass + (circular ?  ' circular' : '')"
+    :style="{'border-radius':radius}"
   />
 </template>
 
@@ -77,6 +82,14 @@ export default {
         return "auto";
       }
     },
+    /**
+     * 类型： 1:默认：使用背景进行布局  2：使用src 直接渲染
+     */
+    type: {
+      default() {
+        return "1";
+      }
+    },
     /** 开启预览 (会使点击事件失效) */
     preview: {
       default() {
@@ -95,22 +108,15 @@ export default {
         return "static/";
       }
     },
-    /**plus 检测网络本地图片是否存在 */
-    isCacheExist: {
+    /** 使用的图片缓存路径 */
+    cacheDoc: {
       default() {
-        return false;
-      }
-    },
-    /**是否缩略图*/
-    isThum: {
-      default() {
-        return false;
+        return "_doc/download/";
       }
     }
   },
   data() {
     return {
-      alloyFinger: undefined,
       /** plus是否已经开启 */
       plusOpen: false,
       /** 图片真实加载地址 */
@@ -118,7 +124,11 @@ export default {
       /** 背景比例 横向比例 */
       backgroundSizeX: 100,
       /** 背景比例 纵向比例 */
-      backgroundSizeY: 100
+      backgroundSizeY: 100,
+      /** 本地图片存在检测 */
+      localCheck: false,
+      /** 缓存是否本地存在 */
+      isCacheExist: false
     };
   },
   computed: {
@@ -153,19 +163,14 @@ export default {
   },
   watch: {
     src(val) {
-      this.resetCurrentUrl();
-      setTimeout(() => {
-        this.checkImgCache();
-      }, 300);
+      this.checkImgCache();
     }
   },
   created() {
-    if (this.isCacheExist || this.openCache)
-      this.plusOpen = this.$util.plus.helper.isOpen();
-    this.resetCurrentUrl();
+    if (this.openCache) this.plusOpen = this.$util.plus.helper.isOpen();
     setTimeout(() => {
       this.checkImgCache();
-    }, 500);
+    }, 50);
   },
   mounted() {},
   methods: {
@@ -182,38 +187,13 @@ export default {
       }
       this.$emit("click", e);
     },
-    /** 重置 真实地址 */
-    resetCurrentUrl() {
-      if (!this.openCache || !this.src || !this.plusOpen) {
-        this.currentUrl = this.src;
-        return;
-      }
-      var _self = this;
-      this.$util.plus.io.loadUrlFileAndCache(
-        this.src,
-        newPath => {
-          _self.currentUrl = newPath.fullPath;
-        },
-        p => {
-          console.log(p);
-        },
-        e => {
-          _self.currentUrl = _self.src;
-        }
-      );
-    },
     /**
      * 检测图片是否缓存，是就返回本地路径
-     *  */
-
+     */
     checkImgCache() {
-      var defaultDoc = null;
-      if (!this.src || !this.plusOpen || !this.isCacheExist) {
+      if (!this.src || !this.plusOpen) {
         this.currentUrl = this.src;
         return;
-      }
-      if (this.isThum) {
-        defaultDoc = "_doc/download/thum/";
       }
       var _self = this;
       this.$util.plus.io.loadCacheFile(
@@ -224,7 +204,7 @@ export default {
         e => {
           _self.currentUrl = _self.src;
         },
-        defaultDoc
+        this.cacheDoc
       );
     }
   },
@@ -238,6 +218,7 @@ export default {
   background-position: center;
   background-repeat: no-repeat;
 }
+
 .circular {
   border-radius: 50%;
 }
