@@ -21,7 +21,9 @@ Framework7.use(Framework7Vue);
 import VueLazyload from "vue-lazyload";
 Vue.use(VueLazyload, {
   preLoad: 1.3,
-  attempt: 4
+  attempt: 4,
+  error: "./static/logo-bg.png",
+  loading: "./static/logo-bg.png",
 });
 
 import AlloyFinger from "alloyfinger";

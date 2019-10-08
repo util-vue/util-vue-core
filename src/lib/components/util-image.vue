@@ -2,7 +2,7 @@
   <img
     v-if="type === '1'"
     @click="clickHandle"
-    v-lazy:background-image=" currentUrl ? ( currentUrl + zoomUrl) : ''"
+    v-lazy:background-image="isCacheExist ? currentUrl : ( currentUrl ? ( currentUrl + zoomUrl) : '')"
     :width="width"
     :height="height"
     :class="bindClass + ' replace-img' + (circular ?  ' circular' : '')"
@@ -12,7 +12,7 @@
   <img
     v-else
     @click="clickHandle"
-    v-lazy="currentUrl ? ( currentUrl + zoomUrl) : ''"
+    v-lazy="isCacheExist ? currentUrl : ( currentUrl ? ( currentUrl + zoomUrl) : '')"
     :width="width"
     :height="height"
     :class="bindClass + (circular ?  ' circular' : '')"
@@ -125,8 +125,6 @@ export default {
       backgroundSizeX: 100,
       /** 背景比例 纵向比例 */
       backgroundSizeY: 100,
-      /** 本地图片存在检测 */
-      localCheck: false,
       /** 缓存是否本地存在 */
       isCacheExist: false
     };
@@ -192,6 +190,7 @@ export default {
      */
     checkImgCache() {
       if (!this.src || !this.plusOpen) {
+        this.isCacheExist = false;
         this.currentUrl = this.src;
         return;
       }
@@ -199,9 +198,11 @@ export default {
       this.$util.plus.io.loadCacheFile(
         this.src,
         newPath => {
+          this.isCacheExist = true;
           _self.currentUrl = newPath.fullPath;
         },
         e => {
+          this.isCacheExist = false;
           _self.currentUrl = _self.src;
         },
         this.cacheDoc
