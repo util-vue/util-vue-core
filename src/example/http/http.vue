@@ -64,7 +64,7 @@ export default {
       dl: {
         userName: "bobo",
         password: "123",
-        uuid: "",
+        uuid: undefined,
         device: 4,
         application: "inhome-app"
       },

@@ -1,5 +1,7 @@
 import Vue from "vue";
-import { util } from "./../index";
+import {
+  util
+} from "./../index";
 import axios from "axios";
 
 /** 请求客户端 */
@@ -31,9 +33,9 @@ export class HttpClient {
     } else {
       for (var i in param) {
         var k =
-          key == null
-            ? i
-            : key + (param instanceof Array ? "[" + i + "]" : "." + i);
+          key == null ?
+          i :
+          key + (param instanceof Array ? "[" + i + "]" : "." + i);
         paramStr += this.urlEncode(param[i], k, encode);
       }
     }
@@ -103,13 +105,13 @@ export class HttpClient {
         break;
       case "POST":
         console.log(JSON.stringify(options.data));
-          axios
-          .post(options.url,options.data,options)
+        axios
+          .post(options.url, options.data, options)
           .then(options.success, options.error);
         break;
       case "PUT":
         axios
-          .put(options.url, options.data,options)
+          .put(options.url, options.data, options)
           .then(options.success, options.error);
         break;
       case "DELETE":
@@ -126,11 +128,10 @@ export class HttpClient {
     }
     util.loading.show("请稍后");
     var task = plus.uploader.createUpload(
-      util.url.commonUrl.upload,
-      {
+      util.url.commonUrl.upload, {
         method: "POST"
       },
-      function(t, status) {
+      function (t, status) {
         util.loading.hide();
         //上传完成
         if (status == 200) {
@@ -161,7 +162,7 @@ export class HttpClient {
       util.message.toast("至少选择一个文件");
       return;
     }
-     this.uploadMultipleByPlusAsync(files, 0, callback, []);
+    this.uploadMultipleByPlusAsync(files, 0, callback, []);
 
   }
 
@@ -169,28 +170,27 @@ export class HttpClient {
     util.loading.show(`上传中...( ${uploadIndex + 1}/${files.length} )`);
     var _self = this;
     let task = plus.uploader.createUpload(
-      util.url.commonUrl.upload,
-      {
+      util.url.commonUrl.upload, {
         method: "POST"
       },
-      function(t, status) {
+      function (t, status) {
         //上传完成
         if (status == 200) {
           let result = JSON.parse(t.responseText);
-          if (result.code === 1 ) {
+          if (result.code === 1) {
             fileResult.push(result.data);
             if (files.length === uploadIndex + 1) {
               util.loading.hide();
               callback(fileResult);
               return;
             }
-             uploadIndex += 1;
+            uploadIndex += 1;
             _self.uploadMultipleByPlusAsync(
               files,
               uploadIndex,
               callback,
               fileResult
-            ); 
+            );
           } else {
             util.loading.hide();
             util.message.toast(result.message);

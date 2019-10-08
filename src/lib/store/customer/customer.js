@@ -7,7 +7,7 @@ const state = {
 const getters = {
   /** 获取Uuid */
   uuid(state) {
-    return util.storage.getStorage(state.uuidKey);
+    return util.storage.getStorage(state.uuidKey) || undefined;
   }
 };
 
