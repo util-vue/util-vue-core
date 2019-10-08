@@ -1,4 +1,6 @@
-import { util } from "./../../index.js";
+import {
+  util
+} from "./../../index.js";
 /** 文件对象 */
 export class IO {
   /**获取私有文件目录对象 plus.io.PRIVATE_DOC|PRIVATE_WWW|PRIVATE_DOCUMENTS|PRIVATE_DOWNLOADS */
@@ -10,7 +12,9 @@ export class IO {
   /** 打开或者创建文件夹 */
   openOrCrateFolder(path, code, success, error) {
     this.getPrivateDocFileSystem(code, fs => {
-      fs.root.getDirectory(path, { create: true }, function (fileEntry) {
+      fs.root.getDirectory(path, {
+        create: true
+      }, function (fileEntry) {
         if (success)
           success(fileEntry);
       }, function (e) {
@@ -20,13 +24,13 @@ export class IO {
     });
   }
   /**
- * 移动文件
- * @param {原始文件对象} fileEntry 
- * @param {移动到目标文件夹对象} dstEntry 
- * @param {文件新名称} newName 
- * @param {回调成功方法} callback 
- * @param {失败} error 
- */
+   * 移动文件
+   * @param {原始文件对象} fileEntry 
+   * @param {移动到目标文件夹对象} dstEntry 
+   * @param {文件新名称} newName 
+   * @param {回调成功方法} callback 
+   * @param {失败} error 
+   */
   moveFile(fileEntry, dstEntry, newName, success, error) {
     fileEntry.moveTo(dstEntry, newName, function (entry) {
       if (success)
@@ -38,8 +42,8 @@ export class IO {
 
   }
   /**
- * 获取fileEntry
- */
+   * 获取fileEntry
+   */
   getFileEntry(path, callback, error) {
     plus.io.resolveLocalFileSystemURL(
       path,
@@ -55,41 +59,40 @@ export class IO {
   }
 
   /**
- * 删除文件/删除目录
- * @param {删除文件、目录对象} entry 
- * @param {回调成功方法} success 
- * @param {失败} error 
- */
+   * 删除文件/删除目录
+   * @param {删除文件、目录对象} entry 
+   * @param {回调成功方法} success 
+   * @param {失败} error 
+   */
   removeFile(entry, success, error) {
     entry.remove(function (entry) {
-      if(success)
-          success(true);
+      if (success)
+        success(true);
     }, function (e) {
-      if(error)
-         error(e.message);
+      if (error)
+        error(e.message);
     });
   }
 
   /**
- * 递归删除目录
- * @param {删除文件、目录对象} entry 
- * @param {回调成功方法} success 
- * @param {失败} error 
- */
-removeRecursivelyFile(path, success, error){
+   * 递归删除目录
+   * @param {删除文件、目录对象} entry 
+   * @param {回调成功方法} success 
+   * @param {失败} error 
+   */
+  removeRecursivelyFile(path, success, error) {
     this.getFileEntry(path, function (f) {
       f.removeRecursively(function (entry) {
-            if(success)
-                success(true);
-          }, function (e) {
-            if(error)
-                error(e.message);
-          }
-      );
-      },e=>{
-        if(error)
-        error(e);
+        if (success)
+          success(true);
+      }, function (e) {
+        if (error)
+          error(e.message);
       });
+    }, e => {
+      if (error)
+        error(e);
+    });
   }
 
 
@@ -97,7 +100,9 @@ removeRecursivelyFile(path, success, error){
   /** 打开或者创建文件 */
   openOrCrate(path, code, callBack) {
     this.getPrivateDocFileSystem(code, fs => {
-      fs.root.getFile(path, { create: true }, function (fileEntry) {
+      fs.root.getFile(path, {
+        create: true
+      }, function (fileEntry) {
         return fileEntry;
       });
     });
@@ -186,7 +191,9 @@ removeRecursivelyFile(path, success, error){
   loadHttpImage(url, success, progress, error) {
     var img = document.createElement("img");
     img.onload = () => {
-      if (success) success({ fullPath: url });
+      if (success) success({
+        fullPath: url
+      });
     };
     img.onerror = () => {
       if (error) error("加载失败");
@@ -194,8 +201,22 @@ removeRecursivelyFile(path, success, error){
     img.src = url;
   }
   /**打开文件 _doc/a.pdf*/
-  openFile(filename){
+  openFile(filename) {
     plus.runtime.openFile(filename);
   }
-  
+
+  // 保存图片到相册中 
+  savePicture(successCB, errorCB, defaultDoc) {
+    defaultDoc = defaultDoc || "_doc/";
+    plus.gallery.save("_doc/a.jpg", function () {
+      console.log("ok");
+      if (successCB)
+        successCB(true)
+    }, function (e) {
+      console.log(JSON.stringify(e));
+      if (errorCB)
+        errorCB(false)
+    });
+  }
+
 }

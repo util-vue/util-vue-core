@@ -19,7 +19,7 @@
               <f7-list-item>
                 <f7-link href="/http/">数据请求</f7-link>
               </f7-list-item>
-               <f7-list-item>
+              <f7-list-item>
                 <f7-link href="/comment/">评论</f7-link>
               </f7-list-item>
               <f7-list-item>
@@ -31,7 +31,7 @@
               <f7-list-item>
                 <f7-link href="/area">地区选择</f7-link>
               </f7-list-item>
-           
+
             </f7-list>
           </f7-accordion-content>
         </f7-list-item>
@@ -60,18 +60,19 @@
               <f7-list-item>
                 <f7-link href="/utilNavSearch/">带有搜索搜索</f7-link>
               </f7-list-item>
-                 <f7-list-item>
+              <f7-list-item>
                 <f7-link href="/version">获取版本号</f7-link>
               </f7-list-item>
+              <f7-list-item>
+                <f7-link href="/images">圖片</f7-link>
+              </f7-list-item>
             </f7-list>
-              <f7-list>
+            <f7-list>
               <f7-list-item>
                 <f7-link href="/sqlLite">SqlLite操作</f7-link>
               </f7-list-item>
-                 <f7-list-item>
-                <f7-link href="/images">圖片</f7-link>
-              </f7-list-item>
-                    <f7-list-item>
+
+              <f7-list-item>
                 <f7-link href="/camera">图片上传</f7-link>
               </f7-list-item>
             </f7-list>
@@ -95,24 +96,23 @@ export default {
       ]
     };
   },
-    mounted(){
-      this.getArea();
+  mounted() {
+    this.getArea();
   },
   methods: {
-        ...mapActions("area", ["getAreaAll"]),
-       async getArea() {
+    ...mapActions("area", ["getAreaAll"]),
+    async getArea() {
       await this.getAreaAll();
     },
     /** 修改地址 */
     changeAddress(address) {
       this.address = address;
     },
-   
-       git() {
+
+    git() {
       window.location.href = "https://github.com/util-vue/util-vue-core";
     }
   }
-
 };
 </script>
 
