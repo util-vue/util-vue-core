@@ -35,7 +35,7 @@ class BaseUrl {
   get productServer() {
     return this._productServer;
   }
-  
+
   /** 用户服务器地址 */
   get customerServer() {
     return this._customerServer;
@@ -55,7 +55,7 @@ class BaseUrl {
   parseURL(url) {
     var a = document.createElement("a");
     a.href = url;
-    return {
+    var result = {
       source: url,
       protocol: a.protocol.replace(":", ""),
       host: a.hostname,
@@ -76,12 +76,13 @@ class BaseUrl {
         }
         return ret;
       })(),
-      file: (a.pathname.match(/\/([^\/?#]+)$/i) || [, ""])[1],
+      file: decodeURI((a.pathname.match(/\/([^\/?#]+)$/i) || [, ""])[1]),
       hash: a.hash.replace("#", ""),
       path: a.pathname.replace(/^([^\/])/, "/$1"),
       relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [, ""])[1],
       segments: a.pathname.replace(/^\//, "").split("/")
     };
+    return result;
   }
 
   /** url参数进行序列化 */
@@ -117,12 +118,9 @@ class SystemUrl {
   }
 
   /**修改密码 */
-  get editPassWord(){
+  get editPassWord() {
     return `${util.url.base.systemServer}/api/User/ChangePassword`;
   }
-
-  
-
 }
 
 /** 楼盘 */
@@ -136,17 +134,16 @@ class CommonUrl {
     return `${util.url.base.commonServer}/api/dataVersion/getNewDb`;
   }
   //获取所有地区
-  get getAllAreaList(){
-  return `${util.url.base.commonServer}/api/area/GetAllAsync`;
+  get getAllAreaList() {
+    return `${util.url.base.commonServer}/api/area/GetAllAsync`;
   }
   //地址转经纬度
-  get addressToLngLat(){
+  get addressToLngLat() {
     return `${util.url.base.commonServer}/api/area/AddressToLngLat`;
-  }   /** 查询客户端版本 */
-   get getClientVersion() {
+  } /** 查询客户端版本 */
+  get getClientVersion() {
     return `${util.url.base.commonServer}/api/ClientVersion/GetClientVersion`;
   }
-  
 }
 
 /** 楼盘 */
@@ -187,11 +184,10 @@ class ProductUrl {
 
 /** 用户 */
 class CustomerUrl {
-
-  get login(){
+  get login() {
     return `${util.url.base.customerServer}/api/Customer/Login`;
   }
-   
+
   /** 发送评论 */
   get sendComment() {
     return `${util.url.base.customerServer}/api/commonComment`;
@@ -216,30 +212,28 @@ class CustomerUrl {
   get getUuid() {
     return `${util.url.base.customerServer}/api/customer/getUuid`;
   }
- 
+
   /**獲取客戶信息 */
   get getCustomerInfo() {
     return `${util.url.base.customerServer}/api/customer/GetFind`;
   }
- /**更新客户信息 */
-  get saveCustomerInfo(){
+  /**更新客户信息 */
+  get saveCustomerInfo() {
     return `${util.url.base.customerServer}/api/customer/Save`;
   }
 
   /**社區/案例  添加*/
-  get sendCommunity(){
+  get sendCommunity() {
     return `${util.url.base.customerServer}/api/Community`;
   }
   /**获取社区、案例 */
-  get communityPagerQuery(){
+  get communityPagerQuery() {
     return `${util.url.base.customerServer}/api/Community`;
   }
- /**删除社区、案例 */
- get deleteCommunity() {
-  return `${util.url.base.customerServer}/api/Community/Delete`;
-}
-
-  
+  /**删除社区、案例 */
+  get deleteCommunity() {
+    return `${util.url.base.customerServer}/api/Community/Delete`;
+  }
 }
 
 /**
@@ -252,7 +246,7 @@ class SetDb {
   get newDb() {
     return "_doc/download/db/";
   }
-  get dbName() { 
+  get dbName() {
     return "daogou.db";
   }
   get databaseName() {
