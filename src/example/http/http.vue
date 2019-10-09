@@ -24,24 +24,38 @@
       <f7-block>
         <f7-row>
           <f7-col>
-            <f7-button @click="sendSms" fill>发送验证码</f7-button>
+            <f7-button
+              @click="sendSms"
+              fill
+            >发送验证码</f7-button>
           </f7-col>
           <f7-col>
-            <f7-button @click="login" fill>登录</f7-button>
+            <f7-button
+              @click="login"
+              fill
+            >登录</f7-button>
           </f7-col>
         </f7-row>
       </f7-block>
       <f7-block>
         <f7-row>
           <f7-col>
-            <f7-button fill round @click="sendGet">获取数据</f7-button>
+            <f7-button
+              fill
+              round
+              @click="sendGet"
+            >获取数据</f7-button>
           </f7-col>
         </f7-row>
       </f7-block>
       <f7-block>
         <f7-row>
           <f7-col>
-            <f7-button fill round @click="edit">修改</f7-button>
+            <f7-button
+              fill
+              round
+              @click="edit"
+            >修改</f7-button>
           </f7-col>
         </f7-row>
       </f7-block>
