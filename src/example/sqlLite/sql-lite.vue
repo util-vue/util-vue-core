@@ -52,14 +52,16 @@ export default {
     async updateDb() {
       util.loading.show("数据同步中,请稍后...");
       var data = await this.getNewDb();
+      console.log(JSON.stringify(data));
       var _self = this;
       if (data) {
         var versionNumber = util.storage.getStorage("VersionNumber");
-        if (versionNumber < data.versionNumber) {
+      
           util.storage.setStorage("VersionNumber", data.versionNumber);
           util.plus.sqllite.updateDb(
             data.dataUpdateAddress,
             function(d) {
+                     console.log("下载完成");
               util.loading.hide();
             },
             function(e) {
@@ -67,9 +69,7 @@ export default {
               util.message.alert("数据同步失败");
             }
           );
-        } else {
-          util.loading.hide();
-        }
+    
       }
     },
 
