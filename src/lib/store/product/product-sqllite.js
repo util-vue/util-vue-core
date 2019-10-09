@@ -301,6 +301,28 @@ const actions = {
       });
     });
   },
+
+
+
+  
+  /**
+   * 查询商户
+   * @param {*} param0 
+   * @param {*} data 
+   */
+  async getMerchantList({ dispatch, commit, state, rootState, rootGetters }, id) {
+    return await new Promise((resolve, reject) => {
+      var where = "where  1=1 ";
+        if (id)
+            where += " and MerchantId ='" + id + "'";
+      var sql = "select * from  Merchant " + where ;
+      util.plus.sqllite.selectSql(util.url.setDb.databaseName, sql, function (data) {
+        resolve(data);
+      }, function (e) {
+        resolve(e);
+      });
+    });
+  },
  
 
 

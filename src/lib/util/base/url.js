@@ -215,7 +215,7 @@ class CustomerUrl {
 
   /**獲取客戶信息 */
   get getCustomerInfo() {
-    return `${util.url.base.customerServer}/api/customer/GetFind`;
+    return `${util.url.base.customerServer}/api/customer/LoginCustomer`;
   }
   /**更新客户信息 */
   get saveCustomerInfo() {
@@ -233,6 +233,11 @@ class CustomerUrl {
   /**删除社区、案例 */
   get deleteCommunity() {
     return `${util.url.base.customerServer}/api/Community/Delete`;
+  }
+
+   /**创建意见反馈 */
+   get feedbackCreate() {
+    return `${util.url.base.customerServer}/api/Feedback/CreateAsycn`;
   }
 }
 

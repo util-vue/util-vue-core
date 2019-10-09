@@ -48,4 +48,11 @@ export class Helper {
     }
   }
 
+
+  //拨打电话
+ dial(phone) {
+	plus.device.dial(phone, false);
+}
+    
+
 }

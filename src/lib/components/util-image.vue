@@ -17,10 +17,13 @@
     :height="height"
     :class="bindClass + (circular ?  ' circular' : '')"
     :style="{'border-radius':radius}"
+    ref="img"
   />
 </template>
 
 <script>
+import AlloyFinger from "AlloyFinger";
+var timeOutEvent = 0; //定时器
 export default {
   props: {
     /**图片地址**/
@@ -113,6 +116,12 @@ export default {
       default() {
         return "_doc/download/";
       }
+    },
+    /**是否保存到相册 */
+    isSavePicture: {
+      default() {
+        return false;
+      }
     }
   },
   data() {
@@ -170,7 +179,9 @@ export default {
       this.checkImgCache();
     }, 50);
   },
-  mounted() {},
+  mounted() {
+    this.saveImg();
+  },
   methods: {
     /** 点击事件 */
     clickHandle(e) {
@@ -207,6 +218,22 @@ export default {
         },
         this.cacheDoc
       );
+    },
+    saveImg() {
+      if (!this.isSavePicture) return;
+      var self = this;
+      var img=self.$refs.img;
+      new AlloyFinger(img, {
+        longTap: function(evt) {
+          timeOutEvent = setTimeout(function() {
+            self.$util.message.confirm("是否保存到相册?", function() {
+              self.$util.plus.io.savePicture(self.src, function() {
+                self.$util.message.toast("保存成功");
+              });
+            });
+          }, 500);
+        }
+      });
     }
   },
   destroyed() {}

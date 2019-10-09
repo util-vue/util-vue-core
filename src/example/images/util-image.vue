@@ -1,12 +1,11 @@
 <template>
   <f7-page>
-    <util-image
-      size="2:1"
-      :isCacheExist="true"
-      src="./static/bg.jpg"
-      mode="aspectFill"
-    ></util-image>
-
+       <util-image
+               src="http://www.fd11111.com/Up/day_161211/201612112214455683.jpg"
+              :openCache="true"
+              type="2"
+              zoom="3240"
+            ></util-image>
     <img
       ref="img"
       src="http://www.fd11111.com/Up/day_161211/201612112214455683.jpg"
@@ -19,14 +18,18 @@
 <script>
 var timeOutEvent = 0; //定时器
 export default {
-  
+  mounted(){
+    var img=['http://www.fd11111.com/Up/day_161211/201612112214455683.jpg','https://p0.ssl.qhimgs4.com/t0145f76d219a128e0b.jpg']
+    this.$util.plus.io.loadUrlFileAndCacheArray(img,d=>{
+      console.log(JSON.stringify(d));
+    });
+  },
+
   methods: {
     touchstart: function(e){
          var self=this;
         timeOutEvent = setTimeout(function(){
-          //此处为长按事件-----在此显示遮罩层及删除按钮
-          console.log("此处为长按事件-----在此显示遮罩层及删除按钮");
-          self.$util.plus.io.savePicture(function(){
+          self.$util.plus.io.savePicture("http://www.fd11111.com/Up/day_161211/201612112214455683.jpg",function(){
             alert("保存成功");
           });
         },500);
@@ -38,8 +41,7 @@ export default {
     },
     touchend: function(e){
         clearTimeout(timeOutEvent);
-        if(timeOutEvent!=0){//点击
-          //此处为点击事件----在此处添加跳转详情页
+        if(timeOutEvent!=0){
             console.log("点击");
         }
         return false;

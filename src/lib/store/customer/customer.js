@@ -192,14 +192,36 @@ const actions = {
         url: util.url.customerUrl.saveCustomerInfo,
         data: params,
         success: result => {
-          resolve(result);
+          resolve(true);
         },
         error: e => {
-          resolve(e);
+          resolve(false);
         }
       });
     });
   },
+
+
+    /**创建意见反馈*/
+    async createFeedback(
+      { dispatch, commit, state, rootState, rootGetters },
+      params
+    ) {
+      return await new Promise((resolve, reject) => {
+        util.webApi.post({
+          url: util.url.customerUrl.feedbackCreate,
+          data: params,
+          loading: true,
+          success: result => {
+            resolve(true);
+          },
+          error: e => {
+            resolve(false);
+          }
+        });
+      });
+    },
+
 
   /** 保存Uuid */
   async saveUuidAsync({ dispatch, commit, state, rootState, rootGetters },type) {

@@ -1,4 +1,6 @@
-import { util } from "./../index";
+import {
+  util
+} from "./../index";
 
 /** 下载组件 */
 export class Downloder {
@@ -13,17 +15,23 @@ export class Downloder {
       return;
     }
     var filename = defaultDoc + url.file;
+    var newName = defaultDoc + util.helper.getUUID() + url.file;
     var task = plus.downloader.createDownload(
-      url.source,
-      {
-        filename,
+      url.source, {
+        newName,
         retry: 5,
         retryInterval: 10
       },
       (download, status) => {
         //下载完成
         if (status == 200) {
-          util.plus.io.loadCacheFile(url.source, success, error,defaultDoc);
+          util.plus.io.getFileEntry(defaultDoc, f => {
+            util.plus.io.getFileEntry(newName, function (fileEntrys) {
+              fileEntrys.moveTo(f, url.file, function (entry) {
+                util.plus.io.loadCacheFile(url.source, success, error, defaultDoc);
+              }, error);
+            }, error);
+          });
         } else {
           if (error) error(download.filename);
         }

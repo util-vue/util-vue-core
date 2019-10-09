@@ -162,6 +162,43 @@ export class IO {
     );
   }
 
+
+  /** 批量加载网络文件 并进行本地缓存 */
+  loadUrlFileAndCacheArray(urlList, success, progress, error, defaultDoc) {
+    var _self = this;
+    var resultArray = [];
+    //判断本地文件是否存在
+    for (let i in urlList) {
+      this.isExistUrlFile(
+        urlList[i],
+        result => {
+          if (result) {
+            //如果文件存在  返回file
+            _self.loadCacheFile(urlList[i], function (data) {
+              resultArray.push(data.fullPath);
+              if (urlList.length - 1 == i) {
+                if (success)
+                  success(resultArray);
+              }
+            }, error, defaultDoc);
+            return;
+          }
+          util.downloder.download(urlList[i], function (d) {
+            resultArray.push(d.fullPath);
+            if (urlList.length - 1 == i) {
+              if (success)
+                success(resultArray);
+            }
+          }, progress, error, defaultDoc);
+        },
+        e => {
+          console.log(e);
+        }, defaultDoc);
+    }
+  }
+
+
+
   /**读取缓存文件 */
   loadCacheFile(url, success, error, defaultDoc) {
     defaultDoc = defaultDoc || "_doc/download/";
@@ -206,16 +243,18 @@ export class IO {
   }
 
   // 保存图片到相册中 
-  savePicture(successCB, errorCB, defaultDoc) {
-    defaultDoc = defaultDoc || "_doc/";
-    plus.gallery.save("_doc/a.jpg", function () {
-      console.log("ok");
-      if (successCB)
-        successCB(true)
-    }, function (e) {
-      console.log(JSON.stringify(e));
+  savePicture(path, successCB, errorCB) {
+    this.loadUrlFileAndCache(path, function (d) {
+      plus.gallery.save(d.fullPath, function () {
+        if (successCB)
+          successCB(true)
+      }, function (e) {
+        if (errorCB)
+          errorCB(false)
+      });
+    }, e => {
       if (errorCB)
-        errorCB(false)
+        errorCB(e)
     });
   }
 
