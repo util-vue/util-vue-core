@@ -28,6 +28,8 @@ export class Downloder {
       self.downloadTask(url, temporaryName, defaultDoc, success, error, progress);
     })
   }
+
+  //下载操作
   downloadTask(url, temporaryName, defaultDoc, success, error, progress) {
     var options = {
       filename: temporaryName,

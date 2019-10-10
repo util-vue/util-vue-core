@@ -59,7 +59,8 @@ export default {
 
 <style>
 .util-title.navbar .left{
-  width: 11% !important;
+  min-width: 11% !important;
+  width: auto!important;
 }
 .util-title.navbar .left i.icon{
   font-size: 36px;
