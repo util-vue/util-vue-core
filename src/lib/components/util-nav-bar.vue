@@ -58,4 +58,13 @@ export default {
 </script>
 
 <style>
+.util-title.navbar .left{
+  width: 11% !important;
+}
+.util-title.navbar .left i.icon{
+  font-size: 36px;
+}
+.util-title.navbar .title{
+   font-size: 36px;
+}
 </style>

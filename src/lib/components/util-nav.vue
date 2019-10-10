@@ -210,7 +210,9 @@ export default {
   font-size: var(--f7-navbar-title-font-size);
   font-family: "SourceHanSansSC-Bold";
 }
-
+.util-title  .title{
+  margin-left: 0px !important;
+}
 .util-title-default {
   height: 100%;
 }

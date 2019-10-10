@@ -1,5 +1,13 @@
 <template>
   <f7-page>
+      <util-nav
+      mode="1"
+      :isBack="true"
+      title="广告片"
+      background="#2C4949"
+      color="#ffffff"
+    ></util-nav>
+    
        <util-image
                src="http://www.fd11111.com/Up/day_161211/201612112214455683.jpg"
               :openCache="true"
