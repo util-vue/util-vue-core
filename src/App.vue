@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+     <f7-statusbar></f7-statusbar>
     <router-view />
   </div>
 </template>
