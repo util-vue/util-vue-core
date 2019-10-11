@@ -56,17 +56,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.util-title.navbar .left{
-  min-width: 11% !important;
-  width: auto!important;
-}
-.util-title.navbar .left i.icon{
-  font-size: 30px;
-}
-
-.util-title.navbar .title{
-   font-size: 30px;
-}
-</style>

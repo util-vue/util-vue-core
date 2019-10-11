@@ -155,25 +155,25 @@ export class SqlLite {
      */
     selectSql(dbName, selectSql, success, error) {
         var _self = this;
-        this.openDb(function (data) {
+       // this.openDb(function (data) {
             plus.sqlite.selectSql({
                 name: dbName,
                 sql: selectSql,
                 success: function (data) {
                     if (success)
                         success(data);
-                    _self.closeDb();
+                    //_self.closeDb();
                 },
                 fail: function (e) {
                     if (error)
                         error(e);
-                    _self.closeDb();
+                   // _self.closeDb();
                 }
             });
-        }, function (e) {
+     /*    }, function (e) {
             if (error)
                 error(e);
-        });
+        }); */
 
     }
 
@@ -186,23 +186,23 @@ export class SqlLite {
      */
     executeSql(dbName, sql, callBack) {
         var _self = this;
-       this.openDb(function (data) { 
+      // this.openDb(function (data) { 
             plus.sqlite.executeSql({
                 name: dbName,
                 sql: sql,
                 success: function (data) {
                     if (callBack)
                         callBack(true);
-                    _self.closeDb();
+                   // _self.closeDb();
                 },
                 fail: function (e) {
                     if (callBack)
                         callBack(e);
-                    _self.closeDb();
+                   // _self.closeDb();
                 }
             })
   
-        }); 
+        //}); 
     }
 
     /**
