@@ -17,28 +17,46 @@ export class SqlLite {
         var dbName = util.url.setDb.dbName;
         var urlFile = util.url.base.parseURL(url);
         util.downloder.download(url, function (file) {
-            util.plus.io.isExistFile(newPath + dbName, function (d) {
+            //_self.closeDb();
+        /*     _self.deleteFile(newPath,  () =>{
+                _self.moveFile(path + urlFile.file, newPath, dbName, d=> {
+                    if (success)
+                        success(d)
+                }, e=> {
+                    if (error)
+                        error(e);
+                });
+            },e=>{
+             if (error)
+                 error(e);
+            }) */
+            util.plus.io.isExistFile(newPath, d=> {
+               if(_self.isOpenDb())
+                  _self.closeDb();
                 if (d) {
-                    _self.deleteFile(dbName, newPath, function () {
-                        _self.moveFile(path + urlFile.file, newPath, dbName, function (d) {
+                    _self.deleteFile(newPath,  () =>{
+                        _self.moveFile(path + urlFile.file, newPath, dbName, data=> {
                             if (success)
-                                success(d)
-                        }, function (e) {
+                                success(data)
+                        }, e=> {
                             if (error)
                                 error(e);
                         });
+                    },er=>{
+                     if (error)
+                         error(er);
                     })
                 } else {
-                    _self.moveFile(path + urlFile.file, newPath, dbName, function (d) {
+                    _self.moveFile(path + urlFile.file, newPath, dbName, ret=> {
                         if (success)
-                            success(d)
-                    }, function (e) {
+                            success(ret)
+                    }, err=>{
                         if (error)
-                            error(e);
+                            error(err);
                     });
                 }
-            })
-        }, null, function (e) {
+            }) 
+        }, null, eerro=> {
             if (error)
                 error(e);
         }, path);
@@ -47,8 +65,15 @@ export class SqlLite {
     /**
      * 删除下载的数据库文件
     */
-    deleteFile(fileName, path, success, error) {
-        util.plus.io.getFileEntry(path + fileName, function (f) {
+    deleteFile(newPath, success, error) {
+        util.plus.io.removeRecursivelyFile(newPath, d=> {
+            if (success)
+            success(d);
+          }, e => {
+            if (error)
+              error(e);
+          }); 
+       /*  util.plus.io.getFileEntry(path + fileName, function (f) {
             util.plus.io.removeFile(f, function (d) {
                 if (success)
                     success(d);
@@ -59,7 +84,7 @@ export class SqlLite {
         }, function (e) {
             if (error)
                 error(e);
-        });
+        }); */
     }
 
     /**
@@ -203,6 +228,18 @@ export class SqlLite {
             })
   
         //}); 
+    }
+
+    /**
+     * 
+     * @param {判斷數據庫是不是打開} callBack 
+     */
+    isOpenDb(){
+       var val = plus.sqlite.isOpenDatabase({
+        name: util.url.setDb.databaseName,
+        path: util.url.setDb.newDb + util.url.setDb.dbName,
+        });
+       return val;
     }
 
     /**

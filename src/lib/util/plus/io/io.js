@@ -155,9 +155,7 @@ export class IO {
         }
         util.downloder.download(url, success, progress, error, defaultDoc);
       },
-      e => {
-        console.log(e);
-      },
+      e => {},
       defaultDoc
     );
   }
@@ -182,18 +180,21 @@ export class IO {
               }
             }, error, defaultDoc);
             return;
-          }
-          util.downloder.download(urlList[i], function (d) {
-            resultArray.push(d.fullPath);
+          } else {
             if (urlList.length - 1 == i) {
               if (success)
-                success(resultArray);
+                success(urlList);
             }
-          }, progress, error, defaultDoc);
+          }
+          /*      util.downloder.download(urlList[i], function (d) {
+                 resultArray.push(d.fullPath);
+                 if (urlList.length - 1 == i) {
+                   if (success)
+                     success(resultArray);
+                 }
+               }, progress, error, defaultDoc); */
         },
-        e => {
-          console.log(e);
-        }, defaultDoc);
+        e => {}, defaultDoc);
     }
   }
 

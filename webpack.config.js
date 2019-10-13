@@ -9,8 +9,8 @@ module.exports = {
     path: path.resolve(__dirname, "./dist"),
     publicPath: process.env.NODE_ENV === "production" ? "./" : "/dist/",
     filename: "build.js"
-  },  
- */
+  },   */
+
   //发布配置
   entry: "./src/lib/index.js",
   output: {
