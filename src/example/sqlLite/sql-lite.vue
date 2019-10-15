@@ -8,6 +8,8 @@
             <f7-list>
               <f7-list-item @click="updateDb">下载数据库</f7-list-item>
               <f7-list-item @click="init">同步资源</f7-list-item>
+              <f7-list-item @click="selectCatalog">商品目录</f7-list-item>
+              <f7-list-item @click="select">商品目录查询商品</f7-list-item>
             </f7-list>
           </f7-accordion-content>
         </f7-list-item>
@@ -38,6 +40,10 @@ export default {
       "getNewDb",
       "updateAccessoryStatus",
       "getAccessoryList"
+    ]),
+     ...mapActions("productSqlLite", [
+      "getCatalogList",
+      "getCatalogGoodsListPage"
     ]),
     async updateDb() {
       util.loading.show("数据同步中,请稍后...");
@@ -109,7 +115,29 @@ export default {
           );
         }
       });
+    },
+   async selectCatalog(){
+     util.plus.sqllite.openDb();
+       var data = await this.getCatalogList({level:1});
+       if(data.length>0){
+        var val = await this.getCatalogList({level:2,parentId:data[0].CatalogId});
+      }
+      if(val.length>0){
+         this.dataList= await this.getCatalogList({level:3,parentId:val[1].CatalogId});
+      }
+   },
+   async select(){
+      util.plus.sqllite.openDb();
+      if(this.dataList.length<1) return;
+      var arr=[];
+      this.dataList.forEach(item=>{
+        arr.push("'"+item.CatalogId+"'");
+      })
+      var val=arr.join();
+      this.queryModel.catalogId =val;
+      var data = await this.getCatalogGoodsListPage(this.queryModel);
     }
+  
   }
 };
 </script>
