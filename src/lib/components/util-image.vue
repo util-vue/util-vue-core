@@ -8,6 +8,7 @@
     :class="bindClass + ' replace-img' + (circular ?  ' circular' : '')"
     :style="{'background-size':modeStyle,'border-radius':radius}"
     :src="replaceSrc"
+    ref="imgRef"
   />
   <img
     v-else
@@ -17,7 +18,7 @@
     :height="height"
     :class="bindClass + (circular ?  ' circular' : '')"
     :style="{'border-radius':radius}"
-    ref="img"
+    ref="imgRef"
   />
 </template>
 
@@ -222,8 +223,9 @@ export default {
     saveImg() {
       if (!this.isSavePicture) return;
       var self = this;
-      var img=self.$refs.img;
-      new AlloyFinger(img, {
+      var img = self.$refs.imgRef;
+      if(!img) return;
+       new AlloyFinger(img, {
         longTap: function(evt) {
           timeOutEvent = setTimeout(function() {
             self.$util.message.confirm("是否保存到相册?", function() {
