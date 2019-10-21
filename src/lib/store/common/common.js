@@ -43,7 +43,6 @@ const actions = {
       util.webApi.get({
         url: util.url.commonUrl.getClientVersion,
         data:{ ClientCode: clientCode },
-        loading: true,
         success: result => {
           resolve(result);
         },
@@ -62,7 +61,6 @@ const actions = {
     return await new Promise((resolve, reject) => {
       var where = "where IsDownload is null  or IsDownload=0";
       var sql = "select * from Attachment " + where;
-      console.log("查询附件表sql="+sql);
       util.plus.sqllite.selectSql(util.url.setDb.databaseName, sql, function (data) {
         resolve(data);
       }, function (e) {
@@ -80,11 +78,9 @@ const actions = {
     return await new Promise((resolve, reject) => {
       var where = " where AttachmentId='" + data.id + "'";
       var sql ="UPDATE Attachment SET IsDownload=" + data.status+ where;
-      console.log("update="+sql);
       util.plus.sqllite.executeSql(util.url.setDb.databaseName, sql, function (data) {
         resolve(true);
       }, function (e) {
-        console.log("修改="+JSON.stringify(e));
         resolve(e);
       });
     });

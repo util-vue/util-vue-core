@@ -197,7 +197,6 @@ const actions = {
           order = data.order;
       }
       var sql = "select * from Catalog " + where + " ORDER BY " + order;
-      console.log(sql);
       util.plus.sqllite.selectSql(util.url.setDb.databaseName, sql, function (data) {
         resolve(data);
       }, function (e) {
@@ -222,6 +221,8 @@ const actions = {
       if (data) {
         if (data.catalogId)
           where += " and  a.CatalogId in  (" + data.catalogId + ")";
+        if (data.ids)
+          where += " and  a.GoodsId in  (" + data.ids + ")";
         if (data.keyword)
           where += " and b.Name like  '%" + data.keyword + "%'";
         if (data.code)
