@@ -18,7 +18,7 @@ const actions = {
   async getArticleContent({ dispatch, commit, state, rootState, rootGetters },data){
     return await new Promise((resolve, reject) => {
       var where = "where  Enabled=1";
-      var order="CreationTime";
+      var order="CreationTime desc";
       if (data) {
         if (data.articleChannelId)
           where += " and ArticleChannelId ='"+data.articleChannelId+"'" ;

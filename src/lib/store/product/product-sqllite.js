@@ -15,7 +15,7 @@ const actions = {
   async getBrandSerialList({ dispatch, commit, state, rootState, rootGetters }, data) {
     return await new Promise((resolve, reject) => {
       var where = "where  Enabled=1";
-      var order = "SortId DESC";
+      var order = "SortId asc";
       if (data) {
         if (data.code)
           where += " and  Code ='" + data.code + "'";
@@ -43,7 +43,7 @@ const actions = {
     return await new Promise((resolve, reject) => {
       var queryModel = new QueryModel();
       var where = "where  Enabled=1";
-      var order = "SortId DESC";
+      var order = "SortId asc";
       var limit = " limit (" + (data.page - 1) + ")" + "*" + data.pageSize + "," + data.pageSize;
       if (data) {
         if (data.code)
@@ -182,8 +182,8 @@ const actions = {
    */
   async getCatalogList({ dispatch, commit, state, rootState, rootGetters }, data) {
     return await new Promise((resolve, reject) => {
-      var where = "where  Enabled=1 ";
-      var order = "SortId DESC";
+      var where = "where  Enabled=1 and Type='Vendor' ";
+      var order = "SortId asc";
       if (data) {
         if (data.level)
           where += " and  Level =" + data.level + "";
@@ -236,7 +236,6 @@ const actions = {
       }
       queryModel = data;
       var sql = "select *  from (select a.*,b.*,c.* from CatalogGoods a   LEFT JOIN  Goods b  ON a.GoodsId = b.GoodsId  LEFT JOIN TagGoods c ON b.GoodsId = c.GoodsId " + where + " group by b.GoodsId  ORDER BY " + order + limit + " )  as d";
-     console.log(sql);
       var totalCountSql = "select count(*) as totalCount  from (select a.*,b.*,c.* from CatalogGoods a   LEFT JOIN  Goods b  ON a.GoodsId = b.GoodsId  LEFT JOIN TagGoods c ON b.GoodsId = c.GoodsId " + where + " group by b.GoodsId )  as d"
       util.plus.sqllite.selectSql(util.url.setDb.databaseName, totalCountSql, function (data) {
         queryModel.totalCount = data[0].totalCount;
