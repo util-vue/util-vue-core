@@ -18,7 +18,7 @@ const actions = {
   async getArticleContent({ dispatch, commit, state, rootState, rootGetters },data){
     return await new Promise((resolve, reject) => {
       var where = "where  Enabled=1";
-      var order="CreationTime desc";
+      var order="SortId asc";
       if (data) {
         if (data.articleChannelId)
           where += " and ArticleChannelId ='"+data.articleChannelId+"'" ;
@@ -44,7 +44,7 @@ const actions = {
     return await new Promise((resolve, reject) => {
       var  queryModel=new QueryModel();
       var where = "where  Enabled=1";
-      var order="CreationTime DESC";
+      var order="SortId asc";
       var limit=" limit ("+(data.page-1)+")"+"*"+data.pageSize+","+data.pageSize;
       if (data) {
         if(data.articleChannelId)
@@ -105,7 +105,7 @@ const actions = {
     return await new Promise((resolve, reject) => {
       var  queryModel=new QueryModel();
       var where = "where  Enabled=1";
-      var order="CreationTime DESC";
+      var order="SortId asc";
       var limit=" limit ("+(data.page-1)+")"+"*"+data.pageSize+","+data.pageSize;
       if (data) {
         if(data.title)  

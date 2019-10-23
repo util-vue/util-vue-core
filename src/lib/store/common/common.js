@@ -81,7 +81,23 @@ const actions = {
       util.plus.sqllite.executeSql(util.url.setDb.databaseName, sql, function (data) {
         resolve(true);
       }, function (e) {
-        resolve(e);
+        resolve(false);
+      });
+    });
+  },
+    /**
+   * 添加
+   * @param {*} param0 
+   * @param {*} data 
+   */
+  async  insertAccessory({ dispatch, commit, state, rootState, rootGetters }, data) {
+    return await new Promise((resolve, reject) => {
+      var sql ="INSERT INTO Attachment VALUES ('" + data.AttachmentId + "','" + data.Name + "','" + data.Size + "','" + data.SizeExplain + "','" + data.Type + "','" + data.Url + "'," + data.IsDownload + ",'" + data.DownloadPath + "')";
+      console.log(sql);
+      util.plus.sqllite.executeSql(util.url.setDb.databaseName, sql, function (data) {
+        resolve(true);
+      }, function (e) {
+        resolve(false);
       });
     });
   }
