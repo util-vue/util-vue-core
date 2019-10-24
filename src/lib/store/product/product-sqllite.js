@@ -207,8 +207,8 @@ const actions = {
 
 
 
-      /**
-   * 查询目录商品
+  /**
+   * 查询目录商品分页
    * @param {*} param0 
    * @param {目录ID} id 
    */
@@ -251,7 +251,39 @@ const actions = {
     });
   },
 
- 
+       /**
+   * 查询目录商品列表
+   * @param {*} param0 
+   * @param {目录ID} id 
+   */
+  async getCatalogGoodsList({ dispatch, commit, state, rootState, rootGetters }, data) {
+    return await new Promise((resolve, reject) => {
+      var where = "where  b.Enabled=1 and b.State=2";
+      var order = "b.CreationTime DESC";
+      if (data) {
+        if (data.catalogId)
+          where += " and  a.CatalogId in  (" + data.catalogId + ")";
+        if (data.ids)
+          where += " and  a.GoodsId in  (" + data.ids + ")";
+        if (data.keyword)
+          where += " and b.Name like  '%" + data.keyword + "%'";
+        if (data.code)
+          where += " and  b.Code ='" + data.code + "'";
+        if (data.categoryId)
+          where += " and  b.CategoryId ='" + data.categoryId + "'";
+        if (data.tagId)
+          where += " and  c.TagId ='" + data.tagId + "'";
+        if (data.order)
+          order = data.order;
+      }
+      var sql = "select *  from (select a.*,b.*,c.* from CatalogGoods a   LEFT JOIN  Goods b  ON a.GoodsId = b.GoodsId  LEFT JOIN TagGoods c ON b.GoodsId = c.GoodsId " + where + " group by b.GoodsId  ORDER BY " + order + " )  as d";
+      util.plus.sqllite.selectSql(util.url.setDb.databaseName, sql, function (d) {
+        resolve(d);
+      }, function (e) {
+        resolve(e);
+      });
+    });
+  },
 
 
 
