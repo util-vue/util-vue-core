@@ -93,8 +93,8 @@ const actions = {
   async  insertAccessory({ dispatch, commit, state, rootState, rootGetters }, data) {
     return await new Promise((resolve, reject) => {
       var sql ="INSERT INTO Attachment VALUES ('" + data.AttachmentId + "','" + data.Name + "','" + data.Size + "','" + data.SizeExplain + "','" + data.Type + "','" + data.Url + "'," + data.IsDownload + ",'" + data.DownloadPath + "')";
-      console.log(sql);
       util.plus.sqllite.executeSql(util.url.setDb.databaseName, sql, function (data) {
+        console.log("INSERT Attachment"+true);
         resolve(true);
       }, function (e) {
         resolve(false);

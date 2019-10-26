@@ -58,7 +58,7 @@ export class SqlLite {
             }) 
         }, null, eerro=> {
             if (error)
-                error(e);
+                error(eerro);
         }, path);
     }
 

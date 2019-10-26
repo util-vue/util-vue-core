@@ -7,7 +7,7 @@
           <f7-accordion-content>
             <f7-list>
               <f7-list-item @click="updateDb">下载数据库</f7-list-item>
-              <f7-list-item @click="init">同步资源</f7-list-item>
+              <f7-list-item @click="init">同步资源{{present}}/{{conut}}---{{progress}}</f7-list-item>
               <f7-list-item @click="selectCatalog">商品目录</f7-list-item>
               <f7-list-item @click="select">商品目录查询商品</f7-list-item>
             </f7-list>
@@ -32,14 +32,17 @@ export default {
         device: 4,
         application: "inhome-app"
       },
-      updateData:null
+      updateData:null,
+      present:0,
+      conut:0,
+      progress:0
     };
   },
   methods: {
     ...mapActions("common", [
       "getNewDb",
       "updateAccessoryStatus",
-      "getAccessoryList"
+      "getAccessoryList","insertAccessory"
     ]),
      ...mapActions("productSqlLite", [
       "getCatalogList",
@@ -54,9 +57,14 @@ export default {
           util.storage.setStorage("VersionNumber", data.versionNumber);
           util.plus.sqllite.updateDb(
             data.dataUpdateAddress,
-            function(d) {
+            async(d) =>{
               console.log("下载完成");
-              util.loading.hide();
+               await _self.addAccess(s=>{
+            if(s){
+               util.loading.hide();
+            }
+          });
+             
             },
             function(e) {
               util.loading.hide();
@@ -65,11 +73,33 @@ export default {
           );
       }
     },
+        //添加小图资源
+    async addAccess(callback) {
+     util.plus.sqllite.openDb(async(d) => {
+        var accessData = await this.getAccessoryList();
+        for(var i=0; i<=accessData.length-1; i++){
+          if (accessData[i].Type == "jpg" || accessData[i].Type == "png") {
+            accessData[i].IsDownload =0;
+            accessData[i].DownloadPath = "_doc/download/thum/";
+            accessData[i].AttachmentId = accessData[i].AttachmentId+i;
+            await this.insertAccessory(accessData[i]);
+          }
+          if( accessData.length == i+1 ){
+              callback(true)
+           }
+        }
+      });
+    },
     init(){
-      this.tongbu();
+           util.plus.sqllite.openDb(async(d) => {
+    console.log("打開成功");
+           })
+       this.tongbu();
+  
     },
     async tongbu(){
       this.updateData= await this.getAccessoryList();
+      this.conut=this.updateData.length;
         setTimeout(() => {
       this.update();
     }, 1000);
@@ -80,40 +110,43 @@ export default {
      */
     async update() {
       var self = this;
+      
         util.loading.show("数据同步中,请稍后...");
-      //同步大图
+          //同步大图
       self.updateData.forEach((item, index) => {
-        if (item.Type == "jpg" || item.Type == "png") {
-          var url =
-            item.Url + "?imageView2/2/w/3240/h/3240";
-        } else {
-          var url = item.Url;
-        }
-         util.plus.io.loadUrlFileAndCache(url, function(d) {
-          var result = self.updateAccessoryStatus({
-            id: item.AttachmentId,
-            status: 1
-          });
-        });
-      });
-      self.updateData.forEach((items, index) => {
-        if (items.Type == "jpg" || items.Type == "png") {
-          var url =
-            items.Url +
+        var imgUrl = item.Url;
+        if (item.DownloadPath) {
+          imgUrl =
+            item.Url +
             "?imageView2/2/w/500/h/500";
-        util.plus.io.loadUrlFileAndCache(
-            url,
-            function(d) {
-              if(self.updateData.length== index+1 ){
-                console.log("完成");
-                  util.loading.hide();
-              }
-            },
-            null,
-            null,
-            "_doc/download/thum/"
-          );
         }
+        if (!item.DownloadPath) {
+          if (item.Type == "jpg" || item.Type == "png")
+            imgUrl =
+              item.Url +
+              "?imageView2/2/w/3240/h/3240";
+        }
+        ///缓存资源
+       util.plus.io.loadUrlFileAndCache(
+          imgUrl,
+          async(d) => {
+            var result = await self.updateAccessoryStatus({
+              id: item.AttachmentId,
+              status: 1
+            });
+               self.present +=1;
+               self.progress = parseInt((self.present / self.conut) * 100);
+                console.log(self.present+'-----------'+self.progress);
+                if (self.conut == self.present) {
+                  util.message.toast("资源缓存完成");
+                  util.loading.hide();
+                } 
+          },null,
+          e => {
+             util.loading.hide();
+          },
+          item.DownloadPath
+        );
       });
     },
    async selectCatalog(){

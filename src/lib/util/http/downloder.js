@@ -17,16 +17,21 @@ export class Downloder {
     }
     var self=this;
     //var filename = defaultDoc + url.file;
-    var temporaryName = cacheDownload + util.helper.getUUID() + url.file;
-    util.plus.io.isExistFile(cacheDownload, () => {
-      util.plus.io.removeRecursivelyFile(cacheDownload, () => {
+    var temporaryName = cacheDownload + url.file;
+
+    plus.io.resolveLocalFileSystemURL(
+      temporaryName,
+      entry => {
+        //删除临时缓存目录下冗余文件
+        util.plus.io.removeFile(entry,sc=>{
+          self.downloadTask(url, temporaryName, defaultDoc, success, error, progress);
+        },e=>{
+          console.log("删除失败"+JSON.stringify(e));
+        });
+      },
+      e => {
         self.downloadTask(url, temporaryName, defaultDoc, success, error, progress);
-      }, () => {
-        self.downloadTask(url, temporaryName, defaultDoc, success, error, progress);
-      }); //删除临时缓存目录下冗余文件
-    }, () => {
-      self.downloadTask(url, temporaryName, defaultDoc, success, error, progress);
-    })
+      });
   }
 
   //下载操作
@@ -57,20 +62,20 @@ export class Downloder {
     task.addEventListener(
       "statechanged",
       (download, status) => {
-        if (
-          progress &&
-          download &&
-          download.totalSize &&
-          download.downloadedSize
-        )
+        if (progress &&download && download.totalSize && download.downloadedSize){
+          var bool=false;
+          if(status == 200 && (download.downloadedSize == download.totalSize)){
+            bool=true;
+          }
           progress(
             parseInt(
               (parseFloat(download.downloadedSize + "") /
                 parseFloat(download.totalSize + "")) *
               100 +
               ""
-            )
-          );
+            ),bool);
+        }
+    
       },
       false
     );
