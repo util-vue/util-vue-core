@@ -4,6 +4,8 @@
   --f7-navbar-height: 44px;
   --f7-navbar-title-text-align: center;
   --f7-font-family: "SourceHanSansSC-Regular";
+  --f7-navbar-bg-color:transparent;
+  --f7-bars-bg-color:transparent;
 }
 
 .util-title-center {
