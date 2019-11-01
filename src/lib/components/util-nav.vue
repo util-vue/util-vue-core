@@ -209,7 +209,6 @@ export default {
   overflow: hidden;
   padding-left: 10px;
   padding-right: 10px;
-  position: fixed;
   top: 0;
   left: 0;
   right: 0;
