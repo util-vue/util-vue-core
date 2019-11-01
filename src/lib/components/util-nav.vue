@@ -10,13 +10,19 @@
         :isLeft="true"
         :btns="leftBtns"
       >
-        <slot name="left" slot="left"></slot>
+        <slot
+          name="left"
+          slot="left"
+        ></slot>
       </util-nav-bar>
       <f7-nav-title :class="{ 'util-title-center': titleCenter}">
         {{title}}
       </f7-nav-title>
       <util-nav-bar :btns="rightBtns">
-        <slot name="right" slot="right"></slot>
+        <slot
+          name="right"
+          slot="right"
+        ></slot>
       </util-nav-bar>
     </template>
 
@@ -26,7 +32,10 @@
         :isLeft="true"
         :btns="leftBtns"
       >
-      <slot name="left" slot="left"></slot>
+        <slot
+          name="left"
+          slot="left"
+        ></slot>
       </util-nav-bar>
       <f7-nav-title>
         <div class="search-bg">
@@ -176,9 +185,9 @@ export default {
         this.$emit("search", this.searchValue);
       }
     },
-     /** 获取焦点事件 */
-    foucusClick(){
-    this.$emit("foucusClick", null);
+    /** 获取焦点事件 */
+    foucusClick() {
+      this.$emit("foucusClick", null);
     }
   }
 };
@@ -188,9 +197,7 @@ export default {
 :root {
   --f7-navbar-title-font-size: 42px;
 }
-.navbar a {
-  color: var(--f7-navbar-color);
-}
+
 .icon {
   font-size: 42px !important;
 }
@@ -210,7 +217,7 @@ export default {
   font-size: var(--f7-navbar-title-font-size);
   font-family: "SourceHanSansSC-Bold";
 }
-.util-title  .title{
+.util-title .title {
   margin-left: 0px !important;
 }
 .util-title-default {
