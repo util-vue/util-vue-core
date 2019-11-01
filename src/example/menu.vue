@@ -2,7 +2,8 @@
   <f7-page :page-content="false">
     <util-nav
       title="Util框架示例"
-      :isBack="false"
+      :isBack="true"
+      color="#fff"
       :rightBtns="btns"
     ></util-nav>
     <f7-page-content>
