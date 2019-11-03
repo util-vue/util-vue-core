@@ -9,24 +9,14 @@
         :isBack="isBack"
         :isLeft="true"
         :btns="leftBtns"
-        :color="color"
       >
-        <slot
-          name="left"
-          slot="left"
-        ></slot>
+        <slot name="left" slot="left"></slot>
       </util-nav-bar>
       <f7-nav-title :class="{ 'util-title-center': titleCenter}">
         {{title}}
       </f7-nav-title>
-      <util-nav-bar
-        :btns="rightBtns"
-        :color="color"
-      >
-        <slot
-          name="right"
-          slot="right"
-        ></slot>
+      <util-nav-bar :btns="rightBtns">
+        <slot name="right" slot="right"></slot>
       </util-nav-bar>
     </template>
 
@@ -35,12 +25,8 @@
         :isBack="isBack"
         :isLeft="true"
         :btns="leftBtns"
-        :color="color"
       >
-        <slot
-          name="left"
-          slot="left"
-        ></slot>
+      <slot name="left" slot="left"></slot>
       </util-nav-bar>
       <f7-nav-title>
         <div class="search-bg">
@@ -57,10 +43,7 @@
           />
         </div>
       </f7-nav-title>
-      <util-nav-bar
-        :btns="rightBtns"
-        :color="color"
-      ></util-nav-bar>
+      <util-nav-bar :btns="rightBtns"></util-nav-bar>
     </template>
 
     <template v-if="mode == 3">
@@ -68,15 +51,11 @@
         :isBack="isBack"
         :isLeft="true"
         :btns="leftBtns"
-        :color="color"
       ></util-nav-bar>
       <f7-nav-title>
         <slot></slot>
       </f7-nav-title>
-      <util-nav-bar
-        :btns="rightBtns"
-        :color="color"
-      ></util-nav-bar>
+      <util-nav-bar :btns="rightBtns"></util-nav-bar>
     </template>
 
   </f7-navbar>
@@ -197,9 +176,9 @@ export default {
         this.$emit("search", this.searchValue);
       }
     },
-    /** 获取焦点事件 */
-    foucusClick() {
-      this.$emit("foucusClick", null);
+     /** 获取焦点事件 */
+    foucusClick(){
+    this.$emit("foucusClick", null);
     }
   }
 };
@@ -209,7 +188,9 @@ export default {
 :root {
   --f7-navbar-title-font-size: 42px;
 }
-
+.navbar a {
+  color: var(--f7-navbar-color);
+}
 .icon {
   font-size: 42px !important;
 }
@@ -221,6 +202,7 @@ export default {
   overflow: hidden;
   padding-left: 10px;
   padding-right: 10px;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -228,7 +210,7 @@ export default {
   font-size: var(--f7-navbar-title-font-size);
   font-family: "SourceHanSansSC-Bold";
 }
-.util-title .title {
+.util-title  .title{
   margin-left: 0px !important;
 }
 .util-title-default {
