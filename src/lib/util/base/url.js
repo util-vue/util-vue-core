@@ -237,7 +237,7 @@ class CustomerUrl {
 
    /**创建意见反馈 */
    get feedbackCreate() {
-    return `${util.url.base.customerServer}/api/Feedback/CreateAsycn`;
+    return `${util.url.base.customerServer}/api/Feedback`;
   }
 }
 

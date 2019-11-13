@@ -9,13 +9,14 @@
         :isBack="isBack"
         :isLeft="true"
         :btns="leftBtns"
+        :color="color"
       >
         <slot name="left" slot="left"></slot>
       </util-nav-bar>
       <f7-nav-title :class="{ 'util-title-center': titleCenter}">
         {{title}}
       </f7-nav-title>
-      <util-nav-bar :btns="rightBtns">
+      <util-nav-bar :btns="rightBtns"   :color="color">
         <slot name="right" slot="right"></slot>
       </util-nav-bar>
     </template>
@@ -25,6 +26,7 @@
         :isBack="isBack"
         :isLeft="true"
         :btns="leftBtns"
+          :color="color"
       >
       <slot name="left" slot="left"></slot>
       </util-nav-bar>
@@ -43,7 +45,7 @@
           />
         </div>
       </f7-nav-title>
-      <util-nav-bar :btns="rightBtns"></util-nav-bar>
+      <util-nav-bar :btns="rightBtns"   :color="color"></util-nav-bar>
     </template>
 
     <template v-if="mode == 3">
@@ -51,11 +53,12 @@
         :isBack="isBack"
         :isLeft="true"
         :btns="leftBtns"
+        :color="color"
       ></util-nav-bar>
       <f7-nav-title>
         <slot></slot>
       </f7-nav-title>
-      <util-nav-bar :btns="rightBtns"></util-nav-bar>
+      <util-nav-bar :btns="rightBtns"   :color="color" ></util-nav-bar>
     </template>
 
   </f7-navbar>
