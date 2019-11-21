@@ -121,6 +121,12 @@ class SystemUrl {
   get editPassWord() {
     return `${util.url.base.systemServer}/api/User/ChangePassword`;
   }
+
+  /**Id登录 */
+  get idLogin() {
+    return `${util.url.base.systemServer}/api/User/IdLogin`;
+  }
+  
 }
 
 /** 楼盘 */
@@ -152,6 +158,50 @@ class BuildingUrl {
   get buildingStylePagerQuery() {
     return `${util.url.base.buildingServer}/api/buildingStyle`;
   }
+  /** 楼盘客户分页查询 */
+	get buildingPagerQuery() {
+		return `${util.url.base.buildingServer}/api/building`;
+	}
+	/** 楼盘客户定位位置查询 */
+	get locationQuery() {
+		return `${util.url.base.buildingServer}/api/building/locationQuery`;
+	}
+	/** 楼盘包含样板间 */
+	get buildingIncludShowHouse() {
+		return `${util.url.base.buildingServer}/api/building/buildingIncludShowHouse`;
+	}
+	/** 样板间分页查询 */
+	get showHousePagerQuery() {
+		return `${util.url.base.buildingServer}/api/ShowHouse`;
+	}
+	/** 统计 */
+	get platfromBuildingsMouduleStatistics() {
+		return `${util.url.base.buildingServer}/api/building/PlatfromBuildingsMouduleStatistics`;
+	}
+	/** 已关注 */
+	get attentionPagerQuery() {
+		return `${util.url.base.buildingServer}/api/building/attentionPagerQuery`;
+	}
+	/** 楼盘详情 */
+	get buildingDetail() {
+		return `${util.url.base.buildingServer}/api/building/detail`;
+	}
+	/** 风格下拉列表 */
+	get styleSelectItems() {
+		return `${util.url.base.buildingServer}/api/buildingstyle/selectItems`;
+	}
+	/** 价格下拉列表 */
+	get priceRangeSelectItems() {
+		return `${util.url.base.buildingServer}/api/showHouse/PriceRangeSelectItems`;
+	}
+	/** 户型区间选择项目 */
+	get housetypeSelectItems() {
+		return `${util.url.base.buildingServer}/api/showHouse/HouseTypeSelectItems`;
+	}
+	/** 样板间详情 */
+	get showHouseDetail() {
+		return `${util.url.base.buildingServer}/api/showHouse/Detail`;
+	}
 }
 
 /** 换装 */
@@ -239,6 +289,16 @@ class CustomerUrl {
    get feedbackCreate() {
     return `${util.url.base.customerServer}/api/Feedback/CreateAsycn`;
   }
+
+  /**互动添加 */
+	get interactionAdd() {
+		return `${util.url.base.customerServer}/api/CommonInteraction/add`;
+	}
+
+	/**互动删除 */
+	get interactionDelete() {
+		return `${util.url.base.customerServer}/api/CommonInteraction/delete`;
+	}
 }
 
 /**
