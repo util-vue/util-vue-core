@@ -118,7 +118,6 @@ const actions = {
   /**
    * 用户Id登录
    */
-
   async idLoginAsync(
     { dispatch, commit, getters, state, rootState, rootGetters },
     data

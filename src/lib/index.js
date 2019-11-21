@@ -5,7 +5,7 @@ import Iconfont from "./font/iconfont";
 import FontBlod from "./font/SourceHanSansSC-Blod.css";
 import FontRegular from "./font/SourceHanSansSC-Regular.css";
 
-import { util, QueryModel } from "./util/index";
+import { util, QueryModel,RequestModel } from "./util/index";
 import user from "./store/system/user";
 import building from "./store/building/building";
 import common from "./store/common/common";
@@ -15,7 +15,9 @@ import diyScheme from "./store/diy/diyScheme";
 import product from "./store/product/product";
 import productSqlLite from "./store/product/product-sqllite";
 import customer from "./store/customer/customer";
+import commonInteraction from "./store/customer/commonInteraction";
 import area from "./store/common/area";
+import showhouse from "./store/showhouse/showhouse";
 import { Orienter } from "./util/threejs/three.orienter";
 //注入组件
 import UtilImage from "./components/util-image.vue";
@@ -61,6 +63,7 @@ export default {
   install,
   util,
   QueryModel,
+  RequestModel,
   store: {
     user,
     building,
@@ -70,8 +73,10 @@ export default {
     diyScheme,
     articleSqlLite,
     customer,
+    commonInteraction,
     productSqlLite,
-    area
+    area,
+    showhouse
   },
   threeJs: {
     Orienter
