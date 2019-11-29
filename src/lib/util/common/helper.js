@@ -368,4 +368,15 @@ export class Helper {
     if (max != undefined && val >= max) return max;
     return val;
   }
+
+  /** 数量简写 */
+  numFormat(num) {
+    if (num >= 10000) {
+      num = Math.round(num / 1000) / 10 + "w";
+    } else if (num >= 1000) {
+      num = Math.round(num / 100) / 10 + "k";
+    }
+    return num;
+  }
+
 }
