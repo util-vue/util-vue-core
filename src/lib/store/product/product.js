@@ -14,7 +14,7 @@ const actions = {
   ) {
     return await new Promise((resolve, reject) => {
       util.webApi.post({
-        url: util.url.productUrl.goodsBill,
+        url: util.url.product.goodsBill,
         data: JSON.stringify(queryParam),
         success: result => {
           resolve(result);

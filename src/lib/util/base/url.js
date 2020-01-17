@@ -126,7 +126,15 @@ class SystemUrl {
   get idLogin() {
     return `${util.url.base.systemServer}/api/User/IdLogin`;
   }
-  
+  /** 刷新 */
+	get refreshSessionKey() {
+		return `${util.url.base.systemServer}/api/user/refreshSessionKey`;
+	}
+
+	/** 微信登录 */
+	get wechatLogin() {
+		return `${util.url.base.systemServer}/api/user/wechatLogin`;
+	}
 }
 
 /** 楼盘 */
@@ -150,6 +158,10 @@ class CommonUrl {
   get getClientVersion() {
     return `${util.url.base.commonServer}/api/ClientVersion/GetClientVersion`;
   }
+  /** 查询服务器时间 */
+	get getServerTime() {
+		return `${util.url.base.commonServer}/api/DataVersion/ServerTime`;
+	}
 }
 
 /** 楼盘 */
@@ -201,6 +213,10 @@ class BuildingUrl {
 	/** 样板间详情 */
 	get showHouseDetail() {
 		return `${util.url.base.buildingServer}/api/showHouse/Detail`;
+  }
+  /** 收藏的样板间 */
+	get collectPagerQuery() {
+		return `${util.url.base.buildingServer}/api/showHouse/collectPagerQuery`;
 	}
 }
 
@@ -298,6 +314,11 @@ class CustomerUrl {
 	/**互动删除 */
 	get interactionDelete() {
 		return `${util.url.base.customerServer}/api/CommonInteraction/delete`;
+  }
+  
+  /**搜索记录基础 */
+	get searchRecodeBase(){
+		return `${util.url.base.customerServer}/api/searchRecode`;
 	}
 }
 
@@ -323,10 +344,10 @@ var url = {
   base: new BaseUrl(),
   system: new SystemUrl(),
   building: new BuildingUrl(),
-  commonUrl: new CommonUrl(),
-  diyUrl: new DiyUrl(),
-  productUrl: new ProductUrl(),
-  customerUrl: new CustomerUrl(),
+  common: new CommonUrl(),
+  diy: new DiyUrl(),
+  product: new ProductUrl(),
+  customer: new CustomerUrl(),
   setDb: new SetDb()
 };
 

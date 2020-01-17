@@ -20,7 +20,7 @@ const actions = {
 	}, data) {
 		return await new Promise((resolve, reject) => {
 			util.webApi.post({
-				url: util.url.customerUrl.interactionAdd,
+				url: util.url.customer.interactionAdd,
 				loading: true,
 				data: data,
 				success: function(result) {
@@ -39,7 +39,7 @@ const actions = {
 	}, data) {
 		return await new Promise((resolve, reject) => {
 			util.webApi.post({
-				url: util.url.customerUrl.interactionDelete,
+				url: util.url.customer.interactionDelete,
 				loading: true,
 				data: data,
 				success: function(result) {

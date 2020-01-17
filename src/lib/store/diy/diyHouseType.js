@@ -14,7 +14,7 @@ const actions = {
   ) {
     return await new Promise((resolve, reject) => {
       util.webApi.get({
-        url: util.url.diyUrl.diyHouseTypePagerQuery,
+        url: util.url.diy.diyHouseTypePagerQuery,
         data: queryParam,
         success: result => {
           resolve(result);
@@ -32,7 +32,7 @@ const actions = {
   ) {
     return await new Promise((resolve, reject) => {
       util.webApi.get({
-        url: util.url.diyUrl.diyPanoramaDetail,
+        url: util.url.diy.diyPanoramaDetail,
         data: data,
         success: result => {
           resolve(result);

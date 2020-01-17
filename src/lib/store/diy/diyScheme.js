@@ -14,7 +14,7 @@ const actions = {
   ) {
     return await new Promise((resolve, reject) => {
       util.webApi.post({
-        url: util.url.diyUrl.saveScheme,
+        url: util.url.diy.saveScheme,
         data: params,
         loading: true,
         success: result => {
@@ -33,7 +33,7 @@ const actions = {
   ) {
     return await new Promise((resolve, reject) => {
       util.webApi.get({
-        url: util.url.diyUrl.diySchemePagerQuery,
+        url: util.url.diy.diySchemePagerQuery,
         data: queryModel,
         success: result => {
           resolve(result);

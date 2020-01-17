@@ -25,6 +25,24 @@ const actions = {
       });
     });
   },
+  /** 收藏的样板间分页查询 */
+  async collectPagerQueryAsync({ commit, state }, queryModel) {
+    return await new Promise((resolve, reject) => {
+      util.webApi.get({
+        url: util.url.building.collectPagerQuery,
+        loading: false,
+        data: queryModel,
+        success: function(result) {
+          queryModel.extends(result);
+          resolve(result);
+        },
+        error: function() {
+          queryModel.error();
+          resolve(false);
+        }
+      });
+    });
+  },
   /** 样板间详情 */
   async showHouseDetailAsync({ commit, state }, requestModel) {
     return await new Promise((resolve, reject) => {

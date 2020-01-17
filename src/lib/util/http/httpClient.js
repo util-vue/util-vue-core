@@ -127,7 +127,7 @@ export class HttpClient {
     }
     util.loading.show("请稍后");
     var task = plus.uploader.createUpload(
-      util.url.commonUrl.upload, {
+      util.url.common.upload, {
         method: "POST"
       },
       function (t, status) {
@@ -169,7 +169,7 @@ export class HttpClient {
     util.loading.show(`上传中...( ${uploadIndex + 1}/${files.length} )`);
     var _self = this;
     let task = plus.uploader.createUpload(
-      util.url.commonUrl.upload, {
+      util.url.common.upload, {
         method: "POST"
       },
       function (t, status) {

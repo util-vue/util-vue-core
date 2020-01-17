@@ -8,10 +8,16 @@ const state = {
     locationLatitude: undefined,
     allAreaData: [],
     allAreaDataHasNull: [],
-    locationArea: undefined
+    locationArea: undefined,
+    cityKey: "jjhh_city_id",
+	cityInfo: undefined
 }
 
 const getters = {
+    /** 缓存的选择城市id */
+    cityId(state) {
+		return util.storage.getStorage(state.cityKey);
+	},
     /** 当前缓存定位的地区信息 */
     locationStorage(state) {
         return util.storage.getStorage("locationAddress");
@@ -118,7 +124,18 @@ const mutations = {
             }],
         });
         state.allAreaDataHasNull = copyData;
-    }
+    },
+    /**
+	 * 初始化程序起始城市
+	 */
+	initCityId(state, id) {
+		id = id || '4a608f50-f1f7-4b77-be8c-c62dd56e41f0';//成都
+		var cityId = getters.cityId(state);
+		if (!cityId)
+			util.storage.setStorage(state.cityKey, id);
+		cityId = getters.cityId(state);
+		util.globalHeader.add('CityId', cityId);
+	}
 }
 
 const actions = {
@@ -262,7 +279,7 @@ const actions = {
     }) {
         return await new Promise((resolve, reject) => {
             util.webApi.get({
-                url: util.url.commonUrl.getAllAreaList,
+                url: util.url.common.getAllAreaList,
                 loading: false,
                 success: function (result) {
                     commit('area', result);
@@ -283,7 +300,7 @@ const actions = {
     }, addressDetail) {
         return await new Promise((resolve, reject) => {
             util.webApi.get({
-                url: util.url.commonUrl.addressToLngLat,
+                url: util.url.common.addressToLngLat,
                 data: {
                     address: addressDetail
                 },
