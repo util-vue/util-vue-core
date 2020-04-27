@@ -33,7 +33,7 @@ export class Helper {
     ) {
       // If we have a cryptographically secure PRNG, use that
       // http://stackoverflow.com/questions/6906916/collisions-when-generating-uuids-in-javascript
-      let buf = new Uint16Array(8);
+      var buf = new Uint16Array(8);
       window.crypto.getRandomValues(buf);
       return (
         this.pad4(buf[0]) +
@@ -78,7 +78,7 @@ export class Helper {
   }
 
   pad4(num) {
-    let ret = num.toString(16);
+    var ret = num.toString(16);
     while (ret.length < 4) {
       ret = "0" + ret;
     }
@@ -273,16 +273,16 @@ export class Helper {
         (date.getFullYear() + "").substr(4 - RegExp.$1.length)
       );
     }
-    let o = {
+    var o = {
       "M+": date.getMonth() + 1,
       "d+": date.getDate(),
       "h+": date.getHours(),
       "m+": date.getMinutes(),
       "s+": date.getSeconds()
     };
-    for (let k in o) {
+    for (var k in o) {
       if (new RegExp(`(${k})`).test(fmt)) {
-        let str = o[k] + "";
+        var str = o[k] + "";
         fmt = fmt.replace(
           RegExp.$1,
           RegExp.$1.length === 1 ? str : this.padLeftZero(str)

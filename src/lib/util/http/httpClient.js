@@ -168,14 +168,14 @@ export class HttpClient {
   uploadMultipleByPlusAsync(files, uploadIndex, callback, fileResult) {
     util.loading.show(`上传中...( ${uploadIndex + 1}/${files.length} )`);
     var _self = this;
-    let task = plus.uploader.createUpload(
+    var task = plus.uploader.createUpload(
       util.url.commonUrl.upload, {
         method: "POST"
       },
       function (t, status) {
         //上传完成
         if (status == 200) {
-          let result = JSON.parse(t.responseText);
+          var result = JSON.parse(t.responseText);
           if (result.code === 1) {
             fileResult.push(result.data);
             if (files.length === uploadIndex + 1) {

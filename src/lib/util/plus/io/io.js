@@ -166,7 +166,7 @@ export class IO {
     var _self = this;
     var resultArray = [];
     //判断本地文件是否存在
-    for (let i in urlList) {
+    for (var i in urlList) {
       this.isExistUrlFile(
         urlList[i],
         result => {
