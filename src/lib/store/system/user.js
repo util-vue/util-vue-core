@@ -26,6 +26,12 @@ const mutations = {
     util.storage.setStorage("Token", config.token);
     state.token = config.token;
     state.userInfo = config.userInfo;
+  },
+  /** 登出删除缓存token */
+  loginOut(state) {
+    util.storage.setStorage("Token", "");
+    state.token = "";
+    state.userInfo = undefined;
   }
 };
 
@@ -41,6 +47,45 @@ const actions = {
         data: data,
         success: result => {
           resolve(true);
+        },
+        error: () => {
+          resolve(false);
+        }
+      });
+    });
+  },
+  /** 刷新session */
+  async refreshSessionKeyAsync(
+    { dispatch, commit, getters, state, rootState, rootGetters },
+    data
+  ) {
+    return await new Promise((resolve, reject) => {
+      util.webApi.post({
+        url: util.url.system.refreshSessionKey,
+        data: data,
+        loading: false,
+        errorMessage: false,
+        success: result => {
+          resolve(true);
+        },
+        error: () => {
+          resolve(false);
+        }
+      });
+    });
+  },
+  /** 微信登录 */
+  async wechatLoginAsync(
+    { dispatch, commit, getters, state, rootState, rootGetters },
+    data
+  ) {
+    return await new Promise((resolve, reject) => {
+      util.webApi.post({
+        url: util.url.system.wechatLogin,
+        data: data,
+        loading: true,
+        success: result => {
+          resolve(result);
         },
         error: () => {
           resolve(false);
@@ -91,12 +136,11 @@ const actions = {
       });
     });
   },
-/**
- * 修改密码
- * @param {} param0 
- * @param {*} data 
- */
-
+  /**
+   * 修改密码
+   * @param {} param0
+   * @param {*} data
+   */
   async editPassWordAsync(
     { dispatch, commit, getters, state, rootState, rootGetters },
     data
@@ -109,13 +153,33 @@ const actions = {
         success: result => {
           resolve(true);
         },
-        error: ()=> {
+        error: () => {
+          resolve(false);
+        }
+      });
+    });
+  },
+  /**
+   * 用户Id登录
+   */
+  async idLoginAsync(
+    { dispatch, commit, getters, state, rootState, rootGetters },
+    data
+  ) {
+    return await new Promise((resolve, reject) => {
+      util.webApi.post({
+        url: util.url.system.idLogin,
+        data: data,
+        loading: true,
+        success: result => {
+          resolve(result);
+        },
+        error: () => {
           resolve(false);
         }
       });
     });
   }
-  
 };
 
 export default {

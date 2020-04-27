@@ -18,7 +18,7 @@ const actions = {
   ) {
     return await new Promise((resolve, reject) => {
       util.webApi.get({
-        url: util.url.commonUrl.getNewDb,
+        url: util.url.common.getNewDb,
         data: JSON.stringify(queryParam),
         loading: true,
         success: result => {
@@ -41,7 +41,7 @@ const actions = {
   ) {
     return await new Promise((resolve, reject) => {
       util.webApi.get({
-        url: util.url.commonUrl.getClientVersion,
+        url: util.url.common.getClientVersion,
         data:{ ClientCode: clientCode },
         success: result => {
           resolve(result);

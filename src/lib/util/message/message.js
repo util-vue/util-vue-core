@@ -3,7 +3,7 @@ import { util } from "./../index";
 export class Message {
   /** 弹出提示消息 */
   alert(msg) {
-    util.f7.f7App.dialog.alert(msg);
+    util.f7.f7App.dialog.alert(msg, "提示");
   }
 
   /** 消息提示 */

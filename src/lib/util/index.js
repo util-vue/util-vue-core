@@ -5,7 +5,7 @@ import { Helper } from "./common/helper";
 import url from "./base/url";
 import { F7 } from "./base/f7";
 import { Message } from "./message/message";
-import { Downloder } from "./http/downloder"
+import { Downloder } from "./http/downloder";
 import { GlobalHeader } from "./http/globalHeader";
 import { HttpClient } from "./http/httpClient";
 import { WebApi } from "./http/webapi";
@@ -15,6 +15,7 @@ import { Storage } from "./../util/storage/storage";
 import { ActionSheet } from "./../util/actions/actionSheet";
 import { plus } from "./../util/plus/index";
 import { QueryModel } from "./../util/common/pager";
+import { RequestModel } from "./../util/common/requestModel";
 
 var staticUtil = {
   helper: new Helper(),
@@ -32,4 +33,4 @@ var staticUtil = {
   plus: plus
 };
 
-export { staticUtil as util, HttpClient, QueryModel };
+export { staticUtil as util, HttpClient, QueryModel, RequestModel };
